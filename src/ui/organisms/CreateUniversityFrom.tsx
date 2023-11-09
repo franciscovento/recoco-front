@@ -1,8 +1,6 @@
 'use client';
-import {
-  useAddUniversityMutation,
-  useGetCountriesQuery,
-} from '@/store/api/recocoApi';
+import { useAddUniversityMutation } from '@/store/api/recoco/universityApi';
+import { useGetCountriesQuery } from '@/store/api/recocoApi';
 import { useForm } from 'react-hook-form';
 
 type formData = {

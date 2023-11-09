@@ -1,65 +1,51 @@
-import { University } from "@/lib/interfaces/university.interface";
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import Cookies from 'js-cookie'
-
-
+// Or from '@reduxjs/toolkit/query' if not using the auto-generated hooks
+import { User } from '@/lib/interfaces/user.interface';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import Cookies from 'js-cookie';
+// initialize an empty api service that we'll inject endpoints into later as needed
 export const recocoApi = createApi({
-  reducerPath: "recocoApi",
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_API_URL,
+    credentials: 'include',
     prepareHeaders: (headers) => {
       const token = Cookies.get('authToken');
       if (token) {
-        headers.set("authorization", `Bearer ${token}`);
+        headers.set('authorization', `Bearer ${token}`);
       }
       return headers;
     },
   }),
-  tagTypes: ["University", "Country"],
+  tagTypes: ['University', 'Country', 'Faculty', 'Degree', 'Auth'],
   endpoints: (builder) => ({
-    getCountries: builder.query<{ id: number; name: string }[], void>({
-      query: () => "/country",
-      providesTags: ["Country"],
-    }),
-    getUniversities: builder.query<University[], null>({
-      query: () => "/university",
-      providesTags: ["University"],
-    }),
-    getUniversityById: builder.query<University, number>({
-      query: ( id ) => `/university/${id}`,
-      providesTags: (result, error, id) => [{ type: 'University', id }],
-    }),
-    addUniversity: builder.mutation<void, Partial<University>>({
-      query: (university) => ({
-        url: '/university',
+    login: builder.mutation<
+      { message: string },
+      { email: string; password: string }
+    >({
+      query: (body) => ({
+        url: '/auth/login',
         method: 'POST',
-        body: university
+        body,
       }),
-      invalidatesTags: ["University"],
     }),
-    updateUniversity: builder.mutation<void, Partial<University>>({
-      query: ({id, ...rest}) => ({
-        url: `/university/${id}`,
-        method: 'PATCH',
-        body: rest
+    logout: builder.mutation<{ message: string }, void>({
+      query: () => ({
+        url: '/auth/logout',
+        method: 'POST',
       }),
-      invalidatesTags: (result, error, { id }) => ["University",{ type: 'University', id }],
     }),
-    deleteUniversity: builder.mutation<void, string>({
-      query: (id) => ({
-        url: `/university/${id}`,
-        method: 'DELETE',
-      }),
-      invalidatesTags: ["University"],
-    })
+    me: builder.query<User, void>({
+      query: () => '/auth/me',
+    }),
+    getCountries: builder.query<{ id: number; name: string }[], void>({
+      query: () => '/country',
+      providesTags: ['Country'],
+    }),
   }),
 });
 
-export const { 
-  useGetUniversitiesQuery, 
-  useGetUniversityByIdQuery, 
-  useAddUniversityMutation, 
-  useUpdateUniversityMutation, 
-  useDeleteUniversityMutation,
+export const {
   useGetCountriesQuery,
+  useLoginMutation,
+  useMeQuery,
+  useLogoutMutation,
 } = recocoApi;

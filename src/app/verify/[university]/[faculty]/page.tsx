@@ -1,16 +1,24 @@
 'use client';
-import {
-  useDeleteUniversityMutation,
-  useGetUniversitiesQuery,
-  useUpdateUniversityMutation,
-} from '@/store/api/recocoApi';
 import CreateUniversity from '@/ui/organisms/CreateUniversityFrom';
 import React from 'react';
+import {
+  useUpdateUniversityMutation,
+  useDeleteUniversityMutation,
+  useGetUniversitiesQuery,
+} from '@/store/api/recoco/universityApi';
+import {
+  useLoginMutation,
+  useLogoutMutation,
+  useMeQuery,
+} from '@/store/api/recocoApi';
 
 const Page = () => {
   const { isError, data, isLoading } = useGetUniversitiesQuery(null);
+  const [login] = useLoginMutation();
+  const { data: me, refetch } = useMeQuery();
   const [update] = useUpdateUniversityMutation();
   const [deleteU] = useDeleteUniversityMutation();
+  const [logout] = useLogoutMutation();
   const updateUniversity = async () => {
     await update({
       id: '18e41324-7b2f-4e8a-b284-e34954352c92',
@@ -27,11 +35,27 @@ const Page = () => {
 
   const deleteUniversity = async () => {
     try {
-      await deleteU('18e41324-7b2f-4e8a-b284-e34954352c92').unwrap();
+      await deleteU('b22252f9-38ae-40dc-90bd-95ee2c7b7c24').unwrap();
       console.log('deleted');
     } catch (error) {
       console.log('error');
     }
+  };
+
+  const loginHandler = async () => {
+    try {
+      const resp = await login({
+        email: 'fgvr92@gmail.com',
+        password: 'Diciembre18',
+      }).unwrap();
+      console.log(resp);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const revalidate = () => {
+    refetch();
   };
   return (
     <>
@@ -53,6 +77,9 @@ const Page = () => {
 
       <button onClick={updateUniversity}>update university</button>
       <button onClick={deleteUniversity}>deleteUniversity</button>
+      <button onClick={loginHandler}>login</button>
+      <button onClick={revalidate}>revalidate</button>
+      <button onClick={() => logout()}>logout</button>
     </>
   );
 };
