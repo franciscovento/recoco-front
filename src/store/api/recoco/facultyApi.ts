@@ -3,7 +3,7 @@ import { Faculty } from '@/lib/interfaces/faculty.interface';
 
 const facultyModel = recocoApi.injectEndpoints({
   endpoints: (builder) => ({
-    getFacultyByUniversity: builder.query<Faculty, string>({
+    getFacultyByUniversity: builder.query<Faculty[], string>({
       query: (id) => `/faculty/by-university/${id}`,
       providesTags: (result, error, id) => [{ type: 'Faculty', id: id }],
     }),

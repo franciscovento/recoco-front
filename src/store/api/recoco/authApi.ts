@@ -3,9 +3,15 @@ import { User } from '@/lib/interfaces/user.interface';
 
 const authModel = recocoApi.injectEndpoints({
   endpoints: (builder) => ({
-    login: builder.query<{ message: string }, null>({
-      query: () => `/auth/login`,
-      providesTags: ['Auth'],
+    login: builder.mutation<
+      { message: string },
+      { email: string; password: string }
+    >({
+      query: (body) => ({
+        url: '/auth/login',
+        method: 'POST',
+        body,
+      }),
     }),
     signUp: builder.mutation<void, Partial<User>>({
       query: (user) => ({
@@ -15,25 +21,21 @@ const authModel = recocoApi.injectEndpoints({
       }),
       invalidatesTags: ['Auth'],
     }),
-    logout: builder.mutation<void, null>({
+    logout: builder.mutation<{ message: string }, void>({
       query: () => ({
-        url: `/auth/logout`,
+        url: '/auth/logout',
         method: 'POST',
       }),
-      invalidatesTags: ['Auth'],
     }),
-    me: builder.query<void, User>({
-      query: () => ({
-        url: `auth/me`,
-      }),
-      providesTags: ['Auth'],
+    me: builder.query<User, void>({
+      query: () => '/auth/me',
     }),
   }),
   overrideExisting: false,
 });
 
 export const {
-  useLoginQuery,
+  useLoginMutation,
   useLogoutMutation,
   useMeQuery,
   useSignUpMutation,

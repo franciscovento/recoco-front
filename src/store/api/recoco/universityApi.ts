@@ -3,7 +3,7 @@ import { recocoApi } from '../recocoApi';
 
 const universityModel = recocoApi.injectEndpoints({
   endpoints: (builder) => ({
-    getUniversities: builder.query<University[], null>({
+    getUniversities: builder.query<University[], void>({
       query: () => '/university',
       providesTags: ['University'],
     }),

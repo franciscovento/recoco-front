@@ -3,15 +3,19 @@ import { recocoApi } from '../recocoApi';
 
 const degreeModel = recocoApi.injectEndpoints({
   endpoints: (builder) => ({
-    getDegreeById: builder.query<Degree, number>({
+    getDegreeById: builder.query<Degree, string>({
       query: (id) => `/degree/${id}`,
       providesTags: (result, error, id) => [{ type: 'Degree', id }],
     }),
+    getDegreeByFaculty: builder.query<Degree[], string>({
+      query: (id) => `/degree/by-faculty/${id}`,
+      providesTags: (result, error, id) => [{ type: 'Degree', id }],
+    }),
     addDegree: builder.mutation<void, Partial<Degree>>({
-      query: (Degree) => ({
+      query: (degree) => ({
         url: '/degree',
         method: 'POST',
-        body: Degree,
+        body: degree,
       }),
       invalidatesTags: ['Degree'],
     }),
@@ -39,6 +43,7 @@ const degreeModel = recocoApi.injectEndpoints({
 
 export const {
   useGetDegreeByIdQuery,
+  useGetDegreeByFacultyQuery,
   useDeleteDegreeMutation,
   useUpdateDegreeMutation,
   useAddDegreeMutation,

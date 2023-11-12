@@ -15,27 +15,17 @@ export const recocoApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ['University', 'Country', 'Faculty', 'Degree', 'Auth'],
+  tagTypes: [
+    'University',
+    'Country',
+    'Faculty',
+    'Degree',
+    'Course',
+    'Auth',
+    'TeacherClass',
+    'Comment',
+  ],
   endpoints: (builder) => ({
-    login: builder.mutation<
-      { message: string },
-      { email: string; password: string }
-    >({
-      query: (body) => ({
-        url: '/auth/login',
-        method: 'POST',
-        body,
-      }),
-    }),
-    logout: builder.mutation<{ message: string }, void>({
-      query: () => ({
-        url: '/auth/logout',
-        method: 'POST',
-      }),
-    }),
-    me: builder.query<User, void>({
-      query: () => '/auth/me',
-    }),
     getCountries: builder.query<{ id: number; name: string }[], void>({
       query: () => '/country',
       providesTags: ['Country'],
@@ -43,9 +33,4 @@ export const recocoApi = createApi({
   }),
 });
 
-export const {
-  useGetCountriesQuery,
-  useLoginMutation,
-  useMeQuery,
-  useLogoutMutation,
-} = recocoApi;
+export const { useGetCountriesQuery } = recocoApi;

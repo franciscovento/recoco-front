@@ -10,10 +10,10 @@ import {
   useLoginMutation,
   useLogoutMutation,
   useMeQuery,
-} from '@/store/api/recocoApi';
+} from '@/store/api/recoco/authApi';
 
 const Page = () => {
-  const { isError, data, isLoading } = useGetUniversitiesQuery(null);
+  const { isError, data, isLoading } = useGetUniversitiesQuery();
   const [login] = useLoginMutation();
   const { data: me, refetch } = useMeQuery();
   const [update] = useUpdateUniversityMutation();

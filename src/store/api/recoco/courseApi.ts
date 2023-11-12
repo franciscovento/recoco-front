@@ -1,40 +1,45 @@
-import { Degree } from '@/lib/interfaces/degree.interface';
 import { recocoApi } from '../recocoApi';
+import { Course } from '@/lib/interfaces/course.interface';
 
 const courseModel = recocoApi.injectEndpoints({
   endpoints: (builder) => ({
-    getDegreeById: builder.query<Degree, number>({
-      query: (id) => `/degree/${id}`,
-      providesTags: (result, error, id) => [{ type: 'Degree', id }],
+    getCourseById: builder.query<Course, string>({
+      query: (id) => `/course/${id}`,
+      providesTags: (result, error, id) => [{ type: 'Course', id }],
     }),
-    addDegree: builder.mutation<void, Partial<Degree>>({
-      query: (Degree) => ({
-        url: '/degree',
+    addCourse: builder.mutation<void, Partial<Course>>({
+      query: (course) => ({
+        url: '/course',
         method: 'POST',
-        body: Degree,
+        body: course,
       }),
-      invalidatesTags: ['Degree'],
+      invalidatesTags: ['Course'],
     }),
-    updateDegree: builder.mutation<void, Partial<Degree>>({
+    updateCourse: builder.mutation<void, Partial<Course>>({
       query: ({ id, ...rest }) => ({
-        url: `/degree/${id}`,
+        url: `/course/${id}`,
         method: 'PATCH',
         body: rest,
       }),
       invalidatesTags: (result, error, { id }) => [
-        'Degree',
-        { type: 'Degree', id },
+        'Course',
+        { type: 'Course', id },
       ],
     }),
-    deleteDegree: builder.mutation<void, string>({
+    deleteCourse: builder.mutation<void, string>({
       query: (id) => ({
-        url: `/degree/${id}`,
+        url: `/course/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['Degree'],
+      invalidatesTags: ['Course'],
     }),
   }),
   overrideExisting: false,
 });
 
-export const {} = courseModel;
+export const {
+  useGetCourseByIdQuery,
+  useAddCourseMutation,
+  useUpdateCourseMutation,
+  useDeleteCourseMutation,
+} = courseModel;
