@@ -4,9 +4,27 @@ import clsx from 'clsx';
 
 interface Props {
   isActive?: boolean;
+  teacherName: string;
+  totalComments: number;
+  difficulty: number;
+  quality: number;
 }
 
-const TeacherClassCard = ({ isActive = false }: Props) => {
+const TeacherClassCard = ({
+  isActive = false,
+  difficulty,
+  quality,
+  teacherName,
+  totalComments,
+}: Props) => {
+  const difficultyTag =
+    difficulty < 3
+      ? 'Fácil'
+      : difficulty < 4
+      ? 'Medio'
+      : difficulty < 5
+      ? 'Difícil'
+      : 'Infumable';
   return (
     <div
       className={clsx(
@@ -19,13 +37,15 @@ const TeacherClassCard = ({ isActive = false }: Props) => {
       <div className="w-[5px] h-[50px] bg-app-primary rounded-3xl"></div>
       <div>
         <div className="flex items-center gap-4 pb-2">
-          <h3 className="text-app-primary-dark">Elton Tito</h3>
+          <h3 className="text-app-primary-dark">{teacherName}</h3>
           <span className="block w-2 h-2 bg-app-text rounded-full"></span>
-          <span className="text-xs text-app-text">Promocionable</span>
+          <span className="text-xs text-app-text">{difficultyTag}</span>
         </div>
         <div className="flex items-center gap-3">
           <Image src={'/svg/comments.svg'} width={63} height={23} alt="" />
-          <span className="text-xs text-app-text">45 comentarios</span>
+          <span className="text-xs text-app-text">
+            {totalComments} comentarios
+          </span>
         </div>
       </div>
     </div>

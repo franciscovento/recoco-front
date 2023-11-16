@@ -1,0 +1,20 @@
+[
+  {
+    "teacherName": "Cristian Hernandez",
+    "totalComments": 10,
+    "difficulty": 1,
+    "quality": 1
+  },
+  {
+    "teacherName": "Patricia Vallejo",
+    "totalComments": 22,
+    "difficulty": 3,
+    "quality": 4
+  },
+  {
+    "teacherName": "Miguel Palacios",
+    "totalComments": 3,
+    "difficulty": 5,
+    "quality": 1
+  }
+]
