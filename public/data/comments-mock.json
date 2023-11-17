@@ -1,0 +1,46 @@
+[
+  {
+    "userImage": "/images/characters/loofie.png",
+    "comment": "This school has potential, if the education did not cost that much. Harvard is known for it}s prestige but in person, the school does not meet expectations. But hey, at least the chicken nuggets in the dining hall are good and they have ok wifi. Kinda like a Mcdonalds.",
+    "commentRating": 3,
+    "date": "9 mar. 2023",
+    "dislikes": 3,
+    "likes": 21
+  },
+
+  {
+    "userImage": "/images/characters/pepa.png",
+    "comment": "This school has potential, if the education did not cost that much. Harvard is known for it}s prestige but in person, the school does not meet expectations. But hey, at least the chicken nuggets in the dining hall are good and they have ok wifi. Kinda like a Mcdonalds.",
+    "commentRating": 3,
+    "date": "9 mar. 2023",
+    "dislikes": 3,
+    "likes": 21
+  },
+
+  {
+    "userImage": "/images/characters/loofie.png",
+    "comment": "This school has potential, if the education did not cost that much. Harvard is known for it}s prestige but in person, the school does not meet expectations. But hey, at least the chicken nuggets in the dining hall are good and they have ok wifi. Kinda like a Mcdonalds.",
+    "commentRating": 4,
+    "date": "9 mar. 2023",
+    "dislikes": 3,
+    "likes": 21
+  },
+
+  {
+    "userImage": "/images/characters/pepa.png",
+    "comment": "This school has potential, if the education did not cost that much. Harvard is known for it}s prestige but in person, the school does not meet expectations. But hey, at least the chicken nuggets in the dining hall are good and they have ok wifi. Kinda like a Mcdonalds.",
+    "commentRating": 5,
+    "date": "9 mar. 2023",
+    "dislikes": 3,
+    "likes": 21
+  },
+
+  {
+    "userImage": "/images/characters/loofie.png",
+    "comment": "This school has potential, if the education did not cost that much. Harvard is known for it}s prestige but in person, the school does not meet expectations. But hey, at least the chicken nuggets in the dining hall are good and they have ok wifi. Kinda like a Mcdonalds.",
+    "commentRating": 1,
+    "date": "9 mar. 2023",
+    "dislikes": 3,
+    "likes": 21
+  }
+]

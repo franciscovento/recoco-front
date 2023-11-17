@@ -11,4 +11,8 @@
   h6 {
     @apply text-app-title font-medium;
   }
+  p,
+  span {
+    @apply text-app-text;
+  }
 }

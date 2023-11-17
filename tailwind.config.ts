@@ -17,6 +17,7 @@ const config: Config = {
         'app-text': '#868686',
         'app-title': '#404040',
         'app-background': '#F4F5F7',
+        'app-border': '#E8E8EC',
       },
       boxShadow: {
         'app-card':
