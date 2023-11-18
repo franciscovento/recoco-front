@@ -7,6 +7,7 @@ import CommentsTitle from '@/ui/molecules/CommentsTitle';
 import CourseTeacherRanking from '@/ui/molecules/CourseTeacherRanking';
 import Comment from '@/ui/molecules/Comment';
 import comments from '../../../../../public/data/comments-mock.json';
+import CreateComment from '@/ui/organisms/CreateComment';
 const page = () => {
   return (
     <main className="flex flex-col lg:flex-row min-h-screen gap-8">
@@ -30,9 +31,13 @@ const page = () => {
             />
             <CourseTeacherRanking ranking={4.5} totalComments={20} />
           </div>
-          <div className="py-12 flex flex-col gap-7">
-            {comments.map((comment) => (
+          <div className="pt-12">
+            <CreateComment />
+          </div>
+          <div className="flex flex-col gap-7 py-8">
+            {comments.map((comment, index) => (
               <Comment
+                key={index}
                 userImage={comment.userImage}
                 comment={comment.comment}
                 commentRating={comment.commentRating}

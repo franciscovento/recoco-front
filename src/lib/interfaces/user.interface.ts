@@ -1,7 +1,7 @@
 interface User {
   id: string;
   email: string;
-  password: string;
+  password?: string;
   username: string;
   rol: string;
   status: string;
