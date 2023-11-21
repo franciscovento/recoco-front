@@ -5,9 +5,10 @@ import ChipButton from '../atoms/ChipButton';
 import Rating from '../molecules/Rating';
 import Button from '../atoms/Button';
 import { useForm } from 'react-hook-form';
-import { appModal } from '@/lib/services/modal.service';
-import LoginRegisterModal from './modals/LoginRegisterModal';
-import { useLoginMutation } from '@/store/api/recoco/authApi';
+import useLoginModal from '@/lib/hooks/useLoginModal';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store/store';
+import { successNotification } from '@/lib/services/notification.service';
 
 type formData = {
   comment: string;
@@ -16,7 +17,8 @@ type formData = {
 };
 
 const CreateComment = () => {
-  const [login] = useLoginMutation();
+  const { isAuthenticated } = useSelector((state: RootState) => state.ui);
+  const { loginRegisterModal } = useLoginModal();
   const [commentActive, setCommentActive] = useState<boolean>(false);
   const [rows, setRows] = useState<'50' | '100'>('50');
   const difficultyOptions = [
@@ -53,17 +55,17 @@ const CreateComment = () => {
   };
 
   const onSubmit = async (data: formData) => {
-    try {
-      showLoginRegisterModal();
-      console.log(data);
-    } catch (error) {}
-  };
+    console.log(isAuthenticated);
 
-  const showLoginRegisterModal = () => {
-    appModal.fire({
-      html: <LoginRegisterModal login={login} />,
-      width: 780,
-    });
+    try {
+      if (!isAuthenticated) {
+        return loginRegisterModal();
+      }
+      successNotification('Comentario creado');
+      reset();
+      setCommentActive(false);
+      setRows('50');
+    } catch (error) {}
   };
 
   return (

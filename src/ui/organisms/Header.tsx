@@ -3,9 +3,11 @@ import React from 'react';
 import Button from '../atoms/Button';
 import { useLogoutMutation } from '@/store/api/recoco/authApi';
 import { uiActions } from '@/store/slices/ui';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/store/store';
 
 const Header = () => {
+  const { isAuthenticated } = useSelector((state: RootState) => state.ui);
   const [logout] = useLogoutMutation();
   const dispatch = useDispatch();
   const handleLogout = async () => {
@@ -26,7 +28,7 @@ const Header = () => {
         </span>
       </div>
       <Button onClick={handleLogout} className="w-28 sm:w-36">
-        Ingresar
+        {isAuthenticated ? 'Cerrar sesión' : 'Iniciar sesión'}
       </Button>
     </header>
   );

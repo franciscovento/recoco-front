@@ -4,7 +4,7 @@ import { User } from '@/lib/interfaces/user.interface';
 const authModel = recocoApi.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation<
-      { message: string },
+      { token: string; user: User },
       { email: string; password: string }
     >({
       query: (body) => ({
@@ -12,7 +12,7 @@ const authModel = recocoApi.injectEndpoints({
         method: 'POST',
         body,
       }),
-      invalidatesTags: ['Auth'],
+      // invalidatesTags: ['Auth'],
     }),
     signUp: builder.mutation<void, Partial<User>>({
       query: (user) => ({
@@ -20,18 +20,18 @@ const authModel = recocoApi.injectEndpoints({
         method: 'POST',
         body: user,
       }),
-      invalidatesTags: ['Auth'],
+      // invalidatesTags: ['Auth'],
     }),
     logout: builder.mutation<{ message: string }, void>({
       query: () => ({
         url: '/auth/logout',
         method: 'POST',
       }),
-      invalidatesTags: ['Auth'],
+      // invalidatesTags: ['Auth'],
     }),
     me: builder.query<User, void>({
       query: () => '/auth/me',
-      providesTags: ['Auth'],
+      // providesTags: ['Auth'],
     }),
   }),
   overrideExisting: false,
