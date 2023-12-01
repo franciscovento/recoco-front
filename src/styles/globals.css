@@ -16,3 +16,7 @@
     @apply text-app-text;
   }
 }
+
+.app-modal-container {
+  overflow: visible !important;
+}

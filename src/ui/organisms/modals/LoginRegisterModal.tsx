@@ -1,7 +1,3 @@
-import {
-  useLoginMutation,
-  useSignUpMutation,
-} from '@/store/api/recoco/authApi';
 import Button from '@/ui/atoms/Button';
 import Image from 'next/image';
 import React from 'react';
@@ -9,7 +5,6 @@ import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import { ErrorMessage } from '@hookform/error-message';
 import { successNotification } from '@/lib/services/notification.service';
-import { watch } from 'fs';
 
 const inputClass =
   'px-3 py-2 border-2 border-app-border rounded-xl outline-none w-full text-sm  duration-300';
@@ -87,10 +82,8 @@ const LoginModal = ({ setIsLogin, login }: ILoginModal) => {
         />
       </div>
       <div className="text-left col-span-3 pt-12 sm:py-12 px-6 order-1 sm:order-2 sm:pr-12">
-        <h3 className="text-2xl font-semibold pb-1">
-          ¡Tu comentario es valioso!
-        </h3>
-        <p className="text-l leading-normal font-light">
+        <h3 className="text-2xl font-semibold pb-1">¡Tu aporte es valioso!</h3>
+        <p className="text-sm leading-normal font-light">
           Aunque aquí todo es confidencial, necesitas iniciar sesión para
           validar que no eres un extraterreste...
         </p>
@@ -175,7 +168,7 @@ type RegisterForm = {
   username: string;
   email: string;
   password: string;
-  repeatPassword: string;
+  // repeatPassword: string;
 };
 const RegisterModal = ({ setIsLogin, signUp }: IRegisterModal) => {
   const {
@@ -188,15 +181,15 @@ const RegisterModal = ({ setIsLogin, signUp }: IRegisterModal) => {
       username: '',
       email: '',
       password: '',
-      repeatPassword: '',
+      // repeatPassword: '',
     },
   });
 
   const onSubmit = async (data: RegisterForm) => {
     try {
-      if (data.password !== data.repeatPassword) {
-        return setError('root', { message: 'Las contraseñas no coinciden' });
-      }
+      // if (data.password !== data.repeatPassword) {
+      //   return setError('root', { message: 'Las contraseñas no coinciden' });
+      // }
       await signUp({
         username: data.username,
         email: data.email,
@@ -228,7 +221,7 @@ const RegisterModal = ({ setIsLogin, signUp }: IRegisterModal) => {
       </div>
       <div className="text-left col-span-3 pt-12 sm:py-12 px-6 order-1 sm:order-2 sm:pr-12">
         <h3 className="text-2xl font-semibold pb-1">Un pasito más...</h3>
-        <p className="text-l leading-normal font-light">
+        <p className="text-sm leading-normal font-light">
           Y puedes ayudar a un compañero a no cometer tus mismos errores
         </p>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
@@ -263,7 +256,7 @@ const RegisterModal = ({ setIsLogin, signUp }: IRegisterModal) => {
                 })}
               />
             </label>
-            <label>
+            {/* <label>
               <input
                 placeholder="Repite tu contraseña"
                 className={inputClass}
@@ -272,7 +265,7 @@ const RegisterModal = ({ setIsLogin, signUp }: IRegisterModal) => {
                   required: 'Este campo es obligatorio',
                 })}
               />
-            </label>
+            </label> */}
           </div>
           <div className="text-center flex flex-col items-center">
             <ErrorMessage

@@ -11,6 +11,7 @@
   "dependencies": {
     "@hookform/error-message": "^2.0.1",
     "@reduxjs/toolkit": "^1.9.7",
+    "@tailwindcss/container-queries": "^0.1.1",
     "axios": "^1.6.0",
     "clsx": "^2.0.0",
     "jose": "^5.1.0",

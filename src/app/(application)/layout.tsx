@@ -23,7 +23,7 @@ export default function ApplicationLayout({
   return (
     <>
       <Header />
-      <main className="p-4 sm:p-6 bg-app-background">{children}</main>
+      <main className="bg-app-background">{children}</main>
     </>
   );
 }

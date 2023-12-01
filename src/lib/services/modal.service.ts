@@ -9,6 +9,9 @@ const appModal = customSwal.mixin({
   showDenyButton: false,
   showCloseButton: false,
   showCancelButton: false,
+  customClass: {
+    htmlContainer: 'app-modal-container',
+  },
 });
 
 export { appModal };
