@@ -14,6 +14,7 @@ const DegreeCourses = ({ degree_id }: Props) => {
       {data?.map(({ course, course_id }) => {
         return (
           <CourseCard
+            key={course_id}
             hasTeachers={course.courseTeacher.length > 0}
             courseId={course_id}
             courseName={course.name}
