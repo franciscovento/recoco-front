@@ -19,6 +19,17 @@ const degreeModel = recocoApi.injectEndpoints({
       }),
       invalidatesTags: ['Degree'],
     }),
+    deleteDegreeCourse: builder.mutation<
+      void,
+      { degree_id: number; course_id: number }
+    >({
+      query: (data) => ({
+        url: `/degree/${data.degree_id}/remove-degree-course/${data.course_id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Course'],
+    }),
+
     updateDegree: builder.mutation<void, Partial<Degree>>({
       query: ({ id, ...rest }) => ({
         url: `/degree/${id}`,
@@ -47,4 +58,5 @@ export const {
   useDeleteDegreeMutation,
   useUpdateDegreeMutation,
   useAddDegreeMutation,
+  useDeleteDegreeCourseMutation,
 } = degreeModel;

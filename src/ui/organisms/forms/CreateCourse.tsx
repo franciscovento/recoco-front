@@ -1,5 +1,6 @@
 'use client';
 import { appModal } from '@/lib/services/modal.service';
+import { useAddWithDegreeCourseMutation } from '@/store/api/recoco/courseApi';
 import Button from '@/ui/atoms/Button';
 import Card from '@/ui/atoms/Card';
 import CreateElementLayout from '@/ui/atoms/CreateElementLayout';
@@ -14,9 +15,10 @@ const inputClass =
   'px-3 py-2 border-2 border-app-border rounded-xl outline-none w-full text-sm  duration-300';
 
 const CreateCourse = () => {
+  const [createCourse] = useAddWithDegreeCourseMutation();
   const onCreate = () => {
     appModal.fire({
-      html: <CreateCourseForm />,
+      html: <CreateCourseForm createCourse={createCourse} />,
       width: 600,
     });
   };
@@ -33,21 +35,37 @@ const CreateCourse = () => {
 
 export default CreateCourse;
 
-const CreateCourseForm = () => {
+type formData = {
+  course_name: string;
+  course_code: string;
+};
+
+interface CreateCourseProps {
+  createCourse: any;
+}
+const CreateCourseForm = ({ createCourse }: CreateCourseProps) => {
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm({
+  } = useForm<formData>({
     defaultValues: {
       course_name: '',
       course_code: '',
     },
   });
 
-  const onSubmit = (data: any) => {
-    console.log(data);
-    Swal.clickConfirm();
+  const onSubmit = async (data: formData) => {
+    try {
+      const course = await createCourse({
+        course_code: data.course_code,
+        degree_id: 1,
+        name: data.course_name,
+        faculty_id: 1,
+      }).unwrap();
+      console.log(course);
+      Swal.clickConfirm();
+    } catch (error) {}
   };
 
   return (

@@ -1,26 +1,52 @@
 import Image from 'next/image';
 import React from 'react';
 import clsx from 'clsx';
+import { useDeleteCourseMutation } from '@/store/api/recoco/courseApi';
+import { useDeleteDegreeCourseMutation } from '@/store/api/recoco/degreeApi';
+import SvgDelete from '../atoms/svg/SvgDelete';
+import { confirmModal } from '@/lib/services/modal.service';
+import Link from 'next/link';
 
 interface Props {
   isActive?: boolean;
   courseName: string;
-  totalComments: number;
   teacherClasses: number;
   classCode: string;
+  courseId: number;
+  hasTeachers: boolean;
 }
 
 const CourseCard = ({
+  courseId,
   isActive = false,
   teacherClasses,
   courseName,
-  totalComments,
   classCode,
+  hasTeachers,
 }: Props) => {
+  const [deleteCourse] = useDeleteDegreeCourseMutation();
+
+  const handleDelete = async () => {
+    try {
+      const confirm = await confirmModal(
+        '¿Estás seguro que deseas eliminar esta materia?',
+        'Esta acción no se puede deshacer'
+      );
+      if (confirm) {
+        const course = await deleteCourse({
+          degree_id: 1,
+          course_id: courseId,
+        }).unwrap();
+        console.log(course);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div
       className={clsx(
-        'p-4 border shadow-app-teacher-class rounded-xl flex items-center gap-4 cursor-pointer duration-300 hover:border-app-primary hover:border-[1.5px] bg-white',
+        'p-4 border shadow-app-teacher-class rounded-xl flex flex-wrap items-center gap-4 cursor-pointer duration-300 hover:border-app-primary hover:border-[1.5px] bg-white',
         {
           'border-app-primary border-[1.5px]': isActive === true,
         }
@@ -30,8 +56,10 @@ const CourseCard = ({
         {classCode}
       </div>
       <div>
-        <div className="flex items-center gap-4 pb-2">
-          <h3 className="text-app-primary-dark">{courseName}</h3>
+        <div className="flex items-center flex-wrap gap-4 pb-2">
+          <h3 className="text-app-primary-dark">
+            <Link href={`/teacher-class/${courseId}`}>{courseName}</Link>
+          </h3>
           <span className="block w-2 h-2 bg-app-text rounded-full"></span>
           <span className="text-xs text-app-text">
             {teacherClasses} Cátedras
@@ -39,11 +67,13 @@ const CourseCard = ({
         </div>
         <div className="flex items-center gap-3">
           <Image src={'/svg/comments.svg'} width={63} height={23} alt="" />
-          <span className="text-xs text-app-text">
-            {totalComments} comentarios
-          </span>
         </div>
       </div>
+      {!hasTeachers && (
+        <button className="flex-1 flex justify-end" onClick={handleDelete}>
+          <SvgDelete />
+        </button>
+      )}
     </div>
   );
 };

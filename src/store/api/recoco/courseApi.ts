@@ -1,3 +1,4 @@
+import { DegreeCourse } from '@/lib/interfaces/degree.interface';
 import { recocoApi } from '../recocoApi';
 import { Course } from '@/lib/interfaces/course.interface';
 
@@ -7,9 +8,21 @@ const courseModel = recocoApi.injectEndpoints({
       query: (id) => `/course/${id}`,
       providesTags: (result, error, id) => [{ type: 'Course', id }],
     }),
-    addCourse: builder.mutation<void, Partial<Course>>({
+    getCourseByDegree: builder.query<DegreeCourse[], string>({
+      query: (id) => `/course/degree_id/${id}`,
+      providesTags: (result, error, id) => ['Course', { type: 'Course', id }],
+    }),
+    addWithDegreeCourse: builder.mutation<
+      void,
+      {
+        name: string;
+        course_code: string;
+        faculty_id: number;
+        degree_id: number;
+      }
+    >({
       query: (course) => ({
-        url: '/course',
+        url: '/course/with-degree',
         method: 'POST',
         body: course,
       }),
@@ -26,7 +39,7 @@ const courseModel = recocoApi.injectEndpoints({
         { type: 'Course', id },
       ],
     }),
-    deleteCourse: builder.mutation<void, string>({
+    deleteCourse: builder.mutation<void, number>({
       query: (id) => ({
         url: `/course/${id}`,
         method: 'DELETE',
@@ -39,7 +52,8 @@ const courseModel = recocoApi.injectEndpoints({
 
 export const {
   useGetCourseByIdQuery,
-  useAddCourseMutation,
+  useAddWithDegreeCourseMutation,
   useUpdateCourseMutation,
   useDeleteCourseMutation,
+  useGetCourseByDegreeQuery,
 } = courseModel;
