@@ -13,7 +13,7 @@ const CourseTeacherRanking = ({ ranking, className, totalComments }: Props) => {
       className={`p-6 rounded-xl border border-[#E8E8EC] flex items-center gap-[22px] max-w-full ${className}`}
     >
       <span className="block text-app-primary text-[45px] font-bold">
-        {ranking}
+        {ranking > 0 ? (Math.round(ranking * 100) / 100).toFixed(1) : '-'}
       </span>
       <div className="flex flex-col gap-1">
         <div>

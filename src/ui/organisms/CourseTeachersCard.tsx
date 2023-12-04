@@ -10,19 +10,12 @@ interface Props {
   courseTag: string;
   courseName: string;
   courseCode: string;
-  teacherClasses: {
-    teacherName: string;
-    totalComments: number;
-    difficulty: number;
-    quality: number;
-  }[];
 }
 export const CourseTeachersCard = ({
   courseId,
   courseCode,
   courseName,
   courseTag,
-  teacherClasses,
 }: Props) => {
   const { data: teacherClass = [] } = useGetTeacherClassByCourseQuery(courseId);
 
@@ -45,8 +38,11 @@ export const CourseTeachersCard = ({
             teacherName={teacherClass.teacher.name}
             teacherLastName={teacherClass.teacher.last_name}
             totalComments={teacherClass._count.comments}
-            score={teacherClass.teacher.score?.toString() || `0.0`}
+            score={teacherClass.teacher.score?.toString()}
             teacherClassName={teacherClass.teacher_class_name}
+            courseId={teacherClass.course_id}
+            teacherId={teacherClass.teacher_id}
+            createdBy={teacherClass.created_by}
           />
         ))}
       </div>

@@ -3,6 +3,7 @@ import React from 'react';
 interface Props {
   className?: string;
   teacherName: string;
+  teacherLastName: string;
   difficulty: 'Fácil' | 'Medio' | 'Difícil';
   courseName: string;
 }
@@ -11,11 +12,14 @@ const CommentsTitle = ({
   courseName,
   teacherName,
   difficulty,
+  teacherLastName,
 }: Props) => {
   return (
     <div className={`bg-app-background p-6 rounded-xl ${className}`}>
       <div className="flex items-center gap-4 pb-1">
-        <h3 className="text-2xl font-semibold">{teacherName}</h3>
+        <h3 className="text-2xl font-semibold capitalize">
+          {teacherName} {teacherLastName}
+        </h3>
         <span className="block w-2 h-2 bg-app-text rounded-full"></span>
         <span className="text-xs text-app-primary min-w-[70px] max-w-full border border-app-primary text-center p-1 rounded-2xl">
           {difficulty}

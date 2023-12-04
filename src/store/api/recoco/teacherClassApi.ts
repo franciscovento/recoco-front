@@ -37,7 +37,7 @@ const teacherClassModel = recocoApi.injectEndpoints({
     }),
     deleteTeacherClass: builder.mutation<
       void,
-      { teacher_id: string; course_id: string }
+      { teacher_id: number; course_id: number }
     >({
       query: ({ teacher_id, course_id }) => ({
         url: `/teacher-class/${teacher_id}/${course_id}`,
@@ -60,5 +60,8 @@ const teacherClassModel = recocoApi.injectEndpoints({
   overrideExisting: false,
 });
 
-export const { useGetTeacherClassByCourseQuery, useAddTeacherClassMutation } =
-  teacherClassModel;
+export const {
+  useGetTeacherClassByCourseQuery,
+  useAddTeacherClassMutation,
+  useDeleteTeacherClassMutation,
+} = teacherClassModel;

@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
 import clsx from 'clsx';
-import { useDeleteCourseMutation } from '@/store/api/recoco/courseApi';
 import { useDeleteDegreeCourseMutation } from '@/store/api/recoco/degreeApi';
 import SvgDelete from '../atoms/svg/SvgDelete';
 import { confirmModal } from '@/lib/services/modal.service';
@@ -13,7 +12,8 @@ interface Props {
   teacherClasses: number;
   classCode: string;
   courseId: number;
-  hasTeachers: boolean;
+  canDelete: boolean;
+  degreeId: number;
 }
 
 const CourseCard = ({
@@ -22,7 +22,8 @@ const CourseCard = ({
   teacherClasses,
   courseName,
   classCode,
-  hasTeachers,
+  canDelete = false,
+  degreeId,
 }: Props) => {
   const [deleteCourse] = useDeleteDegreeCourseMutation();
 
@@ -34,7 +35,7 @@ const CourseCard = ({
       );
       if (confirm) {
         const course = await deleteCourse({
-          degree_id: 1,
+          degree_id: degreeId,
           course_id: courseId,
         }).unwrap();
         console.log(course);
@@ -69,7 +70,7 @@ const CourseCard = ({
           <Image src={'/svg/comments.svg'} width={63} height={23} alt="" />
         </div>
       </div>
-      {!hasTeachers && (
+      {canDelete && (
         <button className="flex-1 flex justify-end" onClick={handleDelete}>
           <SvgDelete />
         </button>
