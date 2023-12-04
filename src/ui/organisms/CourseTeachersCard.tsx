@@ -1,12 +1,15 @@
+'use client';
 import React from 'react';
 import CourseTag from '../atoms/CourseTag';
 import Card from '../atoms/Card';
 import TeacherClassCard from '../molecules/TeacherClassCard';
+import { useGetTeacherClassByCourseQuery } from '@/store/api/recoco/teacherClassApi';
 
 interface Props {
+  courseId: number;
   courseTag: string;
   courseName: string;
-  courseHours: string;
+  courseCode: string;
   teacherClasses: {
     teacherName: string;
     totalComments: number;
@@ -15,31 +18,35 @@ interface Props {
   }[];
 }
 export const CourseTeachersCard = ({
-  courseHours,
+  courseId,
+  courseCode,
   courseName,
   courseTag,
   teacherClasses,
 }: Props) => {
+  const { data: teacherClass = [] } = useGetTeacherClassByCourseQuery(courseId);
+
   return (
     <Card className="bg-[#FBFBFC]">
       <div className="flex gap-8">
         <CourseTag tag={courseTag} />
         <div>
-          <h3 className="">{courseName}</h3>
+          <h3 className="capitalize">{courseName}</h3>
           <span className="text-xs text-app-text">
-            Carga Horaria: {courseHours}
+            Código de materia: {courseCode}
           </span>
         </div>
       </div>
       <div className="py-6 flex flex-col gap-3">
-        {teacherClasses.map((teacherClass, index) => (
+        {teacherClass.map((teacherClass, index) => (
           <TeacherClassCard
-            key={index}
+            key={teacherClass.teacher_id}
             isActive={index === 0}
-            teacherName={teacherClass.teacherName}
-            totalComments={teacherClass.totalComments}
-            difficulty={teacherClass.difficulty}
-            quality={teacherClass.quality}
+            teacherName={teacherClass.teacher.name}
+            teacherLastName={teacherClass.teacher.last_name}
+            totalComments={teacherClass._count.comments}
+            score={teacherClass.teacher.score?.toString() || `0.0`}
+            teacherClassName={teacherClass.teacher_class_name}
           />
         ))}
       </div>

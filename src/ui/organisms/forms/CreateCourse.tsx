@@ -14,11 +14,21 @@ import Swal from 'sweetalert2';
 const inputClass =
   'px-3 py-2 border-2 border-app-border rounded-xl outline-none w-full text-sm  duration-300';
 
-const CreateCourse = () => {
+interface Props {
+  facultyId: number;
+  degreeId: number;
+}
+const CreateCourse = ({ degreeId, facultyId }: Props) => {
   const [createCourse] = useAddWithDegreeCourseMutation();
   const onCreate = () => {
     appModal.fire({
-      html: <CreateCourseForm createCourse={createCourse} />,
+      html: (
+        <CreateCourseForm
+          degreeId={degreeId}
+          facultyId={facultyId}
+          createCourse={createCourse}
+        />
+      ),
       width: 600,
     });
   };
@@ -42,8 +52,14 @@ type formData = {
 
 interface CreateCourseProps {
   createCourse: any;
+  degreeId: number;
+  facultyId: number;
 }
-const CreateCourseForm = ({ createCourse }: CreateCourseProps) => {
+const CreateCourseForm = ({
+  createCourse,
+  degreeId,
+  facultyId,
+}: CreateCourseProps) => {
   const {
     handleSubmit,
     register,
@@ -59,9 +75,9 @@ const CreateCourseForm = ({ createCourse }: CreateCourseProps) => {
     try {
       const course = await createCourse({
         course_code: data.course_code,
-        degree_id: 1,
+        degree_id: degreeId,
         name: data.course_name,
-        faculty_id: 1,
+        faculty_id: facultyId,
       }).unwrap();
       console.log(course);
       Swal.clickConfirm();

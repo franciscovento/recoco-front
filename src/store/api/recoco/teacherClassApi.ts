@@ -14,11 +14,20 @@ const teacherClassModel = recocoApi.injectEndpoints({
         { type: 'TeacherClass', teacher_id, course_id },
       ],
     }),
-    getTeacherClassByCourse: builder.query<TeacherClass[], string>({
+    getTeacherClassByCourse: builder.query<TeacherClass[], number>({
       query: (id) => `/teacher-class/by-course/${id}`,
       providesTags: (result, error, id) => [{ type: 'TeacherClass', id }],
     }),
-    addTeacherClass: builder.mutation<void, Partial<TeacherClass>>({
+    addTeacherClass: builder.mutation<
+      void,
+      {
+        teacher_name: string;
+        last_name: string;
+        course_id: number;
+        teacher_class_name: string;
+        faculty_id: number;
+      }
+    >({
       query: (teacherClass) => ({
         url: '/teacher-class',
         method: 'POST',
@@ -51,4 +60,5 @@ const teacherClassModel = recocoApi.injectEndpoints({
   overrideExisting: false,
 });
 
-export const { useGetTeacherClassByCourseQuery } = teacherClassModel;
+export const { useGetTeacherClassByCourseQuery, useAddTeacherClassMutation } =
+  teacherClassModel;

@@ -3,30 +3,30 @@ import Card from '@/ui/atoms/Card';
 import { CourseTeachersCard } from '@/ui/organisms/CourseTeachersCard';
 import React from 'react';
 import teacherClassesMock from '../../../../../public/data/teacher-class-mock.json';
-import CreateTeacherClassCard from '@/ui/molecules/CreateTeacherClassCard';
 import CommentsTitle from '@/ui/molecules/CommentsTitle';
 import CourseTeacherRanking from '@/ui/molecules/CourseTeacherRanking';
 import Comment from '@/ui/molecules/Comment';
 import comments from '../../../../../public/data/comments-mock.json';
 import CreateComment from '@/ui/organisms/CreateComment';
-import CreateElement from '@/ui/molecules/CreateElementCard';
-const page = () => {
+import { getCourseById } from '@/lib/services/course.service';
+import CreateTeacherClass from '@/ui/organisms/forms/CreateTeacherClass';
+
+const page = async ({ params }: { params: { id: string } }) => {
+  const { data: course } = await getCourseById(params.id);
+  const courseId = +params.id;
+  const facultyId = +course.faculty_id;
   return (
     <main className="flex flex-col lg:flex-row min-h-screen gap-8 p-4 sm:p-6">
       <div className="w-full lg:w-[430px] flex flex-col gap-8">
         <CourseTeachersCard
-          courseHours="45"
-          courseTag="EC"
-          courseName="Administración General"
+          courseId={+params.id}
+          courseCode={course.course_code}
+          courseTag={course.short_name}
+          courseName={course.name}
           teacherClasses={teacherClassesMock}
         />
-        {/* <CreateTeacherClassCard /> */}
-        <CreateElement
-          question="No encuentras a tu profesor?"
-          buttonText="Crear cátedra"
-          description="Cursaste en una catedra que no está en nuestras listas. Ayuda a la comunidad Recoco creando una cátedra."
-          onCreateElement={() => console.log('hola')}
-        />
+
+        <CreateTeacherClass courseId={courseId} facultyId={facultyId} />
       </div>
       <div className="flex-1">
         <Card className="bg-white h-full">

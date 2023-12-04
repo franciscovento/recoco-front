@@ -6,29 +6,23 @@ interface Props {
   isActive?: boolean;
   teacherName: string;
   totalComments: number;
-  difficulty: number;
-  quality: number;
+  teacherLastName?: string;
+  score?: string;
+  teacherClassName?: string;
 }
 
 const TeacherClassCard = ({
   isActive = false,
-  difficulty,
-  quality,
   teacherName,
   totalComments,
+  teacherLastName,
+  score,
+  teacherClassName,
 }: Props) => {
-  const difficultyTag =
-    difficulty < 3
-      ? 'Fácil'
-      : difficulty < 4
-      ? 'Medio'
-      : difficulty < 5
-      ? 'Difícil'
-      : 'Infumable';
   return (
     <div
       className={clsx(
-        'p-4 border shadow-app-teacher-class rounded-xl flex items-center gap-4 cursor-pointer duration-300 hover:border-app-primary hover:border-[1.5px]',
+        'p-4 border shadow-app-teacher-class rounded-xl flex flex-wrap items-center gap-4 cursor-pointer duration-300 hover:border-app-primary hover:border-[1.5px]',
         {
           'border-app-primary border-[1.5px]': isActive === true,
         }
@@ -36,10 +30,12 @@ const TeacherClassCard = ({
     >
       <div className="w-[5px] h-[50px] bg-app-primary rounded-3xl"></div>
       <div>
-        <div className="flex items-center gap-4 pb-2">
-          <h3 className="text-app-primary-dark">{teacherName}</h3>
+        <div className="flex flex-wrap items-center gap-4 pb-2">
+          <h3 className="text-app-primary-dark">
+            {teacherName} {teacherLastName}
+          </h3>
           <span className="block w-2 h-2 bg-app-text rounded-full"></span>
-          <span className="text-xs text-app-text">{difficultyTag}</span>
+          <span className="text-xs text-app-text">{teacherClassName}</span>
         </div>
         <div className="flex items-center gap-3">
           <Image src={'/svg/comments.svg'} width={63} height={23} alt="" />
@@ -47,6 +43,9 @@ const TeacherClassCard = ({
             {totalComments} comentarios
           </span>
         </div>
+      </div>
+      <div className="flex-1 flex items-end self-end font-bold text-3xl text-app-primary justify-end">
+        {score}
       </div>
     </div>
   );

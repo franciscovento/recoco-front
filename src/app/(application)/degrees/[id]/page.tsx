@@ -7,8 +7,8 @@ import React from 'react';
 
 const page = async ({ params }: { params: { id: string } }) => {
   const { data: degree } = await getDegreeById(params.id);
-  const degree_id = params.id;
-  const faculty_id = degree.faculty_id;
+  const degree_id = +params.id;
+  const faculty_id = +degree.faculty_id;
 
   return (
     <div className="flex flex-col sm:flex-row h-[calc(100vh-70px)] overflow-hidden">
@@ -56,7 +56,7 @@ const page = async ({ params }: { params: { id: string } }) => {
             <DegreeCourses degree_id={params.id} />
           </div>
 
-          <CreateCourse />
+          <CreateCourse degreeId={degree_id} facultyId={faculty_id} />
         </div>
       </div>
     </div>
