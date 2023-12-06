@@ -8,7 +8,11 @@ import { useForm } from 'react-hook-form';
 import useLoginModal from '@/lib/hooks/useLoginModal';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
-import { successNotification } from '@/lib/services/notification.service';
+import {
+  failedNotification,
+  successNotification,
+} from '@/lib/services/notification.service';
+import { useAddCommentMutation } from '@/store/api/recoco/commentApi';
 
 type formData = {
   comment: string;
@@ -16,8 +20,14 @@ type formData = {
   quality: number | null;
 };
 
-const CreateComment = () => {
+interface Props {
+  course_id: number;
+  teacher_id: number;
+}
+
+const CreateComment = ({ course_id, teacher_id }: Props) => {
   const { isAuthenticated } = useSelector((state: RootState) => state.ui);
+  const [addComment] = useAddCommentMutation();
   const { loginRegisterModal } = useLoginModal();
   const [commentActive, setCommentActive] = useState<boolean>(false);
   const [rows, setRows] = useState<'50' | '100'>('50');
@@ -55,17 +65,28 @@ const CreateComment = () => {
   };
 
   const onSubmit = async (data: formData) => {
-    console.log(isAuthenticated);
-
     try {
       if (!isAuthenticated) {
         return loginRegisterModal();
       }
+      const resp = await addComment({
+        comment: data.comment,
+        difficulty: Number(data.difficulty),
+        quality: Number(data.quality),
+        course_id,
+        teacher_id,
+      }).unwrap();
+      console.log(resp);
       successNotification('Comentario creado');
       reset();
       setCommentActive(false);
       setRows('50');
-    } catch (error) {}
+    } catch (error: any) {
+      failedNotification(
+        error?.data?.message || 'Error al crear el comentario'
+      );
+      console.log(error);
+    }
   };
 
   return (

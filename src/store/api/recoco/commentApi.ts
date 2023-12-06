@@ -10,7 +10,7 @@ const commentModel = recocoApi.injectEndpoints({
         method: 'POST',
         body,
       }),
-      invalidatesTags: ['Comment'],
+      invalidatesTags: ['Comment', 'TeacherClass'],
     }),
     updateComment: builder.mutation<void, Partial<Comment>>({
       query: (body) => ({
@@ -18,17 +18,17 @@ const commentModel = recocoApi.injectEndpoints({
         method: 'PATCH',
         body,
       }),
-      invalidatesTags: ['Comment'],
+      invalidatesTags: ['Comment', 'TeacherClass'],
     }),
     deleteComment: builder.mutation<
       void,
-      { teacher_id: number; course_id: string }
+      { teacher_id: number; course_id: number }
     >({
       query: ({ teacher_id, course_id }) => ({
         url: `/comment/${teacher_id}/${course_id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['Comment'],
+      invalidatesTags: ['Comment', 'TeacherClass'],
     }),
     likeComment: builder.mutation<
       LikeResponse,
@@ -62,4 +62,5 @@ export const {
   useAddCommentMutation,
   useLikeCommentMutation,
   useDislikeCommentMutation,
+  useDeleteCommentMutation,
 } = commentModel;

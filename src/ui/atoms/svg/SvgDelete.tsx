@@ -9,7 +9,7 @@ const SvgDelete = ({ ...svgProps }: Props) => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...svgProps}
-      className="hover:text-[#F21515] duration-300 text-app-text"
+      className="hover:text-[#f39696] duration-300 text-app-border"
     >
       <circle cx="15.5" cy="15.5" r="15.5" fill="currentColor" />
       <path

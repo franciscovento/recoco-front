@@ -6,12 +6,12 @@ const teacherClassModel = recocoApi.injectEndpoints({
   endpoints: (builder) => ({
     getTeacherClass: builder.query<
       TeacherClass,
-      { teacher_id: string; course_id: string }
+      { teacher_id: number; course_id: number }
     >({
       query: ({ teacher_id, course_id }) =>
         `/teacher-class/${teacher_id}/${course_id}`,
       providesTags: (result, error, { teacher_id, course_id }) => [
-        { type: 'TeacherClass', teacher_id, course_id },
+        { type: 'TeacherClass', id: teacher_id },
       ],
     }),
     getTeacherClassByCourse: builder.query<TeacherClass[], number>({
@@ -61,6 +61,7 @@ const teacherClassModel = recocoApi.injectEndpoints({
 
 export const {
   useGetTeacherClassByCourseQuery,
+  useGetTeacherClassQuery,
   useAddTeacherClassMutation,
   useDeleteTeacherClassMutation,
   useGetTeacherClassCommentsQuery,

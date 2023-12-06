@@ -5,12 +5,15 @@ import Rating from './Rating';
 import LikeButton from '../atoms/LikeButton';
 import { getUTCStringDate } from '@/lib/helpers/formatDate.helper';
 import {
+  useDeleteCommentMutation,
   useDislikeCommentMutation,
   useLikeCommentMutation,
 } from '@/store/api/recoco/commentApi';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
 import { failedNotification } from '@/lib/services/notification.service';
+import SvgDelete from '../atoms/svg/SvgDelete';
+import { confirmModal } from '@/lib/services/modal.service';
 
 interface Props {
   userImage: string;
@@ -21,7 +24,7 @@ interface Props {
   dislikes: number;
   teacher_id: number;
   course_id: number;
-  userId: string;
+  created_by: string;
   isLiked?: boolean;
   isDisliked?: boolean;
 }
@@ -31,14 +34,15 @@ const Comment = ({
   date,
   dislikes,
   likes,
-  userId,
+  created_by,
   teacher_id,
   course_id,
   userImage,
   isLiked = false,
   isDisliked = false,
 }: Props) => {
-  const { isAuthenticated } = useSelector((state: RootState) => state.ui);
+  const { isAuthenticated, user } = useSelector((state: RootState) => state.ui);
+  const [removeComment] = useDeleteCommentMutation();
   const [likeComment] = useLikeCommentMutation();
   const [dislikeComment] = useDislikeCommentMutation();
 
@@ -50,7 +54,7 @@ const Comment = ({
       const resp = await likeComment({
         teacher_id,
         course_id,
-        user_id: userId,
+        user_id: created_by,
       }).unwrap();
       console.log(resp);
     } catch (error) {
@@ -66,11 +70,29 @@ const Comment = ({
       const resp = await dislikeComment({
         teacher_id,
         course_id,
-        user_id: userId,
+        user_id: created_by,
       }).unwrap();
       console.log(resp);
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const deleteComment = async () => {
+    const confirm = await confirmModal(
+      '¿Estás seguro de eliminar este comentario?'
+    );
+    if (confirm) {
+      try {
+        const resp = await removeComment({
+          teacher_id,
+          course_id,
+        }).unwrap();
+        console.log(resp);
+      } catch (error) {
+        failedNotification('Error al eliminar el comentario');
+        console.log(error);
+      }
     }
   };
   const commentDate = new Date(date);
@@ -85,14 +107,21 @@ const Comment = ({
         </div>
       </div>
       <p className="py-2">{comment}</p>
-      <div className="flex gap-4 pt-3">
-        <LikeButton isActive={isLiked} onClick={like} count={likes} />
-        <LikeButton
-          isActive={isDisliked}
-          onClick={dislike}
-          dislike
-          count={dislikes}
-        />
+      <div className="flex gap-4 pt-3 items-center justify-between">
+        <div className="flex gap-4">
+          <LikeButton isActive={isLiked} onClick={like} count={likes} />
+          <LikeButton
+            isActive={isDisliked}
+            onClick={dislike}
+            dislike
+            count={dislikes}
+          />
+        </div>
+        {created_by === user?.id && (
+          <button className="cursor-pointer" onClick={deleteComment}>
+            <SvgDelete />
+          </button>
+        )}
       </div>
     </div>
   );

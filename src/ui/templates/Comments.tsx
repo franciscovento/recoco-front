@@ -26,7 +26,7 @@ const Comments = ({ teacher_id, course_id }: Props) => {
           likes={comment.likes}
           teacher_id={teacher_id}
           course_id={course_id}
-          userId={comment.created_by}
+          created_by={comment.created_by}
           isLiked={
             comment.commentLikes.length > 0 && comment.commentLikes[0].is_like
           }
