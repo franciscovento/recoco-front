@@ -1,5 +1,6 @@
 import { Comment } from '@/lib/interfaces/comment.interface';
 import { recocoApi } from '../recocoApi';
+import { LikeResponse } from '@/lib/interfaces/like.interface';
 
 const commentModel = recocoApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -21,7 +22,7 @@ const commentModel = recocoApi.injectEndpoints({
     }),
     deleteComment: builder.mutation<
       void,
-      { teacher_id: string; course_id: string }
+      { teacher_id: number; course_id: string }
     >({
       query: ({ teacher_id, course_id }) => ({
         url: `/comment/${teacher_id}/${course_id}`,
@@ -30,27 +31,35 @@ const commentModel = recocoApi.injectEndpoints({
       invalidatesTags: ['Comment'],
     }),
     likeComment: builder.mutation<
-      void,
-      { teacher_id: string; course_id: string; user_id: string }
+      LikeResponse,
+      { teacher_id: number; course_id: number; user_id: string }
     >({
       query: ({ teacher_id, course_id, user_id }) => ({
         url: `/comment/${teacher_id}/${course_id}/${user_id}/like`,
         method: 'POST',
       }),
-      invalidatesTags: ['Comment'],
+      invalidatesTags: (result, error, { teacher_id, course_id }) => [
+        { type: 'Comment', id: teacher_id },
+      ],
     }),
     dislikeComment: builder.mutation<
-      void,
-      { teacher_id: string; course_id: string; user_id: string }
+      { message: string; dislike: boolean },
+      { teacher_id: number; course_id: number; user_id: string }
     >({
       query: ({ teacher_id, course_id, user_id }) => ({
         url: `/comment/${teacher_id}/${course_id}/${user_id}/dislike`,
         method: 'POST',
       }),
-      invalidatesTags: ['Comment'],
+      invalidatesTags: (result, error, { teacher_id, course_id }) => [
+        { type: 'Comment', id: teacher_id },
+      ],
     }),
   }),
   overrideExisting: false,
 });
 
-export const { useAddCommentMutation } = commentModel;
+export const {
+  useAddCommentMutation,
+  useLikeCommentMutation,
+  useDislikeCommentMutation,
+} = commentModel;

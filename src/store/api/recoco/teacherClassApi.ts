@@ -47,13 +47,12 @@ const teacherClassModel = recocoApi.injectEndpoints({
     }),
     getTeacherClassComments: builder.query<
       Comment[],
-      { teacher_id: string; course_id: string }
+      { teacher_id: number; course_id: number }
     >({
       query: ({ teacher_id, course_id }) =>
         `/teacher-class/${teacher_id}/${course_id}/comments`,
       providesTags: (result, error, { teacher_id, course_id }) => [
-        'Comment',
-        { type: 'TeacherClass', teacher_id, course_id },
+        { type: 'Comment', id: teacher_id },
       ],
     }),
   }),
@@ -64,4 +63,7 @@ export const {
   useGetTeacherClassByCourseQuery,
   useAddTeacherClassMutation,
   useDeleteTeacherClassMutation,
+  useGetTeacherClassCommentsQuery,
 } = teacherClassModel;
+
+export default teacherClassModel;

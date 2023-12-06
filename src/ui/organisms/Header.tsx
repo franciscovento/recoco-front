@@ -5,12 +5,18 @@ import { useLogoutMutation } from '@/store/api/recoco/authApi';
 import { uiActions } from '@/store/slices/ui';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
+import useLogin from '@/lib/hooks/useLogin';
+import useLoginModal from '@/lib/hooks/useLoginModal';
 
 const Header = () => {
   const { isAuthenticated } = useSelector((state: RootState) => state.ui);
+  const { loginRegisterModal } = useLoginModal();
   const [logout] = useLogoutMutation();
   const dispatch = useDispatch();
   const handleLogout = async () => {
+    if (!isAuthenticated) {
+      return loginRegisterModal();
+    }
     try {
       await logout();
       dispatch(uiActions.setAuthState(false));

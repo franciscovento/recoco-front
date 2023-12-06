@@ -12,7 +12,7 @@ const authModel = recocoApi.injectEndpoints({
         method: 'POST',
         body,
       }),
-      // invalidatesTags: ['Auth'],
+      invalidatesTags: ['Comment'],
     }),
     signUp: builder.mutation<void, Partial<User>>({
       query: (user) => ({
@@ -27,6 +27,7 @@ const authModel = recocoApi.injectEndpoints({
         url: '/auth/logout',
         method: 'POST',
       }),
+      invalidatesTags: ['Comment'],
       // invalidatesTags: ['Auth'],
     }),
     me: builder.query<User, void>({

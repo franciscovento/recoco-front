@@ -6,6 +6,7 @@ import comments from '../../../../../../../public/data/comments-mock.json';
 import Comment from '@/ui/molecules/Comment';
 import CommentsTitle from '@/ui/molecules/CommentsTitle';
 import { getTeacherClassById } from '@/lib/services/teacher-class.service';
+import Comments from '@/ui/templates/Comments';
 
 interface Props {
   params: { id: string; teacher_id: string };
@@ -34,18 +35,8 @@ const page = async ({ params }: Props) => {
       <div className="pt-12">
         <CreateComment />
       </div>
-      <div className="flex flex-col gap-7 py-8">
-        {comments.map((comment, index) => (
-          <Comment
-            key={index}
-            userImage={comment.userImage}
-            comment={comment.comment}
-            commentRating={comment.commentRating}
-            date={comment.date}
-            dislikes={comment.dislikes}
-            likes={comment.likes}
-          />
-        ))}
+      <div className="py-8">
+        <Comments teacher_id={+params.teacher_id} course_id={+params.id} />
       </div>
     </Card>
   );

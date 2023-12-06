@@ -11,4 +11,15 @@ const successNotification = (message: string) => {
   });
 };
 
-export { successNotification };
+const failedNotification = (message: string) => {
+  return Swal.fire({
+    text: message,
+    showConfirmButton: false,
+    toast: true,
+    position: 'top-end',
+    timer: 4000,
+    icon: 'error',
+  });
+};
+
+export { successNotification, failedNotification };
