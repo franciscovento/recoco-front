@@ -14,7 +14,7 @@ interface Props {
   teacherName: string;
   totalComments: number;
   teacherLastName?: string;
-  score?: string;
+  score?: number | null;
   teacherClassName?: string;
   teacherId: number;
   courseId: number;
@@ -76,7 +76,7 @@ const TeacherClassCard = ({
       </div>
       <div className="flex-1 flex items-end self-end font-bold text-3xl text-app-primary justify-end">
         {score
-          ? score
+          ? (Math.round(score * 100) / 100).toFixed(1)
           : createdBy === user?.id && (
               <button className="relative" onClick={deleteTeacherClass}>
                 <SvgDelete />

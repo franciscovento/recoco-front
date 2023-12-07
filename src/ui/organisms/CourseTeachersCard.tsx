@@ -18,6 +18,7 @@ export const CourseTeachersCard = ({
   courseTag,
 }: Props) => {
   const { data: teacherClass = [] } = useGetTeacherClassByCourseQuery(courseId);
+  console.log(teacherClass);
 
   return (
     <Card className="bg-[#FBFBFC]">
@@ -38,7 +39,7 @@ export const CourseTeachersCard = ({
             teacherName={teacherClass.teacher.name}
             teacherLastName={teacherClass.teacher.last_name}
             totalComments={teacherClass._count.comments}
-            score={teacherClass.teacher.score?.toString()}
+            score={teacherClass?.quality}
             teacherClassName={teacherClass.teacher_class_name}
             courseId={teacherClass.course_id}
             teacherId={teacherClass.teacher_id}

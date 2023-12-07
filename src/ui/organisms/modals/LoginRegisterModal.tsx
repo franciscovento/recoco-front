@@ -56,8 +56,8 @@ const LoginModal = ({ setIsLogin, login }: ILoginModal) => {
       });
       return successNotification('Sesión iniciada correctamente');
     } catch (error: any) {
-      if (error?.data?.statusCode === 404) {
-        setError('root', { message: error.data.message });
+      if (error) {
+        setError('root', { message: error?.data?.message });
       }
       return error;
     }
