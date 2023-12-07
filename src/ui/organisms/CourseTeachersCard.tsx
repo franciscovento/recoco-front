@@ -18,7 +18,6 @@ export const CourseTeachersCard = ({
   courseTag,
 }: Props) => {
   const { data: teacherClass = [] } = useGetTeacherClassByCourseQuery(courseId);
-  console.log(teacherClass);
 
   return (
     <Card className="bg-[#FBFBFC]">

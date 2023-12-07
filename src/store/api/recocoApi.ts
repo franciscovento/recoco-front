@@ -1,16 +1,14 @@
 // Or from '@reduxjs/toolkit/query' if not using the auto-generated hooks
-import { User } from '@/lib/interfaces/user.interface';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import Cookies from 'js-cookie';
 // initialize an empty api service that we'll inject endpoints into later as needed
 export const recocoApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_API_URL,
     credentials: 'include',
     prepareHeaders: (headers) => {
-      const token = Cookies.get('authToken');
+      const token = localStorage.getItem('auth_token');
       if (token) {
-        headers.set('authorization', `Bearer ${token}`);
+        headers.set('Authorization', `Bearer ${token}`);
       }
       return headers;
     },

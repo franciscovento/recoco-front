@@ -1,3 +1,4 @@
+import { FetchBaseQueryMeta } from '@reduxjs/toolkit/query';
 import { recocoApi } from '../recocoApi';
 import { User } from '@/lib/interfaces/user.interface';
 
@@ -13,6 +14,14 @@ const authModel = recocoApi.injectEndpoints({
         body,
       }),
       invalidatesTags: ['Comment'],
+      transformResponse: (
+        baseQueryReturnValue: { token: string; user: User },
+        meta: FetchBaseQueryMeta,
+        arg: { email: string; password: string }
+      ) => {
+        localStorage.setItem('auth_token', baseQueryReturnValue.token);
+        return baseQueryReturnValue;
+      },
     }),
     signUp: builder.mutation<void, Partial<User>>({
       query: (user) => ({
@@ -28,7 +37,14 @@ const authModel = recocoApi.injectEndpoints({
         method: 'POST',
       }),
       invalidatesTags: ['Comment'],
-      // invalidatesTags: ['Auth'],
+      transformResponse: (
+        baseQueryReturnValue: { message: string },
+        meta: FetchBaseQueryMeta,
+        arg: void
+      ) => {
+        localStorage.removeItem('auth_token');
+        return baseQueryReturnValue;
+      },
     }),
     me: builder.query<User, void>({
       query: () => '/auth/me',
