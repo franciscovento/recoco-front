@@ -46,6 +46,20 @@ const authModel = recocoApi.injectEndpoints({
         return baseQueryReturnValue;
       },
     }),
+    forgotPassword: builder.mutation<void, { email: string }>({
+      query: (body) => ({
+        url: '/auth/request-reset-password',
+        method: 'POST',
+        body,
+      }),
+    }),
+    resetPassword: builder.mutation<void, { code: string; password: string }>({
+      query: (body) => ({
+        url: '/auth/reset-password',
+        method: 'POST',
+        body,
+      }),
+    }),
     me: builder.query<User, void>({
       query: () => '/auth/me',
       // providesTags: ['Auth'],
@@ -59,4 +73,6 @@ export const {
   useLogoutMutation,
   useMeQuery,
   useSignUpMutation,
+  useForgotPasswordMutation,
+  useResetPasswordMutation,
 } = authModel;

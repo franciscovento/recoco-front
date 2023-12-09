@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import { ErrorMessage } from '@hookform/error-message';
 import { successNotification } from '@/lib/services/notification.service';
+import Link from 'next/link';
 
 const inputClass =
   'px-3 py-2 border-2 border-app-border rounded-xl outline-none w-full text-sm  duration-300';
@@ -99,7 +100,7 @@ const LoginModal = ({ setIsLogin, login }: ILoginModal) => {
                 })}
               />
             </label>
-            <label>
+            <label className="text-right">
               <input
                 placeholder="Escribe tu contraseña"
                 className={
@@ -110,6 +111,12 @@ const LoginModal = ({ setIsLogin, login }: ILoginModal) => {
                   required: '*Este campo es obligatorio',
                 })}
               />
+              <Link
+                className="text-xs underline text-app-text hover:text-blue-400 duration-300 inline-block  relative pt-2 "
+                href={'/auth/forgot-password'}
+              >
+                Olvidé contraseña
+              </Link>
             </label>
           </div>
           <div className="text-center flex flex-col items-center">
