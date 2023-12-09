@@ -7,7 +7,7 @@ import TeacherClassHeader from '@/ui/templates/TeacherClassHeader';
 interface Props {
   params: { id: string; teacher_id: string };
 }
-const page = ({ params }: Props) => {
+const Page = ({ params }: Props) => {
   return (
     <Card className="bg-white h-full">
       <TeacherClassHeader
@@ -24,4 +24,4 @@ const page = ({ params }: Props) => {
   );
 };
 
-export default page;
+export default Page;

@@ -1,7 +1,7 @@
 import React from 'react';
 
-const page = () => {
+const Page = () => {
   return <main>all degrees</main>;
 };
 
-export default page;
+export default Page;

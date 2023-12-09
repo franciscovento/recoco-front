@@ -5,7 +5,7 @@ import CreateCourse from '@/ui/organisms/forms/CreateCourse';
 import DegreeCourses from '@/ui/templates/DegreeCourses';
 import React from 'react';
 
-const page = async ({ params }: { params: { id: string } }) => {
+const Page = async ({ params }: { params: { id: string } }) => {
   const { data: degree } = await getDegreeById(params.id);
   const degree_id = +params.id;
   const faculty_id = +degree.faculty_id;
@@ -63,4 +63,4 @@ const page = async ({ params }: { params: { id: string } }) => {
   );
 };
 
-export default page;
+export default Page;
