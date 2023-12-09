@@ -8,7 +8,7 @@ import React, { useState } from 'react';
 
 const inputClass =
   'px-3 py-2 border-2 border-app-border rounded-xl outline-none w-full text-sm  duration-300';
-const page = () => {
+const Page = () => {
   const [forgotPassword] = useForgotPasswordMutation();
   const [email, setEmail] = useState('');
   const [showError, setShowError] = useState(false);
@@ -97,4 +97,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

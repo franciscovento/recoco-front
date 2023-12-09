@@ -10,7 +10,7 @@ import React, { useState } from 'react';
 
 const inputClass =
   'px-3 py-2 border-2 border-app-border rounded-xl outline-none w-full text-sm  duration-300';
-const page = () => {
+const Page = () => {
   const searchParams = useSearchParams();
   const code = searchParams.get('code') || '';
   const [resetPassword] = useResetPasswordMutation();
@@ -102,4 +102,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
