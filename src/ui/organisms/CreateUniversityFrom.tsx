@@ -11,7 +11,8 @@ type formData = {
 };
 
 const CreateUniversity = () => {
-  const { data: countries } = useGetCountriesQuery();
+  const { data: countriesResponse } = useGetCountriesQuery();
+  const countries = countriesResponse?.data;
   const [addUniversity] = useAddUniversityMutation();
   const {
     register,

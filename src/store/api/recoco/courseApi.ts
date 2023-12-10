@@ -8,7 +8,10 @@ const courseModel = recocoApi.injectEndpoints({
       query: (id) => `/course/${id}`,
       providesTags: (result, error, id) => [{ type: 'Course', id }],
     }),
-    getCourseByDegree: builder.query<DegreeCourse[], string>({
+    getCourseByDegree: builder.query<
+      { message: string; data: DegreeCourse[] },
+      number
+    >({
       query: (id) => `/course/degree_id/${id}`,
       providesTags: (result, error, id) => ['Course', { type: 'Course', id }],
     }),
@@ -56,4 +59,5 @@ export const {
   useUpdateCourseMutation,
   useDeleteCourseMutation,
   useGetCourseByDegreeQuery,
+  endpoints: coursesEndpoints,
 } = courseModel;

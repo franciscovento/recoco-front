@@ -10,7 +10,8 @@ export default async function ApplicationLayout({
   children: React.ReactNode;
   params: any;
 }) {
-  const { data: course } = await getCourseById(params.id);
+  const { data: courseResponse } = await getCourseById(params.id);
+  const course = courseResponse?.data;
   const courseId = +params.id;
   const facultyId = +course.faculty_id;
 
@@ -20,7 +21,7 @@ export default async function ApplicationLayout({
         <CourseTeachersCard
           courseId={+params.id}
           courseCode={course.course_code}
-          courseTag={course.short_name}
+          courseTag={course.course_code}
           courseName={course.name}
         />
 

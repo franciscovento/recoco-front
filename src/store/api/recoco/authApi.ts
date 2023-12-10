@@ -5,7 +5,7 @@ import { User } from '@/lib/interfaces/user.interface';
 const authModel = recocoApi.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation<
-      { token: string; user: User },
+      { message: string; data: { token: string; user: User } },
       { email: string; password: string }
     >({
       query: (body) => ({
@@ -15,15 +15,21 @@ const authModel = recocoApi.injectEndpoints({
       }),
       invalidatesTags: ['Comment'],
       transformResponse: (
-        baseQueryReturnValue: { token: string; user: User },
+        baseQueryReturnValue: {
+          message: string;
+          data: { token: string; user: User };
+        },
         meta: FetchBaseQueryMeta,
         arg: { email: string; password: string }
       ) => {
-        localStorage.setItem('auth_token', baseQueryReturnValue.token);
+        localStorage.setItem('auth_token', baseQueryReturnValue.data.token);
         return baseQueryReturnValue;
       },
     }),
-    signUp: builder.mutation<void, Partial<User>>({
+    signUp: builder.mutation<
+      { message: string; data: { username: string; email: string } },
+      Partial<User>
+    >({
       query: (user) => ({
         url: '/auth/signup',
         method: 'POST',
@@ -46,21 +52,24 @@ const authModel = recocoApi.injectEndpoints({
         return baseQueryReturnValue;
       },
     }),
-    forgotPassword: builder.mutation<void, { email: string }>({
+    forgotPassword: builder.mutation<{ message: string }, { email: string }>({
       query: (body) => ({
         url: '/auth/request-reset-password',
         method: 'POST',
         body,
       }),
     }),
-    resetPassword: builder.mutation<void, { code: string; password: string }>({
+    resetPassword: builder.mutation<
+      { message: string },
+      { code: string; password: string }
+    >({
       query: (body) => ({
         url: '/auth/reset-password',
         method: 'POST',
         body,
       }),
     }),
-    me: builder.query<User, void>({
+    me: builder.query<{ message: string; data: User }, void>({
       query: () => '/auth/me',
       // providesTags: ['Auth'],
     }),

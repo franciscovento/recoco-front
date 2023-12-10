@@ -11,7 +11,7 @@ const useLogin = () => {
         email: data.email,
         password: data.password,
       }).unwrap();
-      dispatch(uiActions.setUserMe(resp.user));
+      dispatch(uiActions.setUserMe(resp.data.user));
       dispatch(uiActions.setAuthState(true));
       return resp;
     } catch (error) {
