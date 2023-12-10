@@ -299,7 +299,7 @@ const RegisterModal = ({ setIsLogin, signUp }: IRegisterModal) => {
               onClick={() => setIsLogin(true)}
               className="text-xs block mt-2 italic cursor-pointer underline underline-offset-2"
             >
-              ¿Ta tienes una cuenta? Ingresar
+              ¿Ya tienes una cuenta? Ingresar
             </button>
           </div>
         </form>
