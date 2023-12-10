@@ -33,7 +33,11 @@ const CreateElement = ({
         <h3 className="text-sm font-medium text-black pb-2">{question}</h3>
         <p className="text-sm text-app-text font-light pb-4">{description}</p>
         <button
-          onClick={isAuthenticated ? onCreateElement : loginRegisterModal}
+          onClick={
+            isAuthenticated
+              ? onCreateElement
+              : () => loginRegisterModal('register')
+          }
           className="w-[177px] relative p-2 rounded-3xl border border-app-primary text-xs duration-300 hover:bg-app-primary-accent"
         >
           {buttonText}

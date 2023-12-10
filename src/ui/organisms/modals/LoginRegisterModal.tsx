@@ -13,10 +13,14 @@ const inputClass =
 interface Props {
   login: any;
   signUp: any;
-  // register: () => void,
+  defaultIsLogin?: boolean;
 }
-const LoginRegisterModal = ({ login, signUp }: Props) => {
-  const [isLogin, setIsLogin] = React.useState<boolean>(true);
+const LoginRegisterModal = ({
+  login,
+  signUp,
+  defaultIsLogin = true,
+}: Props) => {
+  const [isLogin, setIsLogin] = React.useState<boolean>(defaultIsLogin);
 
   return (
     <>
@@ -92,7 +96,7 @@ const LoginModal = ({ setIsLogin, login }: ILoginModal) => {
           <div className="py-4 flex flex-col gap-3">
             <label>
               <input
-                placeholder="Escribe tu nombre de usuario o correo electrónico"
+                placeholder="Escribe tu correo electrónico"
                 className={inputClass + ` ${errors.email && 'border-red-300'}`}
                 type="email"
                 {...register('email', {
@@ -229,7 +233,8 @@ const RegisterModal = ({ setIsLogin, signUp }: IRegisterModal) => {
       <div className="text-left col-span-3 pt-12 sm:py-12 px-6 order-1 sm:order-2 sm:pr-12">
         <h3 className="text-2xl font-semibold pb-1">Un pasito más...</h3>
         <p className="text-sm leading-normal font-light">
-          Y puedes ayudar a un compañero a no cometer tus mismos errores
+          Crea una cuenta para que puedas ayudar a un compañero a no cometer tus
+          mismos errores
         </p>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
           <div className="py-4 flex flex-col gap-3">

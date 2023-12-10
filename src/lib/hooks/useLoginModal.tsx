@@ -8,9 +8,15 @@ const useLoginModal = () => {
   const { registerAndLogin } = useRegister();
   const { loginToApp } = useLogin();
   // const [signUp] = useSignUpMutation();
-  const loginRegisterModal = () => {
+  const loginRegisterModal = (defaultView: 'login' | 'register' = 'login') => {
     appModal.fire({
-      html: <LoginRegisterModal signUp={registerAndLogin} login={loginToApp} />,
+      html: (
+        <LoginRegisterModal
+          signUp={registerAndLogin}
+          login={loginToApp}
+          defaultIsLogin={defaultView === 'login' ? true : false}
+        />
+      ),
       width: 780,
     });
   };

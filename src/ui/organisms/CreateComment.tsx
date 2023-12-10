@@ -68,7 +68,7 @@ const CreateComment = ({ course_id, teacher_id }: Props) => {
   const onSubmit = async (data: formData) => {
     try {
       if (!isAuthenticated) {
-        return loginRegisterModal();
+        return loginRegisterModal('register');
       }
       const resp = await addComment({
         comment: data.comment,

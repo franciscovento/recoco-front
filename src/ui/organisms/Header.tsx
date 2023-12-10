@@ -17,7 +17,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const handleLogout = async () => {
     if (!isAuthenticated) {
-      return loginRegisterModal();
+      return loginRegisterModal('login');
     }
     try {
       await logout();
