@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
 import useLogin from '@/lib/hooks/useLogin';
 import useLoginModal from '@/lib/hooks/useLoginModal';
+import Link from 'next/link';
 
 const Header = () => {
   const { isAuthenticated } = useSelector((state: RootState) => state.ui);
@@ -29,9 +30,9 @@ const Header = () => {
     <header className="bg-white shadow-app-card flex items-center justify-between px-4 h-[67px]">
       <div className="flex items-center gap-2">
         <Image src={'/svg/recoco.svg'} width={31} height={28} alt="logo" />
-        <span>
+        <Link href={'/uba/carreras/1'}>
           <strong>RECOCO</strong> | Sistemas
-        </span>
+        </Link>
       </div>
       <Button onClick={handleLogout} className="w-28 sm:w-36">
         {isAuthenticated ? 'Cerrar sesión' : 'Iniciar sesión'}

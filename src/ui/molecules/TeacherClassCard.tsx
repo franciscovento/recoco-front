@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+import { routes } from '../../../routes';
 
 interface Props {
   isActive?: boolean;
@@ -31,7 +32,7 @@ const TeacherClassCard = ({
   courseId,
   createdBy,
 }: Props) => {
-  const { id, teacher_id } = useParams();
+  const { teacher_id, slug } = useParams();
   const { user } = useSelector((state: RootState) => state.ui);
   const [deleteCourse] = useDeleteTeacherClassMutation();
   const deleteTeacherClass = async () => {
@@ -50,9 +51,13 @@ const TeacherClassCard = ({
   };
   return (
     <Link
-      href={`/teacher-class/${id}/teacher/${teacherId}`}
+      href={routes.courses.teacher.teacher_id(
+        slug as string,
+        courseId.toString(),
+        teacherId.toString()
+      )}
       className={clsx(
-        'p-4 border shadow-app-teacher-class rounded-xl flex flex-wrap items-center gap-4 cursor-pointer duration-300 hover:border-app-primary hover:border-[1.5px]',
+        'p-4 border shadow-app-teacher-class rounded-xl flex  items-center gap-4 cursor-pointer duration-300 hover:border-app-primary hover:border-[1.5px]',
         {
           'border-app-primary border-[1.5px]': +teacher_id === teacherId,
         }
@@ -67,7 +72,7 @@ const TeacherClassCard = ({
           <span className="block w-2 h-2 bg-app-text rounded-full"></span>
           <span className="text-xs text-app-text">{teacherClassName}</span>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center flex-wrap gap-3">
           <Image src={'/svg/comments.svg'} width={63} height={23} alt="" />
           <span className="text-xs text-app-text">
             {totalComments} comentarios

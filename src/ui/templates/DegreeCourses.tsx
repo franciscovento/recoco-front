@@ -2,6 +2,7 @@
 import React from 'react';
 import CourseCard from '../molecules/CourseCard';
 import { DegreeCourse } from '@/lib/interfaces/degree.interface';
+import { useParams, useSearchParams } from 'next/navigation';
 
 interface Props {
   courses: DegreeCourse[];
@@ -9,6 +10,9 @@ interface Props {
   degreeId: number;
 }
 const DegreeCourses = ({ courses, userId, degreeId }: Props) => {
+  const params = useParams();
+  const universityId = params.slug as string;
+
   return (
     <div className="grid gap-4">
       {courses?.map(({ course, course_id }) => {
@@ -21,6 +25,7 @@ const DegreeCourses = ({ courses, userId, degreeId }: Props) => {
             teacherClasses={course._count.courseTeacher}
             classCode={course.course_code}
             degreeId={degreeId}
+            universityId={universityId}
           />
         );
       })}

@@ -5,6 +5,7 @@ import { useDeleteDegreeCourseMutation } from '@/store/api/recoco/degreeApi';
 import SvgDelete from '../atoms/svg/SvgDelete';
 import { confirmModal } from '@/lib/services/modal.service';
 import Link from 'next/link';
+import { routes } from '../../../routes';
 
 interface Props {
   isActive?: boolean;
@@ -14,6 +15,7 @@ interface Props {
   courseId: number;
   canDelete: boolean;
   degreeId: number;
+  universityId: string;
 }
 
 const CourseCard = ({
@@ -24,6 +26,7 @@ const CourseCard = ({
   classCode,
   canDelete = false,
   degreeId,
+  universityId,
 }: Props) => {
   const [deleteCourse] = useDeleteDegreeCourseMutation();
 
@@ -59,7 +62,11 @@ const CourseCard = ({
       <div>
         <div className="flex items-center flex-wrap gap-4 pb-2">
           <h3 className="text-app-primary-dark capitalize">
-            <Link href={`/teacher-class/${courseId}`}>{courseName}</Link>
+            <Link
+              href={routes.courses.course_id(universityId, courseId.toString())}
+            >
+              {courseName}
+            </Link>
           </h3>
           <span className="block w-2 h-2 bg-app-text rounded-full"></span>
           <span className="text-xs text-app-text">
