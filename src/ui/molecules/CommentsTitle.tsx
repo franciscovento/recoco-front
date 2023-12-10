@@ -1,3 +1,4 @@
+import { Difficulty } from '@/lib/interfaces/difficulty.enmu';
 import React from 'react';
 
 interface Props {
@@ -17,12 +18,12 @@ const CommentsTitle = ({
   // "Facil", "Medio", "Dificil", "Infumable"
   const difficultyTag =
     difficulty == 1
-      ? 'Fácil'
+      ? Difficulty.EASY
       : difficulty == 2
-      ? 'Medio'
+      ? Difficulty.MEDIUM
       : difficulty == 3
-      ? 'Difícil'
-      : 'Infumable';
+      ? Difficulty.HARD
+      : Difficulty.HEAVY;
   return (
     <div className={`bg-app-background p-6 rounded-xl ${className}`}>
       <div className="flex items-center gap-4 pb-1">

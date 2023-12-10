@@ -15,7 +15,7 @@ export default async function ApplicationLayout({
   const facultyId = +course.faculty_id;
 
   return (
-    <div className="flex flex-col lg:flex-row min-h-screen gap-8 p-4 sm:p-6">
+    <div className="flex flex-col lg:flex-row min-h-[calc(100vh_-_70px)] gap-8 p-4 sm:p-6">
       <div className="w-full lg:w-[430px] flex flex-col gap-8">
         <CourseTeachersCard
           courseId={+params.course_id}

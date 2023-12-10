@@ -1,10 +1,22 @@
 import { getUniversityBySlug } from '@/lib/services/university.service';
 import Card from '@/ui/atoms/Card';
+import SvgTeacherClassCard from '@/ui/atoms/svg/SvgTeacherClassCard';
 import React from 'react';
 
 const Page = async () => {
   return (
-    <Card className="bg-white h-full">No has seleccionado un profesor</Card>
+    <Card className="bg-white h-full flex flex-col items-center justify-center">
+      <SvgTeacherClassCard />
+      <div className="max-w-xl mx-auto text-center flex flex-col gap-4 items-center pt-4">
+        <h3 className="text-xl text-app-accent font-medium">
+          Selecciona un profesor
+        </h3>
+        <p className="italic">
+          Al parecer aún no has seleccionado ningún profesor. Selecciona a uno
+          de la lista de la barra izquierda y te aparecera el detalle aquí.
+        </p>
+      </div>
+    </Card>
   );
 };
 

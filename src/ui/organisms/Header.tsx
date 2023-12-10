@@ -5,7 +5,6 @@ import { useLogoutMutation } from '@/store/api/recoco/authApi';
 import { uiActions } from '@/store/slices/ui';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
-import useLogin from '@/lib/hooks/useLogin';
 import useLoginModal from '@/lib/hooks/useLoginModal';
 import Link from 'next/link';
 
@@ -30,7 +29,7 @@ const Header = () => {
     <header className="bg-white shadow-app-card flex items-center justify-between px-4 h-[67px]">
       <div className="flex items-center gap-2">
         <Image src={'/svg/recoco.svg'} width={31} height={28} alt="logo" />
-        <Link href={'/uba/carreras/1'}>
+        <Link href={`/`}>
           <strong>RECOCO</strong> | Sistemas
         </Link>
       </div>

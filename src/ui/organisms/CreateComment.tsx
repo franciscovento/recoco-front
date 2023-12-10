@@ -13,6 +13,7 @@ import {
   successNotification,
 } from '@/lib/services/notification.service';
 import { useAddCommentMutation } from '@/store/api/recoco/commentApi';
+import { Difficulty } from '@/lib/interfaces/difficulty.enmu';
 
 type formData = {
   comment: string;
@@ -32,10 +33,10 @@ const CreateComment = ({ course_id, teacher_id }: Props) => {
   const [commentActive, setCommentActive] = useState<boolean>(false);
   const [rows, setRows] = useState<'50' | '100'>('50');
   const difficultyOptions = [
-    { value: 1, name: 'Fácil' },
-    { value: 2, name: 'Medio' },
-    { value: 3, name: 'Difícil' },
-    { value: 4, name: 'Infumable' },
+    { value: 1, name: Difficulty.EASY },
+    { value: 2, name: Difficulty.MEDIUM },
+    { value: 3, name: Difficulty.HARD },
+    { value: 4, name: Difficulty.HEAVY },
   ];
   const {
     register,
