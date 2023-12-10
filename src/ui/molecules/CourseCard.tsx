@@ -78,9 +78,11 @@ const CourseCard = ({
         </div>
       </div>
       {canDelete && (
-        <button className="flex-1 flex justify-end" onClick={handleDelete}>
-          <SvgDelete />
-        </button>
+        <div className="flex-1 flex justify-end">
+          <button onClick={handleDelete}>
+            <SvgDelete />
+          </button>
+        </div>
       )}
     </div>
   );

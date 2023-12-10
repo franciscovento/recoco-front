@@ -7,9 +7,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
 import useLoginModal from '@/lib/hooks/useLoginModal';
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 
 const Header = () => {
   const { isAuthenticated } = useSelector((state: RootState) => state.ui);
+  const params = useParams();
   const { loginRegisterModal } = useLoginModal();
   const [logout] = useLogoutMutation();
   const dispatch = useDispatch();
@@ -29,7 +31,7 @@ const Header = () => {
     <header className="bg-white shadow-app-card flex items-center justify-between px-4 h-[67px]">
       <div className="flex items-center gap-2">
         <Image src={'/svg/recoco.svg'} width={31} height={28} alt="logo" />
-        <Link href={`/`}>
+        <Link href={`/${params.slug}/carreras/1`}>
           <strong>RECOCO</strong> | Sistemas
         </Link>
       </div>
