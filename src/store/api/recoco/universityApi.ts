@@ -3,15 +3,24 @@ import { recocoApi } from '../recocoApi';
 
 const universityModel = recocoApi.injectEndpoints({
   endpoints: (builder) => ({
-    getUniversities: builder.query<University[], void>({
+    getUniversities: builder.query<
+      { message: string; data: University[] },
+      void
+    >({
       query: () => '/university',
       providesTags: ['University'],
     }),
-    getUniversityById: builder.query<University, string>({
+    getUniversityById: builder.query<
+      { message: string; data: University },
+      string
+    >({
       query: (id) => `/university/${id}`,
       providesTags: (result, error, id) => [{ type: 'University', id }],
     }),
-    addUniversity: builder.mutation<void, Partial<University>>({
+    addUniversity: builder.mutation<
+      { message: string; data: University },
+      Partial<University>
+    >({
       query: (university) => ({
         url: '/university',
         method: 'POST',
@@ -19,7 +28,10 @@ const universityModel = recocoApi.injectEndpoints({
       }),
       invalidatesTags: ['University'],
     }),
-    updateUniversity: builder.mutation<void, Partial<University>>({
+    updateUniversity: builder.mutation<
+      { message: string; data: University },
+      Partial<University>
+    >({
       query: ({ id, ...rest }) => ({
         url: `/university/${id}`,
         method: 'PATCH',
@@ -30,7 +42,10 @@ const universityModel = recocoApi.injectEndpoints({
         { type: 'University', id },
       ],
     }),
-    deleteUniversity: builder.mutation<void, string>({
+    deleteUniversity: builder.mutation<
+      { message: string; data: University },
+      string
+    >({
       query: (id) => ({
         url: `/university/${id}`,
         method: 'DELETE',

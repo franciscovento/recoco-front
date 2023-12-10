@@ -61,7 +61,7 @@ const TeacherClassCard = ({
       <div className="w-[5px] h-[50px] bg-app-primary rounded-3xl"></div>
       <div>
         <div className="flex flex-wrap items-center gap-4 pb-2">
-          <h3 className="text-app-primary-dark">
+          <h3 className="text-app-primary-dark capitalize">
             {teacherName} {teacherLastName}
           </h3>
           <span className="block w-2 h-2 bg-app-text rounded-full"></span>

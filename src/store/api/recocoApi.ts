@@ -24,7 +24,10 @@ export const recocoApi = createApi({
     'Comment',
   ],
   endpoints: (builder) => ({
-    getCountries: builder.query<{ id: number; name: string }[], void>({
+    getCountries: builder.query<
+      { message: string; data: { id: number; name: string }[] },
+      void
+    >({
       query: () => '/country',
       providesTags: ['Country'],
     }),

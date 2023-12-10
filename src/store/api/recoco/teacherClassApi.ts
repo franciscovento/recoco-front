@@ -5,7 +5,7 @@ import { Comment } from '@/lib/interfaces/comment.interface';
 const teacherClassModel = recocoApi.injectEndpoints({
   endpoints: (builder) => ({
     getTeacherClass: builder.query<
-      TeacherClass,
+      { message: string; data: TeacherClass },
       { teacher_id: number; course_id: number }
     >({
       query: ({ teacher_id, course_id }) =>
@@ -14,12 +14,15 @@ const teacherClassModel = recocoApi.injectEndpoints({
         { type: 'TeacherClass', id: teacher_id },
       ],
     }),
-    getTeacherClassByCourse: builder.query<TeacherClass[], number>({
+    getTeacherClassByCourse: builder.query<
+      { message: string; data: TeacherClass[] },
+      number
+    >({
       query: (id) => `/teacher-class/by-course/${id}`,
       providesTags: (result, error, id) => [{ type: 'TeacherClass', id }],
     }),
     addTeacherClass: builder.mutation<
-      void,
+      { message: string; data: TeacherClass },
       {
         teacher_name: string;
         last_name: string;
@@ -36,7 +39,7 @@ const teacherClassModel = recocoApi.injectEndpoints({
       invalidatesTags: ['TeacherClass'],
     }),
     deleteTeacherClass: builder.mutation<
-      void,
+      { message: string; data: TeacherClass },
       { teacher_id: number; course_id: number }
     >({
       query: ({ teacher_id, course_id }) => ({
@@ -46,7 +49,7 @@ const teacherClassModel = recocoApi.injectEndpoints({
       invalidatesTags: ['TeacherClass'],
     }),
     getTeacherClassComments: builder.query<
-      Comment[],
+      { message: string; data: Comment[] },
       { teacher_id: number; course_id: number }
     >({
       query: ({ teacher_id, course_id }) =>

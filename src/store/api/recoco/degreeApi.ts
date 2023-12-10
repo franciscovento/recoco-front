@@ -3,15 +3,21 @@ import { recocoApi } from '../recocoApi';
 
 const degreeModel = recocoApi.injectEndpoints({
   endpoints: (builder) => ({
-    getDegreeById: builder.query<Degree, string>({
-      query: (id) => `/degree/${id}`,
-      providesTags: (result, error, id) => [{ type: 'Degree', id }],
-    }),
-    getDegreeByFaculty: builder.query<Degree[], string>({
+    // getDegreeById: builder.query<{ message: string; data: Degree }, string>({
+    //   query: (id) => `/degree/${id}`,
+    //   providesTags: (result, error, id) => [{ type: 'Degree', id }],
+    // }),
+    getDegreeByFaculty: builder.query<
+      { message: string; data: Degree[] },
+      string
+    >({
       query: (id) => `/degree/by-faculty/${id}`,
       providesTags: (result, error, id) => [{ type: 'Degree', id }],
     }),
-    addDegree: builder.mutation<void, Partial<Degree>>({
+    addDegree: builder.mutation<
+      { message: string; data: Degree },
+      Partial<Degree>
+    >({
       query: (degree) => ({
         url: '/degree',
         method: 'POST',
@@ -20,7 +26,7 @@ const degreeModel = recocoApi.injectEndpoints({
       invalidatesTags: ['Degree'],
     }),
     deleteDegreeCourse: builder.mutation<
-      void,
+      { message: string; data: Degree },
       { degree_id: number; course_id: number }
     >({
       query: (data) => ({
@@ -30,7 +36,10 @@ const degreeModel = recocoApi.injectEndpoints({
       invalidatesTags: ['Course'],
     }),
 
-    updateDegree: builder.mutation<void, Partial<Degree>>({
+    updateDegree: builder.mutation<
+      { message: string; data: Degree },
+      Partial<Degree>
+    >({
       query: ({ id, ...rest }) => ({
         url: `/degree/${id}`,
         method: 'PATCH',
@@ -41,7 +50,7 @@ const degreeModel = recocoApi.injectEndpoints({
         { type: 'Degree', id },
       ],
     }),
-    deleteDegree: builder.mutation<void, string>({
+    deleteDegree: builder.mutation<{ message: string; data: Degree }, string>({
       query: (id) => ({
         url: `/degree/${id}`,
         method: 'DELETE',
@@ -53,10 +62,11 @@ const degreeModel = recocoApi.injectEndpoints({
 });
 
 export const {
-  useGetDegreeByIdQuery,
+  // useGetDegreeByIdQuery,
   useGetDegreeByFacultyQuery,
   useDeleteDegreeMutation,
   useUpdateDegreeMutation,
   useAddDegreeMutation,
   useDeleteDegreeCourseMutation,
+  endpoints,
 } = degreeModel;

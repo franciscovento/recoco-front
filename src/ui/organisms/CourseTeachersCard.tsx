@@ -4,6 +4,7 @@ import CourseTag from '../atoms/CourseTag';
 import Card from '../atoms/Card';
 import TeacherClassCard from '../molecules/TeacherClassCard';
 import { useGetTeacherClassByCourseQuery } from '@/store/api/recoco/teacherClassApi';
+import { TeacherClass } from '@/lib/interfaces/teacher-class.interface';
 
 interface Props {
   courseId: number;
@@ -17,7 +18,9 @@ export const CourseTeachersCard = ({
   courseName,
   courseTag,
 }: Props) => {
-  const { data: teacherClass = [] } = useGetTeacherClassByCourseQuery(courseId);
+  const { data: teacherClassResponse } =
+    useGetTeacherClassByCourseQuery(courseId);
+  const teacherClass = teacherClassResponse?.data || [];
 
   return (
     <Card className="bg-[#FBFBFC]">
@@ -31,7 +34,7 @@ export const CourseTeachersCard = ({
         </div>
       </div>
       <div className="py-6 flex flex-col gap-3">
-        {teacherClass.map((teacherClass, index) => (
+        {teacherClass?.map((teacherClass, index) => (
           <TeacherClassCard
             key={teacherClass.teacher_id}
             isActive={index === 0}

@@ -4,7 +4,10 @@ import { LikeResponse } from '@/lib/interfaces/like.interface';
 
 const commentModel = recocoApi.injectEndpoints({
   endpoints: (builder) => ({
-    addComment: builder.mutation<void, Partial<Comment>>({
+    addComment: builder.mutation<
+      { message: string; data: Comment },
+      Partial<Comment>
+    >({
       query: (body) => ({
         url: `/comment/${body.teacher_id}/${body.course_id}`,
         method: 'POST',
@@ -12,7 +15,10 @@ const commentModel = recocoApi.injectEndpoints({
       }),
       invalidatesTags: ['Comment', 'TeacherClass'],
     }),
-    updateComment: builder.mutation<void, Partial<Comment>>({
+    updateComment: builder.mutation<
+      { message: string; data: Comment },
+      Partial<Comment>
+    >({
       query: (body) => ({
         url: `/comment/${body.teacher_id}/${body.course_id}`,
         method: 'PATCH',
@@ -21,7 +27,7 @@ const commentModel = recocoApi.injectEndpoints({
       invalidatesTags: ['Comment', 'TeacherClass'],
     }),
     deleteComment: builder.mutation<
-      void,
+      { message: string; data: Comment },
       { teacher_id: number; course_id: number }
     >({
       query: ({ teacher_id, course_id }) => ({
@@ -43,7 +49,7 @@ const commentModel = recocoApi.injectEndpoints({
       ],
     }),
     dislikeComment: builder.mutation<
-      { message: string; dislike: boolean },
+      { message: string; data: { disLike: boolean } },
       { teacher_id: number; course_id: number; user_id: string }
     >({
       query: ({ teacher_id, course_id, user_id }) => ({

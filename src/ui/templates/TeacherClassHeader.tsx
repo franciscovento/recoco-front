@@ -10,10 +10,11 @@ interface Props {
 }
 const TeacherClassHeader = ({ course_id, teacher_id }: Props) => {
   const {
-    data: teacherClass,
+    data: teacherClassResponse,
     isLoading,
     isError,
   } = useGetTeacherClassQuery({ teacher_id, course_id });
+  const teacherClass = teacherClassResponse?.data;
   if (isLoading) return <div>Cargando contenido...</div>;
   if (isError) return <div>Ocurrió un error</div>;
 

@@ -1,5 +1,9 @@
 'use client';
 import { appModal } from '@/lib/services/modal.service';
+import {
+  failedNotification,
+  successNotification,
+} from '@/lib/services/notification.service';
 import { useAddWithDegreeCourseMutation } from '@/store/api/recoco/courseApi';
 import Button from '@/ui/atoms/Button';
 import Card from '@/ui/atoms/Card';
@@ -20,15 +24,27 @@ interface Props {
 }
 const CreateCourse = ({ degreeId, facultyId }: Props) => {
   const [createCourse] = useAddWithDegreeCourseMutation();
+
+  const onCreateCourse = async (data: {
+    course_code: string;
+    name: string;
+  }) => {
+    createCourse({
+      course_code: data.course_code,
+      degree_id: degreeId,
+      name: data.name,
+      faculty_id: facultyId,
+    })
+      .unwrap()
+      .then(() => {
+        successNotification('Materia creada con éxito');
+      })
+      .catch(() => failedNotification('Parece que este curso ya existe'));
+  };
+
   const onCreate = () => {
     appModal.fire({
-      html: (
-        <CreateCourseForm
-          degreeId={degreeId}
-          facultyId={facultyId}
-          createCourse={createCourse}
-        />
-      ),
+      html: <CreateCourseForm createCourse={onCreateCourse} />,
       width: 600,
     });
   };
@@ -51,15 +67,9 @@ type formData = {
 };
 
 interface CreateCourseProps {
-  createCourse: any;
-  degreeId: number;
-  facultyId: number;
+  createCourse: (_data: { course_code: string; name: string }) => Promise<any>;
 }
-const CreateCourseForm = ({
-  createCourse,
-  degreeId,
-  facultyId,
-}: CreateCourseProps) => {
+const CreateCourseForm = ({ createCourse }: CreateCourseProps) => {
   const {
     handleSubmit,
     register,
@@ -70,18 +80,11 @@ const CreateCourseForm = ({
       course_code: '',
     },
   });
-
   const onSubmit = async (data: formData) => {
-    try {
-      const course = await createCourse({
-        course_code: data.course_code,
-        degree_id: degreeId,
-        name: data.course_name,
-        faculty_id: facultyId,
-      }).unwrap();
-      console.log(course);
-      Swal.clickConfirm();
-    } catch (error) {}
+    return await createCourse({
+      course_code: data.course_code,
+      name: data.course_name,
+    });
   };
 
   return (

@@ -47,7 +47,7 @@ const CourseCard = ({
   return (
     <div
       className={clsx(
-        'p-4 border shadow-app-teacher-class rounded-xl flex flex-wrap items-center gap-4 cursor-pointer duration-300 hover:border-app-primary hover:border-[1.5px] bg-white',
+        'p-4 border shadow-app-teacher-class rounded-xl flex  items-center gap-4 cursor-pointer duration-300 hover:border-app-primary hover:border-[1.5px] bg-white',
         {
           'border-app-primary border-[1.5px]': isActive === true,
         }
@@ -58,7 +58,7 @@ const CourseCard = ({
       </div>
       <div>
         <div className="flex items-center flex-wrap gap-4 pb-2">
-          <h3 className="text-app-primary-dark">
+          <h3 className="text-app-primary-dark capitalize">
             <Link href={`/teacher-class/${courseId}`}>{courseName}</Link>
           </h3>
           <span className="block w-2 h-2 bg-app-text rounded-full"></span>

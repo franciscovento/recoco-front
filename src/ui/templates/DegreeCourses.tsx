@@ -1,29 +1,26 @@
 'use client';
-import { useGetCourseByDegreeQuery } from '@/store/api/recoco/courseApi';
 import React from 'react';
 import CourseCard from '../molecules/CourseCard';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store/store';
+import { DegreeCourse } from '@/lib/interfaces/degree.interface';
 
 interface Props {
-  degree_id: string;
+  courses: DegreeCourse[];
+  userId: string;
+  degreeId: number;
 }
-const DegreeCourses = ({ degree_id }: Props) => {
-  const { user } = useSelector((state: RootState) => state.ui);
-  const { data } = useGetCourseByDegreeQuery(degree_id);
-
+const DegreeCourses = ({ courses, userId, degreeId }: Props) => {
   return (
     <div className="grid gap-4">
-      {data?.map(({ course, course_id }) => {
+      {courses?.map(({ course, course_id }) => {
         return (
           <CourseCard
             key={course_id}
-            canDelete={course.created_by === user?.id}
+            canDelete={course.created_by === userId}
             courseId={course_id}
             courseName={course.name}
             teacherClasses={course._count.courseTeacher}
             classCode={course.course_code}
-            degreeId={+degree_id}
+            degreeId={degreeId}
           />
         );
       })}

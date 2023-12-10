@@ -1,5 +1,6 @@
 'use client';
 import { appModal } from '@/lib/services/modal.service';
+import { failedNotification } from '@/lib/services/notification.service';
 import { useAddWithDegreeCourseMutation } from '@/store/api/recoco/courseApi';
 import { useAddTeacherClassMutation } from '@/store/api/recoco/teacherClassApi';
 import Button from '@/ui/atoms/Button';
@@ -19,6 +20,7 @@ interface Props {
 }
 const CreateTeacherClass = ({ courseId, facultyId }: Props) => {
   const [createTeacherClass] = useAddTeacherClassMutation();
+
   const onCreate = () => {
     appModal.fire({
       html: (
@@ -78,16 +80,16 @@ const CreateTeacherClassForm = ({
 
   const onSubmit = async (data: formData) => {
     try {
-      const course = await createTeacherClass({
+      await createTeacherClass({
         teacher_name: data.teacher_name,
         last_name: data.last_name,
         course_id: courseId,
         faculty_id: facultyId,
         teacher_class_name: data.teacher_class_name,
       }).unwrap();
-      console.log(course);
+
       Swal.clickConfirm();
-    } catch (error) {
+    } catch (error: any) {
       throw error;
     }
   };

@@ -15,7 +15,7 @@ export default function ApplicationLayout({
 
   useEffect(() => {
     if (me) {
-      dispatch(uiActions.setUserMe(me));
+      dispatch(uiActions.setUserMe(me.data));
       dispatch(uiActions.setAuthState(true));
     }
   }, [me]);

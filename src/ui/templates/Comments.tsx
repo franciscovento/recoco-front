@@ -8,10 +8,12 @@ interface Props {
   course_id: number;
 }
 const Comments = ({ teacher_id, course_id }: Props) => {
-  const { data: comments } = useGetTeacherClassCommentsQuery({
+  const { data: commentsResponse } = useGetTeacherClassCommentsQuery({
     teacher_id,
     course_id,
   });
+
+  const comments = commentsResponse?.data;
 
   return (
     <div className="flex flex-col gap-7 ">
