@@ -9,7 +9,7 @@ const commentModel = recocoApi.injectEndpoints({
       Partial<Comment>
     >({
       query: (body) => ({
-        url: `/comment/${body.teacher_id}/${body.course_id}`,
+        url: `/comment`,
         method: 'POST',
         body,
       }),
@@ -20,7 +20,7 @@ const commentModel = recocoApi.injectEndpoints({
       Partial<Comment>
     >({
       query: (body) => ({
-        url: `/comment/${body.teacher_id}/${body.course_id}`,
+        url: `/comment`,
         method: 'PATCH',
         body,
       }),
@@ -28,37 +28,30 @@ const commentModel = recocoApi.injectEndpoints({
     }),
     deleteComment: builder.mutation<
       { message: string; data: Comment },
-      { teacher_id: number; course_id: number }
+      { id: string }
     >({
-      query: ({ teacher_id, course_id }) => ({
-        url: `/comment/${teacher_id}/${course_id}`,
+      query: ({ id }) => ({
+        url: `/comment/${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Comment', 'TeacherClass'],
     }),
-    likeComment: builder.mutation<
-      LikeResponse,
-      { teacher_id: number; course_id: number; user_id: string }
-    >({
-      query: ({ teacher_id, course_id, user_id }) => ({
-        url: `/comment/${teacher_id}/${course_id}/${user_id}/like`,
+    likeComment: builder.mutation<LikeResponse, { comment_id: string }>({
+      query: ({ comment_id }) => ({
+        url: `/comment/${comment_id}/like`,
         method: 'POST',
       }),
-      invalidatesTags: (result, error, { teacher_id, course_id }) => [
-        { type: 'Comment', id: teacher_id },
-      ],
+      invalidatesTags: ['Comment'],
     }),
     dislikeComment: builder.mutation<
       { message: string; data: { disLike: boolean } },
-      { teacher_id: number; course_id: number; user_id: string }
+      { comment_id: string }
     >({
-      query: ({ teacher_id, course_id, user_id }) => ({
-        url: `/comment/${teacher_id}/${course_id}/${user_id}/dislike`,
+      query: ({ comment_id }) => ({
+        url: `/comment/${comment_id}/dislike`,
         method: 'POST',
       }),
-      invalidatesTags: (result, error, { teacher_id, course_id }) => [
-        { type: 'Comment', id: teacher_id },
-      ],
+      invalidatesTags: ['Comment'],
     }),
   }),
   overrideExisting: false,

@@ -1,7 +1,6 @@
 'use client';
 import { appModal } from '@/lib/services/modal.service';
-import { failedNotification } from '@/lib/services/notification.service';
-import { useAddWithDegreeCourseMutation } from '@/store/api/recoco/courseApi';
+import { useAddAnonymsTeacherClassMutation } from '@/store/api/recoco/anonymsApi';
 import { useAddTeacherClassMutation } from '@/store/api/recoco/teacherClassApi';
 import Button from '@/ui/atoms/Button';
 import CreateElementLayout from '@/ui/atoms/CreateElementLayout';
@@ -20,14 +19,17 @@ interface Props {
 }
 const CreateTeacherClass = ({ courseId, facultyId }: Props) => {
   const [createTeacherClass] = useAddTeacherClassMutation();
+  const [createAnonymsTeacherClass] = useAddAnonymsTeacherClassMutation();
 
-  const onCreate = () => {
+  const onCreateElement = (isAnonyms: boolean = false) => {
     appModal.fire({
       html: (
         <CreateTeacherClassForm
           facultyId={facultyId}
           courseId={courseId}
+          createAnonymsTeacherClass={createAnonymsTeacherClass}
           createTeacherClass={createTeacherClass}
+          isAnonyms={isAnonyms}
         />
       ),
       width: 600,
@@ -39,7 +41,7 @@ const CreateTeacherClass = ({ courseId, facultyId }: Props) => {
       question="No encuentras a tu profesor?"
       description="Cursaste en una materia que no está en nuestras listas. Ayuda a la comunidad Recoco creándolo."
       buttonText="Crear profesor"
-      onCreateElement={onCreate}
+      onCreateElement={onCreateElement}
     />
   );
 };
@@ -56,13 +58,17 @@ type formData = {
 
 interface CreateCourseProps {
   createTeacherClass: any;
+  createAnonymsTeacherClass: any;
   courseId: number;
   facultyId: number;
+  isAnonyms: boolean;
 }
 const CreateTeacherClassForm = ({
   createTeacherClass,
+  createAnonymsTeacherClass,
   facultyId,
   courseId,
+  isAnonyms,
 }: CreateCourseProps) => {
   const {
     handleSubmit,
@@ -80,15 +86,25 @@ const CreateTeacherClassForm = ({
 
   const onSubmit = async (data: formData) => {
     try {
-      await createTeacherClass({
-        teacher_name: data.teacher_name,
-        last_name: data.last_name,
-        course_id: courseId,
-        faculty_id: facultyId,
-        teacher_class_name: data.teacher_class_name,
-      }).unwrap();
-
-      Swal.clickConfirm();
+      if (isAnonyms) {
+        await createAnonymsTeacherClass({
+          teacher_name: data.teacher_name,
+          last_name: data.last_name,
+          course_id: courseId,
+          faculty_id: facultyId,
+          teacher_class_name: data.teacher_class_name,
+        }).unwrap();
+        return Swal.clickConfirm();
+      } else {
+        await createTeacherClass({
+          teacher_name: data.teacher_name,
+          last_name: data.last_name,
+          course_id: courseId,
+          faculty_id: facultyId,
+          teacher_class_name: data.teacher_class_name,
+        }).unwrap();
+        return Swal.clickConfirm();
+      }
     } catch (error: any) {
       throw error;
     }

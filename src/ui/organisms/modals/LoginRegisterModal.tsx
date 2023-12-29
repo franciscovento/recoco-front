@@ -59,6 +59,7 @@ const LoginModal = ({ setIsLogin, login }: ILoginModal) => {
         email: data.email,
         password: data.password,
       });
+      Swal.clickConfirm();
       return successNotification('Sesión iniciada correctamente');
     } catch (error: any) {
       if (error) {
@@ -85,6 +86,9 @@ const LoginModal = ({ setIsLogin, login }: ILoginModal) => {
           height={297}
           alt=""
         />
+        <Button className="relative z-50" onClick={() => Swal.clickDeny()}>
+          Crear como anónimo
+        </Button>
       </div>
       <div className="text-left col-span-3 pt-12 sm:py-12 px-6 order-1 sm:order-2 sm:pr-12">
         <h3 className="text-2xl font-semibold pb-1">¡Tu aporte es valioso!</h3>
@@ -206,6 +210,7 @@ const RegisterModal = ({ setIsLogin, signUp }: IRegisterModal) => {
         email: data.email,
         password: data.password,
       });
+      Swal.clickConfirm();
       return successNotification('Create una cuenta con éxito');
     } catch (error) {
       return error;
@@ -229,6 +234,10 @@ const RegisterModal = ({ setIsLogin, signUp }: IRegisterModal) => {
           height={297}
           alt=""
         />
+
+        <Button className="relative z-50" onClick={() => Swal.clickDeny()}>
+          Crear como anónimo
+        </Button>
       </div>
       <div className="text-left col-span-3 pt-12 sm:py-12 px-6 order-1 sm:order-2 sm:pr-12">
         <h3 className="text-2xl font-semibold pb-1">Un pasito más...</h3>

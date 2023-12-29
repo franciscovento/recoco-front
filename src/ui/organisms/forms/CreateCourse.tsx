@@ -4,6 +4,7 @@ import {
   failedNotification,
   successNotification,
 } from '@/lib/services/notification.service';
+import { useAddAnonymsWithDegreeCourseMutation } from '@/store/api/recoco/anonymsApi';
 import { useAddWithDegreeCourseMutation } from '@/store/api/recoco/courseApi';
 import Button from '@/ui/atoms/Button';
 import Card from '@/ui/atoms/Card';
@@ -24,6 +25,7 @@ interface Props {
 }
 const CreateCourse = ({ degreeId, facultyId }: Props) => {
   const [createCourse] = useAddWithDegreeCourseMutation();
+  const [createAnonymsCourse] = useAddAnonymsWithDegreeCourseMutation();
 
   const onCreateCourse = async (data: {
     course_code: string;
@@ -42,9 +44,32 @@ const CreateCourse = ({ degreeId, facultyId }: Props) => {
       .catch(() => failedNotification('Parece que este curso ya existe'));
   };
 
-  const onCreate = () => {
+  const onAnonymsCreateCourse = async (data: {
+    course_code: string;
+    name: string;
+  }) => {
+    createAnonymsCourse({
+      course_code: data.course_code,
+      degree_id: degreeId,
+      name: data.name,
+      faculty_id: facultyId,
+    })
+      .unwrap()
+      .then(() => {
+        successNotification('Materia creada con éxito');
+      })
+      .catch(() => failedNotification('Parece que este curso ya existe'));
+  };
+
+  const onCreate = (isAnonymous: boolean = false) => {
     appModal.fire({
-      html: <CreateCourseForm createCourse={onCreateCourse} />,
+      html: (
+        <CreateCourseForm
+          createCourse={onCreateCourse}
+          isAnonymous={isAnonymous}
+          createAnonymsCourse={onAnonymsCreateCourse}
+        />
+      ),
       width: 600,
     });
   };
@@ -68,8 +93,17 @@ type formData = {
 
 interface CreateCourseProps {
   createCourse: (_data: { course_code: string; name: string }) => Promise<any>;
+  createAnonymsCourse: (_data: {
+    course_code: string;
+    name: string;
+  }) => Promise<any>;
+  isAnonymous: boolean;
 }
-const CreateCourseForm = ({ createCourse }: CreateCourseProps) => {
+const CreateCourseForm = ({
+  createCourse,
+  isAnonymous,
+  createAnonymsCourse,
+}: CreateCourseProps) => {
   const {
     handleSubmit,
     register,
@@ -81,6 +115,12 @@ const CreateCourseForm = ({ createCourse }: CreateCourseProps) => {
     },
   });
   const onSubmit = async (data: formData) => {
+    if (isAnonymous) {
+      return await createAnonymsCourse({
+        course_code: data.course_code,
+        name: data.course_name,
+      });
+    }
     return await createCourse({
       course_code: data.course_code,
       name: data.course_name,
