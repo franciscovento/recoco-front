@@ -6,9 +6,10 @@ import Swal from 'sweetalert2';
 import { ErrorMessage } from '@hookform/error-message';
 import { successNotification } from '@/lib/services/notification.service';
 import Link from 'next/link';
+import SvgRecocoMusic from '@/ui/atoms/svg/branding/SvgRecocoMusic';
 
 const inputClass =
-  'px-3 py-2 border-2 border-app-border rounded-xl outline-none w-full text-sm  duration-300';
+  'px-3 py-2 italic border-2 border-app-border rounded-xl outline-none w-full text-xs  duration-300';
 
 interface Props {
   login: any;
@@ -75,23 +76,20 @@ const LoginModal = ({ setIsLogin, login }: ILoginModal) => {
         <Image
           src={'/images/recoco/login.png'}
           className="rounded-bl-xl opacity-0"
-          width={311}
-          height={297}
+          width={238}
+          height={238}
           alt=""
         />
         <Image
           src={'/images/recoco/login.png'}
           className="rounded-bl-xl absolute bottom-0 left-0 hidden sm:block"
-          width={311}
-          height={297}
+          width={238}
+          height={238}
           alt=""
         />
-        <Button className="relative z-50" onClick={() => Swal.clickDeny()}>
-          Crear como anónimo
-        </Button>
       </div>
       <div className="text-left col-span-3 pt-12 sm:py-12 px-6 order-1 sm:order-2 sm:pr-12">
-        <h3 className="text-2xl font-semibold pb-1">¡Tu aporte es valioso!</h3>
+        <h3 className="text-2xl font-semibold pb-1">¡Holaaa!</h3>
         <p className="text-sm leading-normal font-light">
           Aunque aquí todo es confidencial, necesitas iniciar sesión para
           validar que no eres un extraterreste...
@@ -189,22 +187,17 @@ const RegisterModal = ({ setIsLogin, signUp }: IRegisterModal) => {
   const {
     register,
     handleSubmit,
-    setError,
     formState: { isSubmitting, isValid, errors },
   } = useForm<RegisterForm>({
     defaultValues: {
       username: '',
       email: '',
       password: '',
-      // repeatPassword: '',
     },
   });
 
   const onSubmit = async (data: RegisterForm) => {
     try {
-      // if (data.password !== data.repeatPassword) {
-      //   return setError('root', { message: 'Las contraseñas no coinciden' });
-      // }
       await signUp({
         username: data.username,
         email: data.email,
@@ -218,32 +211,11 @@ const RegisterModal = ({ setIsLogin, signUp }: IRegisterModal) => {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-app-card grid sm:grid-cols-5  relative gap-8 pt-4 sm:pt-0">
-      <div className="col-span-2 self-end order-2 sm:order-1 bg-[url(/images/recoco/register.png)] sm:bg-none w-full bg-bottom bg-no-repeat h-full rounded-bl-xl bg-contain sm:bg-auto">
-        <Image
-          src={'/images/recoco/register.png'}
-          className="rounded-bl-xl opacity-0"
-          width={311}
-          height={297}
-          alt=""
-        />
-        <Image
-          src={'/images/recoco/register.png'}
-          className="rounded-bl-xl absolute bottom-0 left-0 hidden sm:block"
-          width={311}
-          height={297}
-          alt=""
-        />
-
-        <Button className="relative z-50" onClick={() => Swal.clickDeny()}>
-          Crear como anónimo
-        </Button>
-      </div>
-      <div className="text-left col-span-3 pt-12 sm:py-12 px-6 order-1 sm:order-2 sm:pr-12">
-        <h3 className="text-2xl font-semibold pb-1">Un pasito más...</h3>
+    <div className="rounded-xl shadow-app-card grid sm:grid-cols-5  relative sm:pt-0 bg-app-primary-dark">
+      <div className="text-left col-span-full sm:col-span-3 order-1 sm:order-2 bg-white rounded-xl px-8 py-12">
+        <h3 className="text-2xl font-semibold pb-1">Create una cuenta</h3>
         <p className="text-sm leading-normal font-light">
-          Crea una cuenta para que puedas ayudar a un compañero a no cometer tus
-          mismos errores
+          Y miles de estudiantes pueden beneficiarse de tu experiencia :)
         </p>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
           <div className="py-4 flex flex-col gap-3">
@@ -277,16 +249,6 @@ const RegisterModal = ({ setIsLogin, signUp }: IRegisterModal) => {
                 })}
               />
             </label>
-            {/* <label>
-              <input
-                placeholder="Repite tu contraseña"
-                className={inputClass}
-                type="password"
-                {...register('repeatPassword', {
-                  required: 'Este campo es obligatorio',
-                })}
-              />
-            </label> */}
           </div>
           <div className="text-center flex flex-col items-center">
             <ErrorMessage
@@ -299,23 +261,40 @@ const RegisterModal = ({ setIsLogin, signUp }: IRegisterModal) => {
             <Button
               disabled={!isValid || isSubmitting}
               type="submit"
-              className="w-[203px] max-w-full"
+              className="w-full"
             >
               Crear cuenta
             </Button>
             <button
               type="button"
               onClick={() => setIsLogin(true)}
-              className="text-xs block mt-2 italic cursor-pointer underline underline-offset-2"
+              className="text-xs block mt-2 italic cursor-pointer underline underline-offset-2 text-app-primary-dark"
             >
-              ¿Ya tienes una cuenta? Ingresar
+              ¿Ya tienes una cuenta? Iniciar sesión
             </button>
           </div>
         </form>
       </div>
+      <div className="col-span-full sm:col-span-2 order-1 sm:order-2 px-4 py-12 flex items-center justify-center flex-col text-center gap-4">
+        <SvgRecocoMusic />
+        <div>
+          <h2 className="text-xl font-medium text-white pb-2">
+            ¡Tu comentario es valioso!
+          </h2>
+          <p className="text-white text-sm font-extralight">
+            Si no quieres registrarte aún puedes seguir como anónimo
+          </p>
+        </div>
+        <Button
+          onClick={() => Swal.clickDeny()}
+          className="w-fit px-8 bg-white font-bold mt-4 text-xs"
+        >
+          Seguir como anónimo
+        </Button>
+      </div>
       <svg
         onClick={() => Swal.close()}
-        className="absolute top-3 left-3 cursor-pointer"
+        className="absolute top-3 right-3 cursor-pointer text-app-primary-dark sm:text-white"
         xmlns="http://www.w3.org/2000/svg"
         width="26"
         height="26"
@@ -324,11 +303,11 @@ const RegisterModal = ({ setIsLogin, signUp }: IRegisterModal) => {
       >
         <path
           d="M13 1.625C6.6625 1.625 1.625 6.6625 1.625 13C1.625 19.3375 6.6625 24.375 13 24.375C19.3375 24.375 24.375 19.3375 24.375 13C24.375 6.6625 19.3375 1.625 13 1.625ZM13 22.75C7.6375 22.75 3.25 18.3625 3.25 13C3.25 7.6375 7.6375 3.25 13 3.25C18.3625 3.25 22.75 7.6375 22.75 13C22.75 18.3625 18.3625 22.75 13 22.75Z"
-          fill="#00DC8C"
+          fill="currentColor"
         />
         <path
           d="M17.3875 18.6875L13 14.3L8.6125 18.6875L7.3125 17.3875L11.7 13L7.3125 8.6125L8.6125 7.3125L13 11.7L17.3875 7.3125L18.6875 8.6125L14.3 13L18.6875 17.3875L17.3875 18.6875Z"
-          fill="#00DC8C"
+          fill="currentColor"
         />
       </svg>
     </div>

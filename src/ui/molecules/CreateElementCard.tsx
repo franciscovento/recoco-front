@@ -32,9 +32,9 @@ const CreateElement = ({
         if (resp === 'login') {
           return onCreateElement();
         }
-        return null;
+      } else {
+        return onCreateElement();
       }
-      return onCreateElement();
     } catch (error) {
       console.log(error);
     }

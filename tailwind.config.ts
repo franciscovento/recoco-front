@@ -14,7 +14,7 @@ const config: Config = {
       colors: {
         'app-primary': '#00DC8C',
         'app-primary-accent': '#30E5BA',
-        'app-primary-dark': '#0B8F5F',
+        'app-primary-dark': '#2FB584',
         'app-secondary': '#114230',
         'app-accent': '#2FB584',
         'app-text': '#868686',
