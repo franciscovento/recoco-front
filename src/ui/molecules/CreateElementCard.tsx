@@ -10,7 +10,7 @@ interface Props {
   question: string;
   description: string;
   buttonText: string;
-  onCreateElement: () => void;
+  onCreateElement: (_isAnonyms?: boolean) => void;
 }
 
 const CreateElement = ({
@@ -21,6 +21,24 @@ const CreateElement = ({
 }: Props) => {
   const { isAuthenticated } = useSelector((state: RootState) => state.ui);
   const { loginRegisterModal } = useLoginModal();
+
+  const handleCreateElement = async () => {
+    try {
+      if (!isAuthenticated) {
+        const resp = await loginRegisterModal('register');
+        if (resp === 'anonyms') {
+          return onCreateElement(true);
+        }
+        if (resp === 'login') {
+          return onCreateElement();
+        }
+        return null;
+      }
+      return onCreateElement();
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <Card className="@container bg-[#FBFBFC] relative min-h-[220px] flex items-center @md:items-start @md:flex-col  justify-center gap-12">
       <SvgRecocoAsk
@@ -33,11 +51,7 @@ const CreateElement = ({
         <h3 className="text-sm font-medium text-black pb-2">{question}</h3>
         <p className="text-sm text-app-text font-light pb-4">{description}</p>
         <button
-          onClick={
-            isAuthenticated
-              ? onCreateElement
-              : () => loginRegisterModal('register')
-          }
+          onClick={handleCreateElement}
           className="w-[177px] relative p-2 rounded-3xl border border-app-primary text-xs duration-300 hover:bg-app-primary-accent"
         >
           {buttonText}

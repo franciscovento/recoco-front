@@ -16,27 +16,25 @@ import SvgDelete from '../atoms/svg/SvgDelete';
 import { confirmModal } from '@/lib/services/modal.service';
 
 interface Props {
+  id: string;
   userImage: string;
   commentRating: number;
   date: string;
   comment: string;
   likes: number;
   dislikes: number;
-  teacher_id: number;
-  course_id: number;
   created_by: string;
   isLiked?: boolean;
   isDisliked?: boolean;
 }
 const Comment = ({
+  id,
   comment,
   commentRating,
   date,
   dislikes,
   likes,
   created_by,
-  teacher_id,
-  course_id,
   userImage,
   isLiked = false,
   isDisliked = false,
@@ -52,9 +50,7 @@ const Comment = ({
     }
     try {
       const resp = await likeComment({
-        teacher_id,
-        course_id,
-        user_id: created_by,
+        comment_id: id,
       }).unwrap();
       console.log(resp);
     } catch (error) {
@@ -68,9 +64,7 @@ const Comment = ({
     }
     try {
       const resp = await dislikeComment({
-        teacher_id,
-        course_id,
-        user_id: created_by,
+        comment_id: id,
       }).unwrap();
       console.log(resp);
     } catch (error) {
@@ -84,11 +78,9 @@ const Comment = ({
     );
     if (confirm) {
       try {
-        const resp = await removeComment({
-          teacher_id,
-          course_id,
+        await removeComment({
+          id,
         }).unwrap();
-        console.log(resp);
       } catch (error) {
         failedNotification('Error al eliminar el comentario');
         console.log(error);

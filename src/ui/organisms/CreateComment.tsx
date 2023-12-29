@@ -14,6 +14,7 @@ import {
 } from '@/lib/services/notification.service';
 import { useAddCommentMutation } from '@/store/api/recoco/commentApi';
 import { Difficulty } from '@/lib/interfaces/difficulty.enmu';
+import { useAddAnonymsCommentMutation } from '@/store/api/recoco/anonymsApi';
 
 type formData = {
   comment: string;
@@ -29,6 +30,7 @@ interface Props {
 const CreateComment = ({ course_id, teacher_id }: Props) => {
   const { isAuthenticated } = useSelector((state: RootState) => state.ui);
   const [addComment] = useAddCommentMutation();
+  const [addAnonymsComment] = useAddAnonymsCommentMutation();
   const { loginRegisterModal } = useLoginModal();
   const [commentActive, setCommentActive] = useState<boolean>(false);
   const [rows, setRows] = useState<'50' | '100'>('50');
@@ -68,26 +70,52 @@ const CreateComment = ({ course_id, teacher_id }: Props) => {
   const onSubmit = async (data: formData) => {
     try {
       if (!isAuthenticated) {
-        return loginRegisterModal('register');
+        const resp = await loginRegisterModal('register');
+        if (resp === 'login') {
+          return handleAddComment(data);
+        }
+        if (resp === 'anonyms') {
+          return handleAddAnonymsComment(data);
+        }
+        return;
+      } else {
+        return handleAddComment(data);
       }
-      const resp = await addComment({
-        comment: data.comment,
-        difficulty: Number(data.difficulty),
-        quality: Number(data.quality),
-        course_id,
-        teacher_id,
-      }).unwrap();
-      console.log(resp);
-      successNotification('Comentario creado');
-      reset();
-      setCommentActive(false);
-      setRows('50');
     } catch (error: any) {
       failedNotification(
         error?.data?.message || 'Error al crear el comentario'
       );
       console.log(error);
     }
+  };
+
+  const handleAddComment = async (data: formData) => {
+    await addComment({
+      comment: data.comment,
+      difficulty: Number(data.difficulty),
+      quality: Number(data.quality),
+      course_id,
+      teacher_id,
+    }).unwrap();
+
+    successNotification('Comentario creado');
+    reset();
+    setCommentActive(false);
+    setRows('50');
+  };
+
+  const handleAddAnonymsComment = async (data: formData) => {
+    await addAnonymsComment({
+      comment: data.comment,
+      difficulty: Number(data.difficulty),
+      quality: Number(data.quality),
+      course_id,
+      teacher_id,
+    }).unwrap();
+    successNotification('Comentario creado');
+    reset();
+    setCommentActive(false);
+    setRows('50');
   };
 
   return (

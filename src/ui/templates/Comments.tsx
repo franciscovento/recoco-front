@@ -20,14 +20,13 @@ const Comments = ({ teacher_id, course_id }: Props) => {
       {comments?.map((comment, index) => (
         <Comment
           key={index}
+          id={comment.id}
           userImage={'/images/characters/default.png'}
           comment={comment.comment}
           commentRating={comment.quality}
           date={comment.created_at}
           dislikes={comment.disLikes}
           likes={comment.likes}
-          teacher_id={teacher_id}
-          course_id={course_id}
           created_by={comment.created_by}
           isLiked={
             comment.commentLikes.length > 0 && comment.commentLikes[0].is_like
