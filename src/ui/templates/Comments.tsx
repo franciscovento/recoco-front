@@ -21,7 +21,10 @@ const Comments = ({ teacher_id, course_id }: Props) => {
         <Comment
           key={index}
           id={comment.id}
-          userImage={'/images/characters/default.png'}
+          userImage={
+            comment.user.profile_img || '/images/characters/default.png'
+          }
+          userName={comment.user.username}
           comment={comment.comment}
           commentRating={comment.quality}
           date={comment.created_at}

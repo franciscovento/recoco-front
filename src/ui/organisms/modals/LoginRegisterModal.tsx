@@ -221,7 +221,7 @@ const RegisterModal = ({ setIsLogin, signUp }: IRegisterModal) => {
           <div className="py-4 flex flex-col gap-3">
             <label>
               <input
-                placeholder="Nombre de usuario"
+                placeholder="Nombre de usuario - este campo será público"
                 className={inputClass}
                 type="text"
                 {...register('username', {
@@ -231,7 +231,7 @@ const RegisterModal = ({ setIsLogin, signUp }: IRegisterModal) => {
             </label>
             <label>
               <input
-                placeholder="Correo electrónico"
+                placeholder="Correo electrónico - este campo es privado"
                 className={inputClass}
                 type="email"
                 {...register('email', {

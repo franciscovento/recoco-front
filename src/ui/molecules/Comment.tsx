@@ -18,6 +18,7 @@ import { confirmModal } from '@/lib/services/modal.service';
 interface Props {
   id: string;
   userImage: string;
+  userName: string;
   commentRating: number;
   date: string;
   comment: string;
@@ -29,6 +30,7 @@ interface Props {
 }
 const Comment = ({
   id,
+  userName,
   comment,
   commentRating,
   date,
@@ -92,7 +94,10 @@ const Comment = ({
   return (
     <div className="border-t-2 border-[#E8E8EC]">
       <div className="flex items-center justify-between pt-4">
-        <Image src={userImage} width={30} height={30} alt="" />
+        <div className="flex items-end text-sm gap-2">
+          <Image src={userImage} width={30} height={30} alt="" />
+          {/* <span>{userName}</span> */}
+        </div>
         <div className="text-right">
           <Rating value={commentRating} readonly />
           <span className="text-xs">{getUTCStringDate(commentDate)}</span>
