@@ -8,12 +8,14 @@ const useRegister = () => {
     email: string;
     password: string;
     username: string;
+    profile_img: string;
   }) => {
     try {
       await signUp({
         email: data.email,
         password: data.password,
         username: data.username,
+        profile_img: data.profile_img,
       }).unwrap();
 
       const resp = await loginToApp({

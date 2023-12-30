@@ -27,7 +27,10 @@ const authModel = recocoApi.injectEndpoints({
       },
     }),
     signUp: builder.mutation<
-      { message: string; data: { username: string; email: string } },
+      {
+        message: string;
+        data: { username: string; email: string; profile_img: string };
+      },
       Partial<User>
     >({
       query: (user) => ({

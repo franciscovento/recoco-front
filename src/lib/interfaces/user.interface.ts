@@ -6,6 +6,7 @@ interface User {
   rol: string;
   status: string;
   is_verified: boolean;
+  profile_img: string;
   university_id: string;
   degree_id: string;
   created_at: string;

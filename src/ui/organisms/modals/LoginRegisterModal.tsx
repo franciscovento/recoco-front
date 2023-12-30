@@ -181,20 +181,32 @@ type RegisterForm = {
   username: string;
   email: string;
   password: string;
+  profile_img: string;
   // repeatPassword: string;
 };
 const RegisterModal = ({ setIsLogin, signUp }: IRegisterModal) => {
+  const IMG_AVATARS = [
+    '/images/characters/default.png',
+    '/images/characters/loofie.png',
+    '/images/characters/pepa.png',
+    '/images/characters/homero.png',
+  ];
   const {
     register,
     handleSubmit,
+    setValue,
+    watch,
     formState: { isSubmitting, isValid, errors },
   } = useForm<RegisterForm>({
     defaultValues: {
       username: '',
       email: '',
       password: '',
+      profile_img: '/images/characters/default.png',
     },
   });
+
+  const profileImg = watch('profile_img');
 
   const onSubmit = async (data: RegisterForm) => {
     try {
@@ -202,6 +214,7 @@ const RegisterModal = ({ setIsLogin, signUp }: IRegisterModal) => {
         username: data.username,
         email: data.email,
         password: data.password,
+        profile_img: data.profile_img,
       });
       Swal.clickConfirm();
       return successNotification('Create una cuenta con éxito');
@@ -249,6 +262,24 @@ const RegisterModal = ({ setIsLogin, signUp }: IRegisterModal) => {
                 })}
               />
             </label>
+            <div className="text-xs italic text-app-text">
+              Elige un avatar: (Opcional)
+              <div className="flex gap-2 pt-4">
+                {IMG_AVATARS.map((img, index) => (
+                  <Image
+                    onClick={() => setValue('profile_img', img)}
+                    key={index}
+                    src={img}
+                    width={40}
+                    height={40}
+                    alt="character"
+                    className={`rounded-full duration-300 object-contain border-2 cursor-pointer ${
+                      profileImg === img && 'border-app-primary'
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
           </div>
           <div className="text-center flex flex-col items-center">
             <ErrorMessage

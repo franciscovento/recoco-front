@@ -46,7 +46,7 @@ const CreateComment = ({ course_id, teacher_id }: Props) => {
     reset,
     watch,
     setValue,
-    formState: { isValid },
+    formState: { isValid, isSubmitting },
   } = useForm<formData>({
     defaultValues: {
       comment: '',
@@ -72,10 +72,10 @@ const CreateComment = ({ course_id, teacher_id }: Props) => {
       if (!isAuthenticated) {
         const resp = await loginRegisterModal('register');
         if (resp === 'login') {
-          return handleAddComment(data);
+          return await handleAddComment(data);
         }
         if (resp === 'anonyms') {
-          return handleAddAnonymsComment(data);
+          return await handleAddAnonymsComment(data);
         }
         return;
       } else {
@@ -188,7 +188,7 @@ const CreateComment = ({ course_id, teacher_id }: Props) => {
                 Cancelar
               </Button>
               <Button
-                disabled={!isValid || !quality}
+                disabled={!isValid || !quality || isSubmitting}
                 type="submit"
                 className="w-[102px] max-w-full"
               >
