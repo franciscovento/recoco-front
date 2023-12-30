@@ -279,17 +279,18 @@ const RegisterModal = ({ setIsLogin, signUp }: IRegisterModal) => {
         <SvgRecocoMusic />
         <div>
           <h2 className="text-xl font-medium text-white pb-2">
-            ¡Tu comentario es valioso!
+            ¡Tu aporte es valioso!
           </h2>
           <p className="text-white text-sm font-extralight">
-            Si no quieres registrarte aún puedes seguir como anónimo
+            Si no quieres registrarte aún puedes seguir como anónimo, pero no
+            podrás editar ni eliminar tus aportes.
           </p>
         </div>
         <Button
           onClick={() => Swal.clickDeny()}
           className="w-fit px-8 bg-white font-bold mt-4 text-xs"
         >
-          Seguir como anónimo
+          Realizar acción como anónimo
         </Button>
       </div>
       <svg

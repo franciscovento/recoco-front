@@ -20,3 +20,7 @@
 .app-modal-container {
   overflow: visible !important;
 }
+
+.app-animation-fill-mode-forwards {
+  animation-fill-mode: forwards;
+}

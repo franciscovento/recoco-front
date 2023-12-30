@@ -27,6 +27,20 @@ const config: Config = {
           '2.17893px 2.17893px 6.5368px 0px rgba(174, 174, 192, 0.40)',
         'app-teacher-class': '0px 1px 4px 0px rgba(174, 174, 192, 0.30)',
       },
+      animation: {
+        'app-fade-in': 'fadeIn 0.5s ease-in-out',
+        'app-fade-out': 'fadeOut 0.5s ease-in-out',
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        fadeOut: {
+          '0%': { opacity: '1' },
+          '100%': { opacity: '0' },
+        },
+      },
     },
   },
   plugins: [require('@tailwindcss/container-queries')],

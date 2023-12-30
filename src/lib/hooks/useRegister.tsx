@@ -1,6 +1,5 @@
 import { useSignUpMutation } from '@/store/api/recoco/authApi';
 import useLogin from './useLogin';
-import { useDispatch } from 'react-redux';
 
 const useRegister = () => {
   const { loginToApp } = useLogin();

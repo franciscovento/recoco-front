@@ -3,13 +3,14 @@ import CreateComment from '@/ui/organisms/CreateComment';
 import React from 'react';
 import Comments from '@/ui/templates/Comments';
 import TeacherClassHeader from '@/ui/templates/TeacherClassHeader';
+import WhatsAppShare from '@/ui/atoms/WhatsAppShare';
 
 interface Props {
   params: { course_id: string; teacher_id: string; slug: string };
 }
 const Page = async ({ params }: Props) => {
   return (
-    <Card className="bg-white h-full">
+    <Card className="bg-white h-full relative">
       <TeacherClassHeader
         course_id={+params.course_id}
         teacher_id={+params.teacher_id}
@@ -26,6 +27,7 @@ const Page = async ({ params }: Props) => {
           course_id={+params.course_id}
         />
       </div>
+      <WhatsAppShare />
     </Card>
   );
 };

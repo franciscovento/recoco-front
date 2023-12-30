@@ -1,8 +1,10 @@
 'use client';
-import React from 'react';
+import React, { useEffect } from 'react';
 import CommentsTitle from '../molecules/CommentsTitle';
 import CourseTeacherRanking from '../molecules/CourseTeacherRanking';
 import { useGetTeacherClassQuery } from '@/store/api/recoco/teacherClassApi';
+import { useDispatch } from 'react-redux';
+import { teacherClassActions } from '@/store/slices/teacher-class';
 
 interface Props {
   teacher_id: number;
@@ -14,7 +16,14 @@ const TeacherClassHeader = ({ course_id, teacher_id }: Props) => {
     isLoading,
     isError,
   } = useGetTeacherClassQuery({ teacher_id, course_id });
+  const dispatch = useDispatch();
   const teacherClass = teacherClassResponse?.data;
+
+  useEffect(() => {
+    if (teacherClassResponse?.data) {
+      dispatch(teacherClassActions.setTeacherClass(teacherClassResponse?.data));
+    }
+  }, [teacherClassResponse?.data]);
 
   if (isLoading) return <div>Cargando contenido...</div>;
   if (isError) return <div>Ocurrió un error</div>;
