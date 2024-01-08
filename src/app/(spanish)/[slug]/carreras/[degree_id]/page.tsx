@@ -4,10 +4,16 @@ import FilterCourses from '@/ui/templates/FilterCourses';
 import React from 'react';
 
 const Page = ({ params }: { params: { degree_id: string; slug: string } }) => {
-  const { data: degreeResponse } = useGetDegreeByIdQuery(params.degree_id);
+  const { data: degreeResponse, error } = useGetDegreeByIdQuery(
+    params.degree_id
+  );
   const degree = degreeResponse?.data;
   const degree_id = +params.degree_id;
   const faculty_id = degree ? +degree?.faculty_id : 0;
+
+  if (error) {
+    return <div>Está carrera no existe</div>;
+  }
 
   return (
     <div className="flex flex-col sm:flex-row h-[calc(100vh-70px)] overflow-hidden">
