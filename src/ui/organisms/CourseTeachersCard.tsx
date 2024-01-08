@@ -5,6 +5,7 @@ import Card from '../atoms/Card';
 import TeacherClassCard from '../molecules/TeacherClassCard';
 import { useGetTeacherClassByCourseQuery } from '@/store/api/recoco/teacherClassApi';
 import { TeacherClass } from '@/lib/interfaces/teacher-class.interface';
+import TeacherClassSkeleton from '../atoms/skeletons/TeacherClassSkeleton';
 
 interface Props {
   courseId: number;
@@ -18,9 +19,9 @@ export const CourseTeachersCard = ({
   courseName,
   courseTag,
 }: Props) => {
-  const { data: teacherClassResponse } =
+  const { data: teacherClassResponse, isLoading } =
     useGetTeacherClassByCourseQuery(courseId);
-  const teacherClass = teacherClassResponse?.data || [];
+  const teacherClass = teacherClassResponse?.data;
 
   return (
     <Card className="bg-[#FBFBFC]">
@@ -34,20 +35,30 @@ export const CourseTeachersCard = ({
         </div>
       </div>
       <div className="py-6 flex flex-col gap-3">
-        {teacherClass?.map((teacherClass, index) => (
-          <TeacherClassCard
-            key={teacherClass.teacher_id}
-            isActive={index === 0}
-            teacherName={teacherClass.teacher.name}
-            teacherLastName={teacherClass.teacher.last_name}
-            totalComments={teacherClass._count.comments}
-            score={teacherClass?.quality}
-            teacherClassName={teacherClass.teacher_class_name}
-            courseId={teacherClass.course_id}
-            teacherId={teacherClass.teacher_id}
-            createdBy={teacherClass.created_by}
-          />
-        ))}
+        {teacherClass?.length === 0 && (
+          <div className="text-sm text-app-text">
+            No hay profesores agregados a este curso, sé el primero en agregar
+            uno...
+          </div>
+        )}
+        {!isLoading ? (
+          teacherClass?.map((teacherClass, index) => (
+            <TeacherClassCard
+              key={teacherClass.teacher_id}
+              isActive={index === 0}
+              teacherName={teacherClass.teacher.name}
+              teacherLastName={teacherClass.teacher.last_name}
+              totalComments={teacherClass._count.comments}
+              score={teacherClass?.quality}
+              teacherClassName={teacherClass.teacher_class_name}
+              courseId={teacherClass.course_id}
+              teacherId={teacherClass.teacher_id}
+              createdBy={teacherClass.created_by}
+            />
+          ))
+        ) : (
+          <TeacherClassSkeleton />
+        )}
       </div>
     </Card>
   );

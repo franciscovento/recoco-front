@@ -3,7 +3,7 @@ import Card from '@/ui/atoms/Card';
 import SvgTeacherClassCard from '@/ui/atoms/svg/SvgTeacherClassCard';
 import React from 'react';
 
-const Page = async () => {
+const Page = () => {
   return (
     <Card className="bg-white h-full flex flex-col items-center justify-center">
       <SvgTeacherClassCard />
