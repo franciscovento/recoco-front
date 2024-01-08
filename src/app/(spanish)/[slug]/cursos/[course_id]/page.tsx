@@ -1,4 +1,3 @@
-import { getUniversityBySlug } from '@/lib/services/university.service';
 import Card from '@/ui/atoms/Card';
 import SvgTeacherClassCard from '@/ui/atoms/svg/SvgTeacherClassCard';
 import React from 'react';

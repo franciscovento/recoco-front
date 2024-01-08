@@ -5,6 +5,7 @@ import CourseTeacherRanking from '../molecules/CourseTeacherRanking';
 import { useGetTeacherClassQuery } from '@/store/api/recoco/teacherClassApi';
 import { useDispatch } from 'react-redux';
 import { teacherClassActions } from '@/store/slices/teacher-class';
+import TeacherHeaderSkeleton from '../atoms/skeletons/TeacherHeaderSkeleton';
 
 interface Props {
   teacher_id: number;
@@ -25,10 +26,9 @@ const TeacherClassHeader = ({ course_id, teacher_id }: Props) => {
     }
   }, [teacherClassResponse?.data]);
 
-  if (isLoading) return <div>Cargando contenido...</div>;
   if (isError) return <div>Ocurrió un error</div>;
 
-  return (
+  return !isLoading ? (
     <div className="flex justify-between gap-4 flex-wrap">
       <CommentsTitle
         courseName={teacherClass?.course.name || ''}
@@ -42,6 +42,8 @@ const TeacherClassHeader = ({ course_id, teacher_id }: Props) => {
         totalComments={teacherClass?._count.comments || 0}
       />
     </div>
+  ) : (
+    <TeacherHeaderSkeleton />
   );
 };
 
