@@ -4,7 +4,7 @@ import { Course } from '@/lib/interfaces/course.interface';
 
 const courseModel = recocoApi.injectEndpoints({
   endpoints: (builder) => ({
-    getCourseById: builder.query<Course, string>({
+    getCourseById: builder.query<{ message: string; data: Course }, string>({
       query: (id) => `/course/${id}`,
       providesTags: (result, error, id) => [{ type: 'Course', id }],
     }),
