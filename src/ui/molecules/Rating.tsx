@@ -5,9 +5,16 @@ interface Props {
   showTooltip?: boolean;
   readonly?: boolean;
   value?: number;
+  fillColor?: string;
   onChangue?: (value: number) => void;
 }
-const Rating = ({ showTooltip, readonly, value = 0, onChangue }: Props) => {
+const Rating = ({
+  showTooltip,
+  readonly,
+  value = 0,
+  onChangue,
+  fillColor = '#00DC8C',
+}: Props) => {
   const [rating, setRating] = useState(Math.floor(value));
   const [hoverRating, setHoverRating] = useState(0);
   const status = {
@@ -46,7 +53,7 @@ const Rating = ({ showTooltip, readonly, value = 0, onChangue }: Props) => {
           width="21"
           height="21"
           viewBox="0 0 19 19"
-          fill={index < hoverRating || index < rating ? '#00DC8C' : '#e4e5e9'}
+          fill={index < hoverRating || index < rating ? fillColor : '#e4e5e9'}
           xmlns="http://www.w3.org/2000/svg"
           style={{ cursor: 'pointer' }}
         >
