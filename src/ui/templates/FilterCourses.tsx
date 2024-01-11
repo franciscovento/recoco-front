@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
 import { removeAccents } from '@/lib/helpers/removeAccents';
 import { orderCoursesByName } from '@/lib/helpers/orderCoursesByName';
+import CoursesSkeleton from '../atoms/skeletons/CoursesSkeleton';
 
 interface Props {
   degree_id: number;
@@ -19,7 +20,7 @@ const FilterCourses = ({ degree_id, faculty_id }: Props) => {
   const [search, setSearch] = React.useState('');
   const user = useSelector((state: RootState) => state.ui.user);
   const [courses, setCourses] = React.useState<DegreeCourse[]>([]);
-  const { data: coursesByDegreeResponse } =
+  const { data: coursesByDegreeResponse, isLoading } =
     useGetCourseByDegreeQuery(degree_id);
 
   const handleSearch = () => {
@@ -82,11 +83,15 @@ const FilterCourses = ({ degree_id, faculty_id }: Props) => {
         </Button>
       </label>
       <div className="w-full py-8">
-        <DegreeCourses
-          degreeId={degree_id}
-          courses={courses}
-          userId={user?.id || ''}
-        />
+        {!isLoading ? (
+          <DegreeCourses
+            degreeId={degree_id}
+            courses={courses}
+            userId={user?.id || ''}
+          />
+        ) : (
+          <CoursesSkeleton />
+        )}
       </div>
 
       <CreateCourse degreeId={degree_id} facultyId={faculty_id} />

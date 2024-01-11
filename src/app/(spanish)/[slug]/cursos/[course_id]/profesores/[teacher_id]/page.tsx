@@ -8,7 +8,7 @@ import WhatsAppShare from '@/ui/atoms/WhatsAppShare';
 interface Props {
   params: { course_id: string; teacher_id: string; slug: string };
 }
-const Page = async ({ params }: Props) => {
+const Page = ({ params }: Props) => {
   return (
     <Card className="bg-white h-full relative">
       <TeacherClassHeader
