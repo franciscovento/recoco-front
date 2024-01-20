@@ -30,7 +30,7 @@ const FilterCourses = ({ degree_id, faculty_id }: Props) => {
       );
     }
     const query = removeAccents(search.toLocaleLowerCase());
-    const filter = courses.filter((course) =>
+    const filter = coursesByDegreeResponse!.data.filter((course) =>
       removeAccents(course.course.name.toLowerCase()).includes(
         query.toLowerCase()
       )
