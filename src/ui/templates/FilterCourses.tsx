@@ -52,7 +52,7 @@ const FilterCourses = ({ degree_id, faculty_id }: Props) => {
   return (
     <div className="flex-1 flex flex-col gap-4 items-center max-w-[900px] mx-auto">
       <SvgRecocoThinking />
-      <h2 className="text-xl font-medium">Hola, qué materia buscas?</h2>
+      <h2 className="text-xl font-medium">Hola, ¿qué materia buscas?</h2>
       <label className="relative w-full">
         <input
           value={search}
@@ -65,7 +65,7 @@ const FilterCourses = ({ degree_id, faculty_id }: Props) => {
         <Button
           onClick={handleSearch}
           variant="outline"
-          className="w-[114px] h-[31px] flex items-center gap-2 justify-center absolute top-1/2 -translate-y-1/2 right-4"
+          className="!w-12 h-[31px] flex items-center gap-2 justify-center absolute top-1/2 -translate-y-1/2 right-4"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -79,7 +79,6 @@ const FilterCourses = ({ degree_id, faculty_id }: Props) => {
               fill="black"
             />
           </svg>
-          Buscar
         </Button>
       </label>
       <div className="w-full py-8">

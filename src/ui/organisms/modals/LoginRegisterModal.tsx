@@ -196,6 +196,7 @@ const RegisterModal = ({ setIsLogin, signUp }: IRegisterModal) => {
     handleSubmit,
     setValue,
     watch,
+    setError,
     formState: { isSubmitting, isValid, errors },
   } = useForm<RegisterForm>({
     defaultValues: {
@@ -218,7 +219,10 @@ const RegisterModal = ({ setIsLogin, signUp }: IRegisterModal) => {
       });
       Swal.clickConfirm();
       return successNotification('Create una cuenta con éxito');
-    } catch (error) {
+    } catch (error: any) {
+      if (error) {
+        setError('root', { message: error?.data?.message });
+      }
       return error;
     }
   };

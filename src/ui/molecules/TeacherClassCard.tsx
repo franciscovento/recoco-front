@@ -54,7 +54,7 @@ const TeacherClassCard = ({
       href={routes.courses.teacher.teacher_id(
         slug as string,
         courseId.toString(),
-        teacherId.toString()
+        teacherId.toString() + '#comments'
       )}
       className={clsx(
         'p-4 border shadow-app-teacher-class rounded-xl flex  items-center gap-4 cursor-pointer duration-300 hover:border-app-primary hover:border-[1.5px]',

@@ -10,25 +10,28 @@ interface Props {
 }
 const Page = ({ params }: Props) => {
   return (
-    <Card className="bg-white h-full relative">
-      <TeacherClassHeader
-        course_id={+params.course_id}
-        teacher_id={+params.teacher_id}
-      />
-      <div className="pt-12">
-        <CreateComment
+    <>
+      <span id="comments" className="h-2 pt-2 w-full block"></span>
+      <Card className="bg-white h-full relative">
+        <TeacherClassHeader
           course_id={+params.course_id}
           teacher_id={+params.teacher_id}
         />
-      </div>
-      <div className="py-8">
-        <Comments
-          teacher_id={+params.teacher_id}
-          course_id={+params.course_id}
-        />
-      </div>
-      <WhatsAppShare />
-    </Card>
+        <div className="pt-12">
+          <CreateComment
+            course_id={+params.course_id}
+            teacher_id={+params.teacher_id}
+          />
+        </div>
+        <div className="py-8">
+          <Comments
+            teacher_id={+params.teacher_id}
+            course_id={+params.course_id}
+          />
+        </div>
+        <WhatsAppShare />
+      </Card>
+    </>
   );
 };
 
