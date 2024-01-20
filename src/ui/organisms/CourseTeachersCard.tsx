@@ -4,7 +4,6 @@ import CourseTag from '../atoms/CourseTag';
 import Card from '../atoms/Card';
 import TeacherClassCard from '../molecules/TeacherClassCard';
 import { useGetTeacherClassByCourseQuery } from '@/store/api/recoco/teacherClassApi';
-import { TeacherClass } from '@/lib/interfaces/teacher-class.interface';
 import TeacherClassSkeleton from '../atoms/skeletons/TeacherClassSkeleton';
 
 interface Props {

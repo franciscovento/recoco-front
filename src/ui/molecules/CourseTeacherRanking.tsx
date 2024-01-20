@@ -21,7 +21,7 @@ const CourseTeacherRanking = ({ ranking, className, totalComments }: Props) => {
         </div>
 
         <span className="text-xs text-black font-medium">
-          {totalComments} calificaciones
+          {`( ${totalComments} calificaciones)`}
         </span>
       </div>
     </div>
