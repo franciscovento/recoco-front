@@ -7,9 +7,7 @@ import {
 import { useAddAnonymsWithDegreeCourseMutation } from '@/store/api/recoco/anonymsApi';
 import { useAddWithDegreeCourseMutation } from '@/store/api/recoco/courseApi';
 import Button from '@/ui/atoms/Button';
-import Card from '@/ui/atoms/Card';
 import CreateElementLayout from '@/ui/atoms/CreateElementLayout';
-import SvgRecocoBlink from '@/ui/atoms/svg/branding/SvgRecocoBlink';
 import CreateElement from '@/ui/molecules/CreateElementCard';
 import { ErrorMessage } from '@hookform/error-message';
 import React from 'react';
@@ -17,7 +15,7 @@ import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 
 const inputClass =
-  'px-3 py-2 border-2 border-app-border rounded-xl outline-none w-full text-sm  duration-300';
+  'px-3 py-2 border-2 border-app-border rounded-xl outline-none w-full text-[11px]  duration-300 sm:text-sm';
 
 interface Props {
   facultyId: number;

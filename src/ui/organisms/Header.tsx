@@ -8,6 +8,7 @@ import { RootState } from '@/store/store';
 import useLoginModal from '@/lib/hooks/useLoginModal';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+import { successNotification } from '@/lib/services/notification.service';
 
 const Header = () => {
   const { isAuthenticated } = useSelector((state: RootState) => state.ui);
@@ -23,6 +24,7 @@ const Header = () => {
       await logout();
       dispatch(uiActions.setAuthState(false));
       dispatch(uiActions.setUserMe(null));
+      successNotification('Has cerrado sesión correctamente');
     } catch (error) {
       console.log(error);
     }
@@ -32,7 +34,7 @@ const Header = () => {
       <div className="flex items-center gap-2">
         <Image src={'/svg/recoco.svg'} width={31} height={28} alt="logo" />
         <Link href={`/${params.slug}/carreras/1`}>
-          <strong>RECOCO</strong> | Sistemas
+          <strong>RECOCO</strong> | Sistemas UBA
         </Link>
       </div>
       <Button onClick={handleLogout} className="w-28 sm:w-36">
