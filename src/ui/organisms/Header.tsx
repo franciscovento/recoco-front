@@ -33,8 +33,8 @@ const Header = () => {
     <header className="bg-white shadow-app-card flex items-center justify-between px-4 h-[67px]">
       <div className="flex items-center gap-2">
         <Image src={'/svg/recoco.svg'} width={31} height={28} alt="logo" />
-        <Link href={`/${params.slug}/carreras/1`}>
-          <strong>RECOCO</strong> | Sistemas UBA
+        <Link href={`/`}>
+          <strong>RECOCO</strong>
         </Link>
       </div>
       <Button onClick={handleLogout} className="w-28 sm:w-36">

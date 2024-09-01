@@ -1,4 +1,5 @@
 import instance from '../helpers/axios.helpers';
+import { ApiResponse } from '../interfaces/apiResponse.interface';
 import { University } from '../interfaces/university.interface';
 
 const getUniversityBySlug = (slug: string) => {
@@ -8,6 +9,6 @@ const getUniversityBySlug = (slug: string) => {
 };
 
 const getUniversities = () => {
-  return instance.get<{ message: string; data: University[] }>('/university/');
+  return instance.get<ApiResponse<University[]>>('/university/');
 };
 export { getUniversityBySlug, getUniversities };

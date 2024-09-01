@@ -9,4 +9,5 @@ export type University = {
   created_by: string;
   created_at: string;
   updated_at: string;
+  country: { id: number; name: string };
 };

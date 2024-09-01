@@ -5,4 +5,10 @@ const getDegreeById = (id: string) => {
   return instance.get<{ message: string; data: Degree }>(`/degree/${id}`);
 };
 
-export { getDegreeById };
+const getDegreesByFacultyId = (facultyId: string) => {
+  return instance.get<{ message: string; data: Degree[] }>(
+    `/degree/by-faculty/${facultyId}`
+  );
+};
+
+export { getDegreeById, getDegreesByFacultyId };

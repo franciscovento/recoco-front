@@ -23,7 +23,9 @@ export default function ApplicationLayout({
   return (
     <>
       <Header />
-      <main className="bg-app-background">{children}</main>
+      <main className="min-h-[calc(100vh-67px)] bg-app-background">
+        {children}
+      </main>
     </>
   );
 }

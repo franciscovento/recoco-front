@@ -7,6 +7,7 @@ import { confirmModal } from '@/lib/services/modal.service';
 import Link from 'next/link';
 import { routes } from '../../../routes';
 import CourseCode from '../atoms/CourseCode';
+import { formatText } from '@/lib/helpers/formatText';
 
 interface Props {
   isActive?: boolean;
@@ -62,8 +63,8 @@ const CourseCard = ({
         <CourseCode classCode={classCode} />
         <div>
           <div className="flex flex-col lg:flex-row lg:items-center gap-2 lg:gap-4 pb-2 ">
-            <h3 className="flex-1 text-app-primary-dark capitalize duration-300">
-              {courseName}
+            <h3 className="flex-1 text-app-primary-dark duration-300">
+              {formatText(courseName)}
             </h3>
             <span className="hidden lg:block w-2 h-2 bg-app-text rounded-full"></span>
             <span className="text-xs text-app-text">
