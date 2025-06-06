@@ -10,10 +10,6 @@ const TeacherHeaderSkeleton = () => {
             <span className="h-6 inline-block font-semibold capitalize w-40 bg-gray-200 rounded-lg"></span>
             <span className="h-6 inline-block font-semibold capitalize w-20 bg-gray-200 rounded-lg"></span>
           </div>
-          <span className="block w-2 h-2 bg-app-text rounded-full"></span>
-          <span className="text-xs text-gray-400 min-w-[70px] max-w-full border border-gray-300 text-center p-1 rounded-2xl">
-            {'Sin calificar'}
-          </span>
         </div>
         <span className="w-20 h-3 pt-2 block bg-gray-200"></span>
       </div>

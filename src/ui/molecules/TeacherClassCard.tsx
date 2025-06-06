@@ -6,7 +6,6 @@ import { confirmModal } from '@/lib/services/modal.service';
 import { useDeleteTeacherClassMutation } from '@/store/api/recoco/teacherClassApi';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
-import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import { routes } from '../../../routes';
 
@@ -36,6 +35,7 @@ const TeacherClassCard = ({
   const { teacher_id, slug } = useParams();
   const { user } = useSelector((state: RootState) => state.ui);
   const [deleteCourse] = useDeleteTeacherClassMutation();
+  const fullName = `${teacherName} ${teacherLastName || ''}`.trim();
   const deleteTeacherClass = async () => {
     const confirm = await confirmModal('¿Estás seguro de eliminar esta clase?');
     if (confirm) {
@@ -62,11 +62,6 @@ const TeacherClassCard = ({
             )
           )
         }
-        // href={routes.courses.teacher.teacher_id(
-        //   slug as string,
-        //   courseId.toString(),
-        //   teacherId.toString() + '#comments'
-        // )}
         className={clsx(
           'p-4 border shadow-app-teacher-class rounded-xl flex  items-center gap-4 cursor-pointer duration-300 hover:border-app-primary hover:border-[1.5px] w-full',
           {
@@ -75,14 +70,17 @@ const TeacherClassCard = ({
         )}
       >
         <div className="w-[5px] h-[50px] bg-app-primary rounded-3xl"></div>
-        <div>
-          <div className="flex flex-wrap items-center gap-4 pb-2">
-            <span className="text-app-primary-dark capitalize">
-              {teacherName} {teacherLastName}
+        <div className="flex-1 pr-14 flex flex-col gap-2">
+          <div className="flex flex-wrap items-center gap-4">
+            <span className="text-app-primary-dark capitalize text-left">
+              {fullName}
             </span>
-            <span className="block w-2 h-2 bg-app-text rounded-full"></span>
-            <span className="text-xs text-app-text">{teacherClassName}</span>
           </div>
+
+          <div className="text-xs text-app-text text-left">
+            Cátedra: {teacherClassName || '---'}
+          </div>
+
           <div className="flex items-center flex-wrap gap-3">
             <Image src={'/svg/comments.svg'} width={63} height={23} alt="" />
             <span className="text-xs text-app-text">
@@ -91,7 +89,7 @@ const TeacherClassCard = ({
           </div>
         </div>
       </button>
-      <div className="flex flex-col font-bold text-3xl justify-between py-4 gap-2 items-end text-app-primary absolute right-4 top-0 h-full">
+      <div className="flex flex-col font-bold text-xl md:text-3xl justify-between py-4 gap-2 items-end text-app-primary absolute right-4 top-0 h-full">
         {score
           ? (Math.round(score * 100) / 100).toFixed(1)
           : createdBy === user?.id && (

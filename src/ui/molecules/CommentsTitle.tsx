@@ -32,10 +32,14 @@ const CommentsTitle = ({
         <h3 className="text-2xl font-semibold capitalize">
           {teacherName} {teacherLastName}
         </h3>
-        <span className="block w-2 h-2 bg-app-text rounded-full"></span>
-        <span
+      </div>
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="text-xs text-app-text">
+          Dificultad de la materia:{' '}
+        </span>
+        <div
           className={clsx(
-            'text-xs  min-w-[70px] max-w-full text-center p-1 rounded-2xl border',
+            'text-xs  min-w-[70px] max-w-full text-center p-1 rounded-2xl border w-fit',
             {
               'bg-app-primary text-white': difficultyTag == Difficulty.EASY,
               'bg-app-secondary text-white': difficultyTag == Difficulty.MEDIUM,
@@ -45,9 +49,8 @@ const CommentsTitle = ({
           )}
         >
           {difficulty > 0 ? difficultyTag : 'Sin calificar'}
-        </span>
+        </div>
       </div>
-      <span className="text-sm text-app-text">Cátedra de {courseName}</span>
     </div>
   );
 };
