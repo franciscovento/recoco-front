@@ -24,7 +24,7 @@ export default async function Home() {
             key={university.id}
             detail={university.country.name}
             name={university.name}
-            href={`/${university.id}/facultades`}
+            href={`/${university.slug}/facultades`}
           />
         ))}
       </div>

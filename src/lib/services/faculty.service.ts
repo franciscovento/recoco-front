@@ -2,10 +2,10 @@ import instance from '../helpers/axios.helpers';
 import { ApiResponse } from '../interfaces/apiResponse.interface';
 import { Faculty } from '../interfaces/faculty.interface';
 
-const getFacultiesByUniversityId = async (universityId: string) => {
+const getFacultiesByUniversitySlug = async (universitySlug: string) => {
   return instance.get<ApiResponse<Faculty[]>>(
-    `/faculty/by-university/${universityId}`
+    `/faculty/by-university-slug/${universitySlug}`
   );
 };
 
-export { getFacultiesByUniversityId };
+export { getFacultiesByUniversitySlug as getFacultiesByUniversityId };

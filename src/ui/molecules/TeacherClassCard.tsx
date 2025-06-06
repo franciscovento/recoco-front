@@ -7,7 +7,7 @@ import { useDeleteTeacherClassMutation } from '@/store/api/recoco/teacherClassAp
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { routes } from '../../../routes';
 
 interface Props {
@@ -32,6 +32,7 @@ const TeacherClassCard = ({
   courseId,
   createdBy,
 }: Props) => {
+  const router = useRouter();
   const { teacher_id, slug } = useParams();
   const { user } = useSelector((state: RootState) => state.ui);
   const [deleteCourse] = useDeleteTeacherClassMutation();
@@ -50,36 +51,47 @@ const TeacherClassCard = ({
     }
   };
   return (
-    <Link
-      href={routes.courses.teacher.teacher_id(
-        slug as string,
-        courseId.toString(),
-        teacherId.toString() + '#comments'
-      )}
-      className={clsx(
-        'p-4 border shadow-app-teacher-class rounded-xl flex  items-center gap-4 cursor-pointer duration-300 hover:border-app-primary hover:border-[1.5px]',
-        {
-          'border-app-primary border-[1.5px]': +teacher_id === teacherId,
+    <div className="relative">
+      <button
+        onClick={() =>
+          router.replace(
+            routes.courses.teacher.teacher_id(
+              slug as string,
+              courseId.toString(),
+              teacherId.toString() + '#comments'
+            )
+          )
         }
-      )}
-    >
-      <div className="w-[5px] h-[50px] bg-app-primary rounded-3xl"></div>
-      <div>
-        <div className="flex flex-wrap items-center gap-4 pb-2">
-          <h3 className="text-app-primary-dark capitalize">
-            {teacherName} {teacherLastName}
-          </h3>
-          <span className="block w-2 h-2 bg-app-text rounded-full"></span>
-          <span className="text-xs text-app-text">{teacherClassName}</span>
+        // href={routes.courses.teacher.teacher_id(
+        //   slug as string,
+        //   courseId.toString(),
+        //   teacherId.toString() + '#comments'
+        // )}
+        className={clsx(
+          'p-4 border shadow-app-teacher-class rounded-xl flex  items-center gap-4 cursor-pointer duration-300 hover:border-app-primary hover:border-[1.5px] w-full',
+          {
+            'border-app-primary border-[1.5px]': +teacher_id === teacherId,
+          }
+        )}
+      >
+        <div className="w-[5px] h-[50px] bg-app-primary rounded-3xl"></div>
+        <div>
+          <div className="flex flex-wrap items-center gap-4 pb-2">
+            <span className="text-app-primary-dark capitalize">
+              {teacherName} {teacherLastName}
+            </span>
+            <span className="block w-2 h-2 bg-app-text rounded-full"></span>
+            <span className="text-xs text-app-text">{teacherClassName}</span>
+          </div>
+          <div className="flex items-center flex-wrap gap-3">
+            <Image src={'/svg/comments.svg'} width={63} height={23} alt="" />
+            <span className="text-xs text-app-text">
+              {totalComments} comentarios
+            </span>
+          </div>
         </div>
-        <div className="flex items-center flex-wrap gap-3">
-          <Image src={'/svg/comments.svg'} width={63} height={23} alt="" />
-          <span className="text-xs text-app-text">
-            {totalComments} comentarios
-          </span>
-        </div>
-      </div>
-      <div className="flex-1 flex items-end self-end font-bold text-3xl text-app-primary justify-end">
+      </button>
+      <div className="flex flex-col font-bold text-3xl justify-between py-4 gap-2 items-end text-app-primary absolute right-4 top-0 h-full">
         {score
           ? (Math.round(score * 100) / 100).toFixed(1)
           : createdBy === user?.id && (
@@ -88,7 +100,7 @@ const TeacherClassCard = ({
               </button>
             )}
       </div>
-    </Link>
+    </div>
   );
 };
 
