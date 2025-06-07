@@ -99,7 +99,7 @@ const Comment = ({
       <div className="flex items-center justify-between pt-4">
         <div className="flex items-center text-sm gap-2">
           <Image src={userImage} width={30} height={30} alt="" />
-          <span>{userName}</span>
+          {/* <span>{userName}</span> */}
         </div>
         <div className="text-right">
           <Rating value={commentRating} readonly />
