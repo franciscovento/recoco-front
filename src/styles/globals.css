@@ -30,6 +30,10 @@
   animation-fill-mode: forwards;
 }
 
+.app-error-notification {
+  color: #fdc000 !important;
+}
+
 ::-webkit-scrollbar {
   width: 8px;
 }

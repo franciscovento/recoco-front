@@ -43,18 +43,19 @@ const Comment = ({
 }: Props) => {
   const { isAuthenticated, user } = useSelector((state: RootState) => state.ui);
   const [removeComment] = useDeleteCommentMutation();
-  const [likeComment] = useLikeCommentMutation();
-  const [dislikeComment] = useDislikeCommentMutation();
+  const [likeComment, statusLike] = useLikeCommentMutation();
+  const [dislikeComment, statusDislike] = useDislikeCommentMutation();
 
   const like = async () => {
     if (!isAuthenticated) {
-      return failedNotification('Necesitas iniciar sesión');
+      return failedNotification(
+        'Necesitas iniciar sesión para realizar esta acción'
+      );
     }
     try {
       const resp = await likeComment({
         comment_id: id,
       }).unwrap();
-      console.log(resp);
     } catch (error) {
       console.log(error);
     }
@@ -62,7 +63,9 @@ const Comment = ({
 
   const dislike = async () => {
     if (!isAuthenticated) {
-      return failedNotification('Necesitas iniciar sesión');
+      return failedNotification(
+        'Necesitas iniciar sesión para realizar esta acción'
+      );
     }
     try {
       const resp = await dislikeComment({
@@ -94,9 +97,9 @@ const Comment = ({
   return (
     <div className="border-t-2 border-[#E8E8EC]">
       <div className="flex items-center justify-between pt-4">
-        <div className="flex items-end text-sm gap-2">
+        <div className="flex items-center text-sm gap-2">
           <Image src={userImage} width={30} height={30} alt="" />
-          {/* <span>{userName}</span> */}
+          <span>{userName}</span>
         </div>
         <div className="text-right">
           <Rating value={commentRating} readonly />
@@ -106,8 +109,14 @@ const Comment = ({
       <p className="py-2">{comment}</p>
       <div className="flex gap-4 pt-3 items-center justify-between">
         <div className="flex gap-4">
-          <LikeButton isActive={isLiked} onClick={like} count={likes} />
           <LikeButton
+            isActive={isLiked}
+            onClick={like}
+            count={likes}
+            isLoading={statusLike.isLoading}
+          />
+          <LikeButton
+            isLoading={statusDislike.isLoading}
             isActive={isDisliked}
             onClick={dislike}
             dislike

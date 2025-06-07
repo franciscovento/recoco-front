@@ -4,16 +4,19 @@ interface Props extends React.ComponentPropsWithoutRef<'button'> {
   dislike?: boolean;
   count?: number;
   isActive?: boolean;
+  isLoading?: boolean;
 }
 const LikeButton = ({
   dislike = false,
   count = 0,
   isActive = false,
+  isLoading = false,
   ...buttonProps
 }: Props) => {
   return (
     <button
-      className={`flex items-center gap-2  max-w-full border-2 px-4 py-2  rounded-3xl ${
+      disabled={isLoading}
+      className={`flex items-center gap-2  max-w-full border-2 px-4 py-2  rounded-3xl disabled:opacity-50 ${
         isActive ? 'border-app-primary' : 'border-app-border'
       }`}
       {...buttonProps}
@@ -50,9 +53,34 @@ const LikeButton = ({
           />
         </svg>
       )}
-      <span className={`text-sm ${isActive && 'text-app-primary'}`}>
-        {count}
-      </span>
+      {isLoading ? (
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
+          fill="none"
+          className="animate-spin"
+        >
+          <circle
+            cx="10"
+            cy="10"
+            r="8"
+            stroke="currentColor"
+            strokeWidth="3"
+            opacity="0.2"
+          />
+          <path
+            d="M18 10a8 8 0 1 1-8-8"
+            stroke="currentColor"
+            strokeWidth="3"
+            strokeLinecap="round"
+          />
+        </svg>
+      ) : (
+        <span className={`text-sm ${isActive && 'text-app-primary'}`}>
+          {count}
+        </span>
+      )}
     </button>
   );
 };

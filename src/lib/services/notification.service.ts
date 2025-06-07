@@ -16,9 +16,10 @@ const failedNotification = (message: string) => {
     text: message,
     showConfirmButton: false,
     toast: true,
-    position: 'top-end',
+    position: 'bottom-left',
     timer: 4000,
-    icon: 'error',
+    icon: 'warning',
+    customClass: 'app-error-notification',
   });
 };
 

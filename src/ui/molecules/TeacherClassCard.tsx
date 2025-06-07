@@ -69,7 +69,15 @@ const TeacherClassCard = ({
           }
         )}
       >
-        <div className="w-[5px] h-[50px] bg-app-primary rounded-3xl"></div>
+        <div
+          className={clsx(
+            'flex-shrink-0 duration-300 bg-app-primary rounded-3xl',
+            {
+              'w-[5px] h-[50px]': +teacher_id === teacherId,
+              'w-[0px] h-[0px]': +teacher_id !== teacherId,
+            }
+          )}
+        ></div>
         <div className="flex-1 pr-14 flex flex-col gap-2">
           <div className="flex flex-wrap items-center gap-4">
             <span className="text-app-primary-dark capitalize text-left">
