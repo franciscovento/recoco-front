@@ -182,7 +182,7 @@ const CreateComment = ({ course_id, teacher_id }: Props) => {
               <Button
                 type="button"
                 onClick={handleCancel}
-                className="w-[77px] max-w-full"
+                className=" max-w-full"
                 variant="outline"
               >
                 Cancelar
@@ -190,7 +190,7 @@ const CreateComment = ({ course_id, teacher_id }: Props) => {
               <Button
                 disabled={!isValid || !quality || isSubmitting}
                 type="submit"
-                className="w-[102px] max-w-full"
+                className=" max-w-full"
               >
                 Comentar
               </Button>

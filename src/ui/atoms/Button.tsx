@@ -19,9 +19,9 @@ const Button = ({
       solid: 'bg-app-primary hover:bg-app-primary-accent',
     },
     size: {
-      sm: 'w-[80px] text-xs',
-      md: 'w-[114px] text-sm',
-      lg: 'w-[120px] text-base',
+      sm: 'px-4 text-xs',
+      md: 'px-8 text-sm',
+      lg: 'px-12 text-base',
     },
   };
   return (

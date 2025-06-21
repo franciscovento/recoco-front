@@ -1,4 +1,8 @@
 import instance from '../helpers/axios.helpers';
+import {
+  TeacherClassResource,
+  TeacherClassResourceResponse,
+} from '../interfaces/resources.interface';
 import { TeacherClass } from '../interfaces/teacher-class.interface';
 
 const getTeacherClassById = (teacher_id: number, course_id: number) => {
@@ -7,4 +11,25 @@ const getTeacherClassById = (teacher_id: number, course_id: number) => {
   );
 };
 
-export { getTeacherClassById };
+const getTeacherClassResources = (teacher_id: number, course_id: number) => {
+  return instance.get<TeacherClassResourceResponse>(
+    `/teacher-class/${teacher_id}/${course_id}/resources`
+  );
+};
+
+const createTeacherClassResource = (
+  teacher_id: number,
+  course_id: number,
+  resource: Partial<TeacherClassResource>
+) => {
+  return instance.post<TeacherClassResourceResponse>(
+    `/teacher-class/${teacher_id}/${course_id}/resources`,
+    resource
+  );
+};
+
+export {
+  getTeacherClassById,
+  getTeacherClassResources,
+  createTeacherClassResource,
+};
