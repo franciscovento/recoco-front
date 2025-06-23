@@ -3,7 +3,7 @@ import { Button, ButtonProps, Drawer, Spin, Tooltip } from 'antd';
 import { useGetResourcesQuery } from '@/store/api/recoco/teacherClassApi';
 import { getCategoryResourceName } from '@/lib/helpers/getCategoryResourceName';
 import useResourceForm from '@/lib/hooks/modals/useResourceForm';
-import { userRequireAuth } from '@/lib/hooks/useRequireAuth';
+import { useRequireAuth } from '@/lib/hooks/useRequireAuth';
 import {
   DeleteOutlined,
   FlagFilled,
@@ -46,7 +46,7 @@ const ResourceDrawer: React.FC<ResourceDrawerProps> = ({
   const [deleteResource] = useDeleteResourceMutation();
   const [reportResource] = useReportResourceMutation();
   const [deleteReport] = useDeleteReportMutation();
-  const { handleOpenModal } = userRequireAuth();
+  const { handleOpenModal } = useRequireAuth();
   const { showResourceFormModal } = useResourceForm();
   const [open, setOpen] = useState(false);
 

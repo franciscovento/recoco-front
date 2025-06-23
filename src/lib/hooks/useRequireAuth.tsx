@@ -2,7 +2,7 @@ import { RootState } from '@/store/store';
 import { useSelector } from 'react-redux';
 import useLoginRegisterForm from './modals/useLoginRegisterForm';
 
-const userRequireAuth = () => {
+const useRequireAuth = () => {
   const { showLoginRegisterModal } = useLoginRegisterForm();
   const { isAuthenticated } = useSelector((state: RootState) => state.ui);
 
@@ -24,4 +24,4 @@ const userRequireAuth = () => {
   };
 };
 
-export { userRequireAuth };
+export { useRequireAuth };
