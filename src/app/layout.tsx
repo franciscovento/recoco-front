@@ -1,8 +1,7 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import '../styles/globals.css';
-import { Providers } from '@/store/provider';
-const inter = Inter({ subsets: ['latin'] });
+import { ReduxProvider } from '@/providers/ReduxProvider';
+import AntdProvider from '@/providers/AntProvider';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://recoco.pro'),
@@ -21,8 +20,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Providers>{children}</Providers>
+      <body>
+        <ReduxProvider>
+          <AntdProvider>{children}</AntdProvider>
+        </ReduxProvider>
       </body>
     </html>
   );

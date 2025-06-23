@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 
 const useLogin = () => {
   const dispatch = useDispatch();
-  const [login] = useLoginMutation();
+  const [login, { isLoading }] = useLoginMutation();
   const loginToApp = async (data: { email: string; password: string }) => {
     try {
       const resp = await login({
@@ -21,6 +21,7 @@ const useLogin = () => {
 
   return {
     loginToApp,
+    isLoading,
   };
 };
 

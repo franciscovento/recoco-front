@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { routes } from '../../../routes';
 import CourseCode from '../atoms/CourseCode';
 import { formatText } from '@/lib/helpers/formatText';
+import useConfirm from '@/lib/hooks/modals/useAppNotification';
 
 interface Props {
   isActive?: boolean;
@@ -31,23 +32,23 @@ const CourseCard = ({
   universityId,
 }: Props) => {
   const [deleteCourse] = useDeleteDegreeCourseMutation();
+  const { confirm } = useConfirm();
 
   const handleDelete = async () => {
-    try {
-      const confirm = await confirmModal(
-        '¿Estás seguro que deseas eliminar esta materia?',
-        'Esta acción no se puede deshacer'
-      );
-      if (confirm) {
-        const course = await deleteCourse({
-          degree_id: degreeId,
-          course_id: courseId,
-        }).unwrap();
-        console.log(course);
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    confirm({
+      title: '¿Estás seguro que deseas eliminar esta materia?',
+      content: 'Esta acción no se puede deshacer',
+      onOk: async () => {
+        try {
+          await deleteCourse({
+            degree_id: degreeId,
+            course_id: courseId,
+          }).unwrap();
+        } catch (error) {
+          throw error;
+        }
+      },
+    });
   };
   return (
     <div className="relative">
@@ -76,7 +77,7 @@ const CourseCard = ({
           </div>
         </div>
       </Link>
-      {canDelete && (
+      {teacherClasses === 0 && canDelete && (
         <div className="flex-1 flex justify-end absolute right-4 top-1/2 -translate-y-1/2">
           <button onClick={handleDelete}>
             <SvgDelete />

@@ -2,18 +2,28 @@ import { TeacherClass } from '@/lib/interfaces/teacher-class.interface';
 import { recocoApi } from '../recocoApi';
 import { Comment } from '@/lib/interfaces/comment.interface';
 import {
-  TeacherClassResource,
-  TeacherClassResourceResponse,
-} from '@/lib/interfaces/resources.interface';
+  Resource,
+  ResourceResponse,
+} from '@/lib/interfaces/resource.interface';
 
 const teacherClassModel = recocoApi.injectEndpoints({
   endpoints: (builder) => ({
     getResources: builder.query<
-      { message: string; data: TeacherClassResourceResponse },
+      ResourceResponse,
       { teacher_id: number; course_id: number }
     >({
       query: ({ teacher_id, course_id }) =>
-        `/teacher-class/${teacher_id}/${course_id}/add-resource`,
+        `/teacher-class/${teacher_id}/${course_id}/resources`,
+      transformResponse: (response: ResourceResponse) => {
+        const orderByCreatedAt = response.data.sort(
+          (a, b) =>
+            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+        );
+        return {
+          ...response,
+          data: orderByCreatedAt,
+        };
+      },
       providesTags: (result, error, { teacher_id, course_id }) => [
         {
           type: 'TeacherClassResource',
@@ -22,13 +32,17 @@ const teacherClassModel = recocoApi.injectEndpoints({
       ],
     }),
     addResource: builder.mutation<
-      { message: string; data: TeacherClassResource },
-      Partial<TeacherClassResource>
+      { message: string; data: Resource },
+      Partial<Resource>
     >({
       query: ({ teacher_id, course_id, ...rest }) => ({
         url: `/teacher-class/${teacher_id}/${course_id}/add-resource`,
         method: 'POST',
-        body: rest,
+        body: {
+          teacher_id,
+          course_id,
+          ...rest,
+        },
       }),
       invalidatesTags: (result, error, { teacher_id, course_id }) => [
         {
@@ -37,7 +51,6 @@ const teacherClassModel = recocoApi.injectEndpoints({
         },
       ],
     }),
-
     getTeacherClass: builder.query<
       { message: string; data: TeacherClass },
       { teacher_id: number; course_id: number }

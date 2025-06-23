@@ -7,26 +7,39 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
 import useLoginModal from '@/lib/hooks/useLoginModal';
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
-import { successNotification } from '@/lib/services/notification.service';
+import useAppNotification from '@/lib/hooks/modals/useAppNotification';
 
 const Header = () => {
+  const { notification, confirm } = useAppNotification();
   const { isAuthenticated } = useSelector((state: RootState) => state.ui);
-  const params = useParams();
+
   const { loginRegisterModal } = useLoginModal();
   const [logout] = useLogoutMutation();
   const dispatch = useDispatch();
   const handleLogout = async () => {
     if (!isAuthenticated) {
       return loginRegisterModal('login');
-    }
-    try {
-      await logout();
-      dispatch(uiActions.setAuthState(false));
-      dispatch(uiActions.setUserMe(null));
-      successNotification('Has cerrado sesión correctamente');
-    } catch (error) {
-      console.log(error);
+    } else {
+      confirm({
+        title: 'Cerrar sesión',
+        content: '¿Estás seguro de querer cerrar sesión?',
+        onOk: async () => {
+          try {
+            await logout();
+            dispatch(uiActions.setAuthState(false));
+            dispatch(uiActions.setUserMe(null));
+            notification({
+              type: 'success',
+              message: 'Has cerrado sesión correctamente',
+            });
+          } catch (error) {
+            notification({
+              type: 'error',
+              message: 'Error al cerrar sesión',
+            });
+          }
+        },
+      });
     }
   };
   return (

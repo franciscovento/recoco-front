@@ -8,6 +8,8 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
 import { useParams, useRouter } from 'next/navigation';
 import { routes } from '../../../routes';
+import useConfig from 'antd/es/config-provider/hooks/useConfig';
+import useConfirm from '@/lib/hooks/modals/useAppNotification';
 
 interface Props {
   isActive?: boolean;
@@ -32,23 +34,26 @@ const TeacherClassCard = ({
   createdBy,
 }: Props) => {
   const router = useRouter();
+  const { confirm } = useConfirm();
   const { teacher_id, slug } = useParams();
   const { user } = useSelector((state: RootState) => state.ui);
   const [deleteCourse] = useDeleteTeacherClassMutation();
   const fullName = `${teacherName} ${teacherLastName || ''}`.trim();
   const deleteTeacherClass = async () => {
-    const confirm = await confirmModal('¿Estás seguro de eliminar esta clase?');
-    if (confirm) {
-      try {
-        const resp = await deleteCourse({
-          course_id: courseId,
-          teacher_id: teacherId,
-        }).unwrap();
-        console.log(resp);
-      } catch (error) {
-        throw error;
-      }
-    }
+    confirm({
+      title: '¿Estás seguro de eliminar esta clase?',
+      content: 'Si eliminas esta clase, no podrás recuperarlo.',
+      onOk: async () => {
+        try {
+          const resp = await deleteCourse({
+            course_id: courseId,
+            teacher_id: teacherId,
+          }).unwrap();
+        } catch (error) {
+          throw error;
+        }
+      },
+    });
   };
   return (
     <div className="relative">

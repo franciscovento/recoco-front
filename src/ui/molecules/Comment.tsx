@@ -14,6 +14,7 @@ import { RootState } from '@/store/store';
 import { failedNotification } from '@/lib/services/notification.service';
 import SvgDelete from '../atoms/svg/SvgDelete';
 import { confirmModal } from '@/lib/services/modal.service';
+import useConfirm from '@/lib/hooks/modals/useAppNotification';
 
 interface Props {
   id: string;
@@ -45,7 +46,7 @@ const Comment = ({
   const [removeComment] = useDeleteCommentMutation();
   const [likeComment, statusLike] = useLikeCommentMutation();
   const [dislikeComment, statusDislike] = useDislikeCommentMutation();
-
+  const { confirm } = useConfirm();
   const like = async () => {
     if (!isAuthenticated) {
       return failedNotification(
@@ -78,20 +79,22 @@ const Comment = ({
   };
 
   const deleteComment = async () => {
-    const confirm = await confirmModal(
-      '¿Estás seguro de eliminar este comentario?'
-    );
-    if (confirm) {
-      try {
-        await removeComment({
-          id,
-        }).unwrap();
-      } catch (error) {
-        failedNotification('Error al eliminar el comentario');
-        console.log(error);
-      }
-    }
+    confirm({
+      title: '¿Estás seguro de eliminar este comentario?',
+      content: 'Si eliminas este comentario, no podrás recuperarlo.',
+      onOk: async () => {
+        try {
+          await removeComment({
+            id,
+          }).unwrap();
+        } catch (error) {
+          failedNotification('Error al eliminar el comentario');
+          console.log(error);
+        }
+      },
+    });
   };
+
   const commentDate = new Date(date);
 
   return (

@@ -23,6 +23,7 @@ export const recocoApi = createApi({
     'TeacherClass',
     'Comment',
     'TeacherClassResource',
+    'Resource',
   ],
   endpoints: (builder) => ({
     getCountries: builder.query<

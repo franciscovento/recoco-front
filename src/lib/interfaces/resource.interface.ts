@@ -1,9 +1,9 @@
-export interface TeacherClassResourceResponse {
+export interface ResourceResponse {
   message: string;
-  data: TeacherClassResource[];
+  data: Resource[];
 }
 
-export interface TeacherClassResource {
+export interface Resource {
   id: number;
   name: string;
   url: string;
@@ -13,6 +13,8 @@ export interface TeacherClassResource {
   updated_at: Date;
   course_id: number;
   teacher_id: number;
+  reports: number;
+  is_reported_by_user?: boolean;
 }
 
 export type ResourceCategory =

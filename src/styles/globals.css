@@ -1,8 +1,13 @@
-@tailwind base;
+@layer tailwind-base, antd, reset;
+
+@layer tailwind-base {
+  @tailwind base;
+}
+
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
+/* @layer base {
   *,
   html {
     scroll-behavior: smooth !important;
@@ -16,11 +21,10 @@
   h6 {
     @apply text-app-title font-medium;
   }
-  p,
-  span {
+  p {
     @apply text-app-text;
   }
-}
+} */
 
 .app-modal-container {
   overflow: visible !important;
@@ -44,4 +48,10 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: #636363;
+}
+
+/* CONFIRM MODAL */
+.app-confirm .anticon-exclamation-circle {
+  margin-right: 8px !important;
+  margin-top: 2px !important;
 }

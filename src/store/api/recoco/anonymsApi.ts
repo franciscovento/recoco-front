@@ -1,9 +1,30 @@
 import { Comment } from '@/lib/interfaces/comment.interface';
 import { recocoApi } from '../recocoApi';
 import { TeacherClass } from '@/lib/interfaces/teacher-class.interface';
+import { TeacherClassResource } from '@/lib/interfaces/resources.interface';
 
 const anonymsModel = recocoApi.injectEndpoints({
   endpoints: (builder) => ({
+    addAnonymsResource: builder.mutation<
+      { message: string; data: TeacherClassResource },
+      Partial<TeacherClassResource>
+    >({
+      query: ({ teacher_id, course_id, ...rest }) => ({
+        url: `/anonyms/teacher-class/resource`,
+        method: 'POST',
+        body: {
+          teacher_id,
+          course_id,
+          ...rest,
+        },
+      }),
+      invalidatesTags: (result, error, { teacher_id, course_id }) => [
+        {
+          type: 'TeacherClassResource',
+          id: `${teacher_id}-${course_id}`,
+        },
+      ],
+    }),
     addAnonymsComment: builder.mutation<
       { message: string; data: Comment },
       Partial<Comment>
@@ -56,4 +77,5 @@ export const {
   useAddAnonymsCommentMutation,
   useAddAnonymsTeacherClassMutation,
   useAddAnonymsWithDegreeCourseMutation,
+  useAddAnonymsResourceMutation,
 } = anonymsModel;
