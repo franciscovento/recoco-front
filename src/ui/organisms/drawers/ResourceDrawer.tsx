@@ -22,6 +22,7 @@ import {
   Resource,
   ResourceCategory,
 } from '@/lib/interfaces/resource.interface';
+import { groupBy } from '@/lib/helpers/groupBy';
 
 interface ResourceDrawerProps {
   teacher_id: number;
@@ -140,9 +141,7 @@ const ResourceDrawer: React.FC<ResourceDrawerProps> = ({
   const resources = resourcesData?.data || [];
 
   const groupedResources =
-    resources.length > 0
-      ? Object.groupBy(resources, (resource: Resource) => resource.category)
-      : {};
+    resources.length > 0 ? groupBy(resources, 'category') : {};
 
   return (
     <>

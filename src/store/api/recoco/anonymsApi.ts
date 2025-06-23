@@ -1,13 +1,13 @@
 import { Comment } from '@/lib/interfaces/comment.interface';
 import { recocoApi } from '../recocoApi';
 import { TeacherClass } from '@/lib/interfaces/teacher-class.interface';
-import { TeacherClassResource } from '@/lib/interfaces/resources.interface';
+import { Resource } from '@/lib/interfaces/resource.interface';
 
 const anonymsModel = recocoApi.injectEndpoints({
   endpoints: (builder) => ({
     addAnonymsResource: builder.mutation<
-      { message: string; data: TeacherClassResource },
-      Partial<TeacherClassResource>
+      { message: string; data: Resource },
+      Partial<Resource>
     >({
       query: ({ teacher_id, course_id, ...rest }) => ({
         url: `/anonyms/teacher-class/resource`,

@@ -1,4 +1,4 @@
-import { ResourceCategory } from '../interfaces/resources.interface';
+import { ResourceCategory } from '../interfaces/resource.interface';
 
 export const getCategoryResourceName = (category: ResourceCategory) => {
   switch (category) {

@@ -1,5 +1,6 @@
 'use client';
-import { ResourceCategory } from '@/lib/interfaces/resources.interface';
+
+import { ResourceCategory } from '@/lib/interfaces/resource.interface';
 import { appModal } from '@/lib/services/modal.service';
 import { useAddAnonymsTeacherClassMutation } from '@/store/api/recoco/anonymsApi';
 import { useAddTeacherClassMutation } from '@/store/api/recoco/teacherClassApi';

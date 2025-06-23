@@ -6,11 +6,12 @@ import Logo from '@/ui/atoms/svg/branding/Logo';
 import SvgRecocoThinking from '@/ui/atoms/svg/branding/SvgRecocoThinking';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 
 const inputClass =
   'px-3 py-2 border-2 border-app-border rounded-xl outline-none w-full text-sm  duration-300';
-const Page = () => {
+
+const ResetPasswordForm = () => {
   const searchParams = useSearchParams();
   const code = searchParams.get('code') || '';
   const [resetPassword] = useResetPasswordMutation();
@@ -99,6 +100,14 @@ const Page = () => {
         </div>
       </div>
     </div>
+  );
+};
+
+const Page = () => {
+  return (
+    <Suspense fallback={<div>Cargando...</div>}>
+      <ResetPasswordForm />
+    </Suspense>
   );
 };
 

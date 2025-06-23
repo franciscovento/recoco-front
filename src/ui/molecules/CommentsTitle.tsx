@@ -1,10 +1,7 @@
 import { Difficulty } from '@/lib/interfaces/difficulty.enmu';
 import clsx from 'clsx';
-import React, { useState } from 'react';
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
+import React from 'react';
 import 'animate.css';
-import ResourcesCard from '../organisms/ResourcesCard';
 import { useParams } from 'next/navigation';
 import { ResourceDrawer } from '../organisms/drawers/ResourceDrawer';
 interface Props {
