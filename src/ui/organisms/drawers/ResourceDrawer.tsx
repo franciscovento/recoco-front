@@ -156,12 +156,8 @@ const ResourceDrawer: React.FC<ResourceDrawerProps> = ({
         width={400}
         loading={isLoading}
       >
-        {error ? (
-          <div className="text-red-500 text-center">
-            Error al cargar los recursos
-          </div>
-        ) : resources.length > 0 ? (
-          <div className="h-full flex flex-col justify-between">
+        <div className="h-full flex flex-col justify-between">
+          {resources.length > 0 ? (
             <div className="flex flex-col gap-4  h-[calc(100%_-_50px)] overflow-y-auto">
               <div>
                 <span className="text-xs text-app-text">
@@ -247,29 +243,29 @@ const ResourceDrawer: React.FC<ResourceDrawerProps> = ({
                 </div>
               ))}
             </div>
-            <div className="text-center">
-              <Button
-                onClick={() =>
-                  handleOpenModal((anonymous) => {
-                    showResourceFormModal({
-                      course_id,
-                      teacher_id,
-                      isAnonyms: anonymous,
-                    });
-                  })
-                }
-                icon={<PlusOutlined />}
-                type="primary"
-              >
-                Nuevo recurso
-              </Button>
+          ) : (
+            <div className="text-gray-500 text-center">
+              No hay recursos disponibles
             </div>
+          )}
+          <div className="text-center">
+            <Button
+              onClick={() =>
+                handleOpenModal((anonymous) => {
+                  showResourceFormModal({
+                    course_id,
+                    teacher_id,
+                    isAnonyms: anonymous,
+                  });
+                })
+              }
+              icon={<PlusOutlined />}
+              type="primary"
+            >
+              Nuevo recurso
+            </Button>
           </div>
-        ) : (
-          <div className="text-gray-500 text-center">
-            No hay recursos disponibles
-          </div>
-        )}
+        </div>
       </Drawer>
     </>
   );

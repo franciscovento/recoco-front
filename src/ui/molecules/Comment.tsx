@@ -13,7 +13,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
 import { failedNotification } from '@/lib/services/notification.service';
 import SvgDelete from '../atoms/svg/SvgDelete';
-import { confirmModal } from '@/lib/services/modal.service';
+
 import useConfirm from '@/lib/hooks/modals/useAppNotification';
 
 interface Props {
@@ -54,7 +54,7 @@ const Comment = ({
       );
     }
     try {
-      const resp = await likeComment({
+      await likeComment({
         comment_id: id,
       }).unwrap();
     } catch (error) {
