@@ -1,9 +1,9 @@
 import { Difficulty } from '@/lib/interfaces/difficulty.enmu';
 import clsx from 'clsx';
 import React from 'react';
-import 'animate.css';
 import { useParams } from 'next/navigation';
 import { ResourceDrawer } from '../organisms/drawers/ResourceDrawer';
+
 interface Props {
   className?: string;
   teacherName: string;
