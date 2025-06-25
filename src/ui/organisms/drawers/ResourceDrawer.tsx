@@ -23,6 +23,8 @@ import {
   ResourceCategory,
 } from '@/lib/interfaces/resource.interface';
 import { groupBy } from '@/lib/helpers/groupBy';
+import { getUTCStringDate } from '@/lib/helpers/formatDate.helper';
+import { getNotificationFormatDate } from '@/lib/helpers/getFormatDate';
 
 interface ResourceDrawerProps {
   teacher_id: number;
@@ -161,9 +163,9 @@ const ResourceDrawer: React.FC<ResourceDrawerProps> = ({
             <div className="flex flex-col gap-4  h-[calc(100%_-_50px)] overflow-y-auto">
               <div>
                 <span className="text-xs text-app-text">
-                  Nota: Estas urls son subidas por la comunidad, no podemos
-                  asegurar que sean seguras, por favor, revisa bien el origen
-                  antes de ingresar. No podemos evitar los trolls.
+                  Estos links son subidos por la comunidad, revisa bien el
+                  origen antes de ingresar. Puedes reportar cualquier recurso
+                  que consideres inapropiado.
                 </span>
               </div>
               {Object.keys(groupedResources).map((category) => (
@@ -235,6 +237,10 @@ const ResourceDrawer: React.FC<ResourceDrawerProps> = ({
                           </div>
                           <span className="text-[9px] text-app-text truncate block">
                             {resource.url}
+                          </span>
+                          <span className="text-[9px] text-app-text truncate block">
+                            Subído el{' '}
+                            {getNotificationFormatDate(resource.created_at)}
                           </span>
                         </div>
                       )
