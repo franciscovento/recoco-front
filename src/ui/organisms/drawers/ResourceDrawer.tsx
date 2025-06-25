@@ -239,7 +239,6 @@ const ResourceDrawer: React.FC<ResourceDrawerProps> = ({
                             {resource.url}
                           </span>
                           <span className="text-[9px] text-app-text truncate block">
-                            Subído el{' '}
                             {getNotificationFormatDate(resource.created_at)}
                           </span>
                         </div>
