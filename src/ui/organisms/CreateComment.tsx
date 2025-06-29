@@ -3,18 +3,15 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 import ChipButton from '../atoms/ChipButton';
 import Rating from '../molecules/Rating';
-import Button from '../atoms/Button';
 import { useForm } from 'react-hook-form';
 import useLoginModal from '@/lib/hooks/useLoginModal';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
-import {
-  failedNotification,
-  successNotification,
-} from '@/lib/services/notification.service';
 import { useAddCommentMutation } from '@/store/api/recoco/commentApi';
 import { Difficulty } from '@/lib/interfaces/difficulty.enmu';
 import { useAddAnonymsCommentMutation } from '@/store/api/recoco/anonymsApi';
+import { Button } from 'antd';
+import useAppNotification from '@/lib/hooks/modals/useAppNotification';
 
 type formData = {
   comment: string;
@@ -28,9 +25,12 @@ interface Props {
 }
 
 const CreateComment = ({ course_id, teacher_id }: Props) => {
+  const { notification } = useAppNotification();
   const { isAuthenticated } = useSelector((state: RootState) => state.ui);
-  const [addComment] = useAddCommentMutation();
-  const [addAnonymsComment] = useAddAnonymsCommentMutation();
+  const [addComment, { isLoading: isLoadingAddComment }] =
+    useAddCommentMutation();
+  const [addAnonymsComment, { isLoading: isLoadingAddAnonymsComment }] =
+    useAddAnonymsCommentMutation();
   const { loginRegisterModal } = useLoginModal();
   const [commentActive, setCommentActive] = useState<boolean>(false);
   const [rows, setRows] = useState<'50' | '100'>('50');
@@ -46,7 +46,7 @@ const CreateComment = ({ course_id, teacher_id }: Props) => {
     reset,
     watch,
     setValue,
-    formState: { isValid, isSubmitting },
+    formState: { isValid },
   } = useForm<formData>({
     defaultValues: {
       comment: '',
@@ -82,10 +82,10 @@ const CreateComment = ({ course_id, teacher_id }: Props) => {
         return handleAddComment(data);
       }
     } catch (error: any) {
-      failedNotification(
-        error?.data?.message || 'Error al crear el comentario'
-      );
-      console.log(error);
+      notification({
+        type: 'error',
+        message: error?.data?.message || 'Error al crear el comentario',
+      });
     }
   };
 
@@ -98,7 +98,10 @@ const CreateComment = ({ course_id, teacher_id }: Props) => {
       teacher_id,
     }).unwrap();
 
-    successNotification('Comentario creado');
+    notification({
+      type: 'success',
+      message: 'Comentario creado',
+    });
     reset();
     setCommentActive(false);
     setRows('50');
@@ -112,7 +115,10 @@ const CreateComment = ({ course_id, teacher_id }: Props) => {
       course_id,
       teacher_id,
     }).unwrap();
-    successNotification('Comentario creado');
+    notification({
+      type: 'success',
+      message: 'Comentario creado',
+    });
     reset();
     setCommentActive(false);
     setRows('50');
@@ -134,6 +140,7 @@ const CreateComment = ({ course_id, teacher_id }: Props) => {
           style={{
             height: `${rows}px`,
           }}
+          disabled={isLoadingAddComment || isLoadingAddAnonymsComment}
           placeholder="Agrega tu comentario"
           className="w-full outline-none border-2 border-app-border rounded-3xl px-4 py-2 resize-none text-app-text duration-300"
           onFocus={handleOnFocus}
@@ -153,6 +160,9 @@ const CreateComment = ({ course_id, teacher_id }: Props) => {
                         <label key={index} className="relative group">
                           <input
                             value={item.value}
+                            disabled={
+                              isLoadingAddComment || isLoadingAddAnonymsComment
+                            }
                             {...register('difficulty', { required: true })}
                             type="radio"
                             className="absolute opacity-0 w-full h-full cursor-pointer"
@@ -174,23 +184,20 @@ const CreateComment = ({ course_id, teacher_id }: Props) => {
                   <Rating
                     showTooltip
                     onChangue={(e) => setValue('quality', e)}
+                    disabled={isLoadingAddComment || isLoadingAddAnonymsComment}
                   />
                 </div>
               </li>
             </ul>
             <div className="flex items-center gap-2 pt-6">
-              <Button
-                type="button"
-                onClick={handleCancel}
-                className=" max-w-full"
-                variant="outline"
-              >
+              <Button htmlType="button" onClick={handleCancel}>
                 Cancelar
               </Button>
               <Button
-                disabled={!isValid || !quality || isSubmitting}
-                type="submit"
-                className=" max-w-full"
+                type="primary"
+                disabled={!isValid || !quality}
+                loading={isLoadingAddComment || isLoadingAddAnonymsComment}
+                htmlType="submit"
               >
                 Comentar
               </Button>

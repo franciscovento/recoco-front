@@ -7,6 +7,7 @@ interface Props {
   value?: number;
   fillColor?: string;
   onChangue?: (value: number) => void;
+  disabled?: boolean;
 }
 const Rating = ({
   showTooltip,
@@ -14,6 +15,7 @@ const Rating = ({
   value = 0,
   onChangue,
   fillColor = '#00DC8C',
+  disabled,
 }: Props) => {
   const [rating, setRating] = useState(Math.floor(value));
   const [hoverRating, setHoverRating] = useState(0);
@@ -47,8 +49,12 @@ const Rating = ({
       {[...Array(5)].map((_, index) => (
         <svg
           key={index}
-          onClick={!readonly ? () => handleStarClick(index) : () => null}
-          onMouseEnter={!readonly ? () => handleStarHover(index) : () => null}
+          onClick={
+            !readonly && !disabled ? () => handleStarClick(index) : () => null
+          }
+          onMouseEnter={
+            !readonly && !disabled ? () => handleStarHover(index) : () => null
+          }
           onMouseLeave={handleHoverLeave}
           width="21"
           height="21"
