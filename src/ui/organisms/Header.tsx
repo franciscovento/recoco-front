@@ -135,7 +135,7 @@ const HeaderName = () => {
     <div>
       <Link
         href={headerContent.href}
-        className="truncate max-w-[150px] text-xs xs:text-base font-semibold text-app-secondary cursor-pointer uppercase xs:max-w-fit block px-2 py-1"
+        className="truncate max-w-[200px] text-xs xs:text-base font-semibold text-app-secondary cursor-pointer uppercase xs:max-w-fit block px-2 py-1"
       >
         {headerContent.name}
       </Link>
