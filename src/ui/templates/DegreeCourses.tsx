@@ -8,8 +8,9 @@ interface Props {
   courses: DegreeCourse[];
   userId: string;
   degreeId: number;
+  facultyId: number;
 }
-const DegreeCourses = ({ courses, userId, degreeId }: Props) => {
+const DegreeCourses = ({ courses, userId, degreeId, facultyId }: Props) => {
   const params = useParams();
   const universityId = params.slug as string;
 
@@ -25,7 +26,8 @@ const DegreeCourses = ({ courses, userId, degreeId }: Props) => {
             teacherClasses={course._count.courseTeacher}
             classCode={course.course_code}
             degreeId={degreeId}
-            universityId={universityId}
+            universitySlug={universityId}
+            facultyId={facultyId}
           />
         );
       })}

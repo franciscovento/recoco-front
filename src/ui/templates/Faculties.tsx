@@ -2,6 +2,7 @@ import React from 'react';
 import SimpleCard from '../molecules/SimpleCard';
 import { Faculty } from '@/lib/interfaces/faculty.interface';
 import { getFacultiesByUniversityId } from '@/lib/services/faculty.service';
+import { appRoutes } from '../../../routes';
 
 const Faculties = async ({ universitySlug }: { universitySlug: string }) => {
   let faculties: Faculty[] = [];
@@ -20,7 +21,7 @@ const Faculties = async ({ universitySlug }: { universitySlug: string }) => {
           key={faculty.id}
           name={faculty.name}
           detail={faculty.slug}
-          href={`/${universitySlug}/facultades/${faculty.id}`}
+          href={appRoutes.facultades.detail(universitySlug, faculty.id)}
         />
       ))}
     </div>

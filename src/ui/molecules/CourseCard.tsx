@@ -3,9 +3,8 @@ import React from 'react';
 import clsx from 'clsx';
 import { useDeleteDegreeCourseMutation } from '@/store/api/recoco/degreeApi';
 import SvgDelete from '../atoms/svg/SvgDelete';
-import { confirmModal } from '@/lib/services/modal.service';
 import Link from 'next/link';
-import { routes } from '../../../routes';
+import { appRoutes } from '../../../routes';
 import CourseCode from '../atoms/CourseCode';
 import { formatText } from '@/lib/helpers/formatText';
 import useConfirm from '@/lib/hooks/modals/useAppNotification';
@@ -18,7 +17,8 @@ interface Props {
   courseId: number;
   canDelete: boolean;
   degreeId: number;
-  universityId: string;
+  universitySlug: string;
+  facultyId: number;
 }
 
 const CourseCard = ({
@@ -29,7 +29,8 @@ const CourseCard = ({
   classCode,
   canDelete = false,
   degreeId,
-  universityId,
+  universitySlug,
+  facultyId,
 }: Props) => {
   const [deleteCourse] = useDeleteDegreeCourseMutation();
   const { confirm } = useConfirm();
@@ -59,7 +60,12 @@ const CourseCard = ({
             'border-app-primary border-[1.5px]': isActive === true,
           }
         )}
-        href={routes.courses.course_id(universityId, courseId.toString())}
+        href={appRoutes.facultades.carreras.cursos.detail(
+          universitySlug,
+          facultyId,
+          degreeId,
+          courseId
+        )}
       >
         <CourseCode classCode={classCode} />
         <div>

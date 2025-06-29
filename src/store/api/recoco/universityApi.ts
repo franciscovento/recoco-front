@@ -10,11 +10,11 @@ const universityModel = recocoApi.injectEndpoints({
       query: () => '/university',
       providesTags: ['University'],
     }),
-    getUniversityById: builder.query<
+    getUniversityBySlug: builder.query<
       { message: string; data: University },
       string
     >({
-      query: (id) => `/university/${id}`,
+      query: (id) => `/university/by-slug/${id}`,
       providesTags: (result, error, id) => [{ type: 'University', id }],
     }),
     addUniversity: builder.mutation<
@@ -61,5 +61,5 @@ export const {
   useAddUniversityMutation,
   useDeleteUniversityMutation,
   useUpdateUniversityMutation,
-  useGetUniversityByIdQuery,
+  useGetUniversityBySlugQuery,
 } = universityModel;

@@ -7,17 +7,20 @@ export default async function ApplicationLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: { course_id: string };
+  params: { course_id: string; faculty_id: string; degree_id: string };
 }) {
   const { data: courseResponse } = await getCourseById(params.course_id);
   const course = courseResponse?.data;
   const courseId = +params.course_id;
-  const facultyId = +course.faculty_id;
+  const facultyId = +params.faculty_id;
+  const degreeId = +params.degree_id;
 
   return (
     <div className="flex flex-col lg:flex-row min-h-[calc(100vh_-_70px)] gap-8 p-4 sm:p-6">
       <div className="w-full lg:w-[430px] flex flex-col gap-8">
         <CourseTeachersCard
+          facultyId={facultyId}
+          degreeId={degreeId}
           courseId={+params.course_id}
           courseCode={course.course_code}
           courseTag={course.course_code}

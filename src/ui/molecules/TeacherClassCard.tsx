@@ -2,13 +2,11 @@ import Image from 'next/image';
 import React from 'react';
 import clsx from 'clsx';
 import SvgDelete from '../atoms/svg/SvgDelete';
-import { confirmModal } from '@/lib/services/modal.service';
 import { useDeleteTeacherClassMutation } from '@/store/api/recoco/teacherClassApi';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
 import { useParams, useRouter } from 'next/navigation';
-import { routes } from '../../../routes';
-import useConfig from 'antd/es/config-provider/hooks/useConfig';
+import { appRoutes } from '../../../routes';
 import useConfirm from '@/lib/hooks/modals/useAppNotification';
 
 interface Props {
@@ -21,6 +19,8 @@ interface Props {
   teacherId: number;
   courseId: number;
   createdBy: string;
+  facultyId: number;
+  degreeId: number;
 }
 
 const TeacherClassCard = ({
@@ -30,6 +30,8 @@ const TeacherClassCard = ({
   score,
   teacherClassName,
   teacherId,
+  facultyId,
+  degreeId,
   courseId,
   createdBy,
 }: Props) => {
@@ -60,11 +62,13 @@ const TeacherClassCard = ({
       <button
         onClick={() =>
           router.replace(
-            routes.courses.teacher.teacher_id(
+            appRoutes.facultades.carreras.cursos.profesores.detail(
               slug as string,
-              courseId.toString(),
-              teacherId.toString() + '#comments'
-            )
+              facultyId,
+              degreeId,
+              courseId,
+              teacherId
+            ) + '#comments'
           )
         }
         className={clsx(

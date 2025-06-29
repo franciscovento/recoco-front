@@ -3,7 +3,11 @@ import { useGetDegreeByIdQuery } from '@/store/api/recoco/degreeApi';
 import FilterCourses from '@/ui/templates/FilterCourses';
 import React from 'react';
 
-const Page = ({ params }: { params: { degree_id: string; slug: string } }) => {
+const Page = ({
+  params,
+}: {
+  params: { faculty_id: string; degree_id: string; slug: string };
+}) => {
   const { data: degreeResponse, error } = useGetDegreeByIdQuery(
     params.degree_id
   );

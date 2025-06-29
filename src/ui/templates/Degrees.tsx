@@ -2,6 +2,7 @@ import React from 'react';
 import SimpleCard from '../molecules/SimpleCard';
 import { Degree } from '@/lib/interfaces/degree.interface';
 import { getDegreesByFacultyId } from '@/lib/services/degree.service';
+import { appRoutes } from '../../../routes';
 
 const Degrees = async ({
   facultyId,
@@ -26,7 +27,11 @@ const Degrees = async ({
           key={degree.id}
           name={degree.name}
           detail={degree.slug}
-          href={`/${universitySlug}/carreras/${degree.id}`}
+          href={appRoutes.facultades.carreras.detail(
+            universitySlug,
+            facultyId,
+            degree.id
+          )}
         />
       ))}
     </div>

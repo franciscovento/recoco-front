@@ -63,6 +63,7 @@ const FilterCourses = ({ degree_id, faculty_id }: Props) => {
           <DegreeCourses
             degreeId={degree_id}
             courses={courses}
+            facultyId={faculty_id}
             userId={user?.id || ''}
           />
         ) : (
