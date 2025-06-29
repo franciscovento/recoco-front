@@ -9,7 +9,7 @@ import useLoginModal from '@/lib/hooks/useLoginModal';
 import Link from 'next/link';
 import useAppNotification from '@/lib/hooks/modals/useAppNotification';
 import { Button } from 'antd';
-import { useParams, usePathname } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { useGetDegreeByIdQuery } from '@/store/api/recoco/degreeApi';
 import { appRoutes } from '../../../routes';
 

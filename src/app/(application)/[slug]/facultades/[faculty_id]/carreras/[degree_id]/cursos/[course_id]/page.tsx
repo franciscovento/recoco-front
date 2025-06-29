@@ -1,8 +1,14 @@
+'use client';
 import Card from '@/ui/atoms/Card';
 import SvgTeacherClassCard from '@/ui/atoms/svg/SvgTeacherClassCard';
-import React from 'react';
+import { usePathname } from 'next/navigation';
+import React, { useEffect } from 'react';
 
 const Page = () => {
+  const pathName = usePathname();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathName]);
   return (
     <Card className="bg-white h-full flex flex-col items-center justify-center">
       <SvgTeacherClassCard />
