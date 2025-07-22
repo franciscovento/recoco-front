@@ -26,6 +26,10 @@
   }
 } */
 
+.app-wrapper {
+  @apply max-w-5xl mx-auto px-4;
+}
+
 .app-modal-container {
   overflow: visible !important;
 }

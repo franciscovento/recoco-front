@@ -10,12 +10,11 @@ interface Props {
 }
 const SimpleCard: FC<Props> = async ({ detail, href, name }) => {
   return (
-    <Link href={href}>
-      <div className="group duration-300 hover:rotate-2 cursor-pointer bg-white rounded-3xl p-4  h-48 flex flex-col gap-2">
-        <h3 className="duration-300 group-hover:text-app-primary text-2xl font-bold">
+    <Link href={href} className="border border-app-primary-accent rounded-3xl ">
+      <div className="group duration-300 cursor-pointer bg-white rounded-3xl p-4 flex flex-col gap-2">
+        <h3 className="duration-300 text-center text-app-title group-hover:text-app-primary text-xl font-bold">
           {formatText(name)}
         </h3>
-        <p className="text-black">{detail}</p>
       </div>
     </Link>
   );

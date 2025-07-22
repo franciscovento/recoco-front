@@ -2,8 +2,6 @@
 import { useGetDegreeByIdQuery } from '@/store/api/recoco/degreeApi';
 import FilterCourses from '@/ui/templates/FilterCourses';
 import React from 'react';
-import { FloatButton } from 'antd';
-import { CommentOutlined } from '@ant-design/icons';
 import Chatbot from '@/ui/templates/Chatbot';
 const Page = ({
   params,

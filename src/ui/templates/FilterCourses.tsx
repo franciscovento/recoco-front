@@ -20,31 +20,15 @@ interface Props {
 const FilterCourses = ({ degree_id, faculty_id }: Props) => {
   const [search, setSearch] = React.useState('');
   const user = useSelector((state: RootState) => state.ui.user);
-  const [courses, setCourses] = React.useState<DegreeCourse[]>([]);
   const { data: coursesByDegreeResponse, isLoading } =
     useGetCourseByDegreeQuery(degree_id);
 
-  const handleSearch = () => {
-    if (search === '') {
-      return setCourses(
-        orderCoursesByName(coursesByDegreeResponse?.data || [])
-      );
-    }
-    const query = removeAccents(search.toLocaleLowerCase());
-    const filter = coursesByDegreeResponse!.data.filter((course) =>
-      removeAccents(course.course.name.toLowerCase()).includes(
-        query.toLowerCase()
-      )
-    );
-    setCourses(filter);
-  };
-
-  useEffect(() => {
-    if (coursesByDegreeResponse) {
-      const copyCourses = [...coursesByDegreeResponse?.data];
-      setCourses(orderCoursesByName(copyCourses));
-    }
-  }, [coursesByDegreeResponse]);
+  const filteredCourses = coursesByDegreeResponse?.data?.filter(
+    (degreeCourse) =>
+      removeAccents(degreeCourse.course.name)
+        .toLowerCase()
+        .includes(search.toLowerCase())
+  );
 
   return (
     <div className="flex-1 flex flex-col gap-4 items-center max-w-[900px] mx-auto">
@@ -52,7 +36,7 @@ const FilterCourses = ({ degree_id, faculty_id }: Props) => {
       <h2 className="text-xl font-medium">Hola, ¿qué materia buscas?</h2>
       <Search
         value={search}
-        onSearch={handleSearch}
+        allowClear
         onChange={(e) => setSearch(e.target.value)}
         placeholder="Escribe el nombre de la materia"
         className="w-full"
@@ -62,7 +46,7 @@ const FilterCourses = ({ degree_id, faculty_id }: Props) => {
         {!isLoading ? (
           <DegreeCourses
             degreeId={degree_id}
-            courses={courses}
+            courses={orderCoursesByName(filteredCourses || [])}
             facultyId={faculty_id}
             userId={user?.id || ''}
           />

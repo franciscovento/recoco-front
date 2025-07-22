@@ -1,7 +1,6 @@
 'use client';
 import { useMeQuery } from '@/store/api/recoco/authApi';
 import { uiActions } from '@/store/slices/ui';
-import Header from '@/ui/organisms/Header';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -20,12 +19,5 @@ export default function ApplicationLayout({
     }
   }, [me]);
 
-  return (
-    <>
-      <Header />
-      <main className="min-h-[calc(100vh-67px)] bg-app-background">
-        {children}
-      </main>
-    </>
-  );
+  return <>{children}</>;
 }
