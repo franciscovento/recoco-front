@@ -1,23 +1,27 @@
 'use client';
 import { useMeQuery } from '@/store/api/recoco/authApi';
 import { uiActions } from '@/store/slices/ui';
-import { useEffect } from 'react';
+import { useEffect, FC } from 'react';
 import { useDispatch } from 'react-redux';
 
-export default function ApplicationLayout({
-  children, // will be a page or nested layout
-}: {
+interface Props {
   children: React.ReactNode;
-}) {
+}
+
+const AuthProvider: FC<Props> = ({ children }) => {
   const dispatch = useDispatch();
-  const { data: me } = useMeQuery();
+  const { data: me, isLoading } = useMeQuery();
 
   useEffect(() => {
-    if (me) {
+    if (me?.data) {
       dispatch(uiActions.setUserMe(me.data));
       dispatch(uiActions.setAuthState(true));
+    } else if (!isLoading) {
+      dispatch(uiActions.setAuthState(false));
     }
-  }, [me]);
+  }, [me, isLoading, dispatch]);
 
   return <>{children}</>;
-}
+};
+
+export default AuthProvider;

@@ -8,4 +8,10 @@ const getFacultiesByUniversitySlug = async (universitySlug: string) => {
   );
 };
 
-export { getFacultiesByUniversitySlug as getFacultiesByUniversityId };
+const getFacultyById = async (facultyId: string) => {
+  return instance.get<ApiResponse<Faculty>>(`/faculty/${facultyId}`);
+};
+export {
+  getFacultiesByUniversitySlug as getFacultiesByUniversityId,
+  getFacultyById,
+};

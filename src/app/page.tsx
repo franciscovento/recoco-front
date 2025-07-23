@@ -1,9 +1,11 @@
+import { getUniversities } from '@/lib/services/university.service';
 import SvgRecocoSticker from '@/ui/atoms/svg/branding/SvgRecocoSticker';
-
-import Universities from '@/ui/templates/Universities';
-import { Suspense } from 'react';
+import SimpleCard from '@/ui/molecules/SimpleCard';
+import { appRoutes } from '../../routes';
 
 export default async function Home() {
+  const resp = await getUniversities();
+  const universities = resp.data.data;
   return (
     <main className="flex min-h-screen flex-col gap-4 items-center justify-center p-8 bg-app-accent">
       <SvgRecocoSticker />
@@ -16,9 +18,19 @@ export default async function Home() {
           disponibles las siguientes universidades:
         </p>
       </div>
-      <Suspense fallback={<div>Cargando Universidades...</div>}>
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] w-full max-w-3xl mx-auto py-8 gap-4">
+        {universities.map((university) => (
+          <SimpleCard
+            key={university.id}
+            detail={university.country.name}
+            name={university.name}
+            href={appRoutes.facultades.root(university.slug)}
+          />
+        ))}
+      </div>
+      {/* <Suspense fallback={<div>Cargando Universidades...</div>}>
         <Universities />
-      </Suspense>
+      </Suspense> */}
     </main>
   );
 }

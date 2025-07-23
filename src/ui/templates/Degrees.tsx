@@ -22,8 +22,6 @@ const Degrees = async ({
     // Si hay error, mostrar página sin universidades
   }
 
-  console.log(degrees);
-
   return (
     <>
       <div className="pt-24">

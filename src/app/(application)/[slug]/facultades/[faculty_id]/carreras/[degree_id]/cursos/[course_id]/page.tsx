@@ -10,7 +10,7 @@ const Page = () => {
     window.scrollTo(0, 0);
   }, [pathName]);
   return (
-    <Card className="bg-white h-full flex flex-col items-center justify-center">
+    <Card className="bg-white h-fit py-12 flex flex-col items-center justify-center">
       <SvgTeacherClassCard />
       <div className="max-w-xl mx-auto text-center flex flex-col gap-4 items-center pt-4">
         <h3 className="text-xl text-app-accent font-medium">

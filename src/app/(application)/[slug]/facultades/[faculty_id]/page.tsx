@@ -6,6 +6,16 @@ import {
   MessageOutlined,
 } from '@ant-design/icons';
 import LoginRegisterButton from '@/ui/templates/LoginRegisterButton';
+import {
+  getFacultiesByUniversityId,
+  getFacultyById,
+} from '@/lib/services/faculty.service';
+import SimpleCard from '@/ui/molecules/SimpleCard';
+import { formatText } from '@/lib/helpers/formatText';
+import { getDegreesByFacultyId } from '@/lib/services/degree.service';
+import { appRoutes } from '../../../../../../routes';
+import { getUniversities } from '@/lib/services/university.service';
+import Header from '@/ui/organisms/Header';
 
 interface Props {
   params: {
@@ -13,19 +23,77 @@ interface Props {
     faculty_id: string;
   };
 }
+
+export async function generateStaticParams() {
+  const { data } = await getUniversities();
+  const universities = data.data;
+
+  const params: { faculty_id: string; slug: string }[] = [];
+
+  for (const university of universities) {
+    const faculties = await getFacultiesByUniversityId(university.slug);
+    for (const faculty of faculties.data.data) {
+      params.push({
+        faculty_id: faculty.id.toString(),
+        slug: university.slug,
+      });
+    }
+  }
+
+  return params;
+}
+
 const Page: FC<Props> = async ({ params }) => {
+  const { data: faculty } = await getFacultyById(params.faculty_id);
+
+  const { data } = await getDegreesByFacultyId(params.faculty_id);
+  const degrees = data.data;
   return (
     <>
-      {/* Degrees section */}
-      <Suspense
-        fallback={
-          <div className="h-[300px] flex items-center justify-center ">
-            Cargando información...
+      <Header
+        headerHref={appRoutes.facultades.root(params.slug)}
+        headerName={faculty.data.university.name}
+      />
+      <div className="pt-24">
+        <div className="flex flex-col text-center items-center gap-4 app-wrapper">
+          <h1 className="text-4xl  font-bold">
+            Recomendaciones{' '}
+            <span>{formatText(degrees[0]?.faculty?.name || '-')}</span>
+          </h1>
+          <p className="text-xl">
+            Sistema inteligente de recomendaciones para la{' '}
+            <span>{formatText(degrees[0]?.faculty?.name || '-')}</span>.
+            Descubre qué cursos tomar basándote en experiencias reales de
+            estudiantes.
+          </p>
+        </div>
+      </div>
+
+      <div className="app-wrapper flex flex-col gap-4 py-12">
+        {degrees.length > 0 ? (
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] w-full mx-auto gap-4">
+            {degrees.map((degree) => (
+              <SimpleCard
+                key={degree.id}
+                name={degree.name}
+                detail={degree.slug}
+                href={appRoutes.facultades.carreras.detail(
+                  params.slug,
+                  params.faculty_id,
+                  degree.id
+                )}
+              />
+            ))}
           </div>
-        }
-      >
-        <Degrees facultyId={params.faculty_id} universitySlug={params.slug} />
-      </Suspense>
+        ) : (
+          <div className="text-center py-8">
+            <p className="text-[#114230] text-lg">
+              No se pudieron cargar las carreras en este momento, actualiza la
+              página
+            </p>
+          </div>
+        )}
+      </div>
 
       {/* Faculty banner */}
       <div className="py-12 bg-app-primary  text-white ">

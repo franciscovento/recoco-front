@@ -1,4 +1,3 @@
-'use client';
 import Header from '@/ui/organisms/Header';
 
 export default function ApplicationLayout({
@@ -8,7 +7,7 @@ export default function ApplicationLayout({
 }) {
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <main className="min-h-[calc(100vh-67px)] bg-app-background">
         {children}
       </main>

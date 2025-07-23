@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import '../styles/globals.css';
 import { ReduxProvider } from '@/providers/ReduxProvider';
 import AntdProvider from '@/providers/AntProvider';
+import AuthProvider from '@/providers/AuthProvider';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://recoco.pro'),
@@ -22,7 +23,9 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ReduxProvider>
-          <AntdProvider>{children}</AntdProvider>
+          <AuthProvider>
+            <AntdProvider>{children}</AntdProvider>
+          </AuthProvider>
         </ReduxProvider>
       </body>
     </html>

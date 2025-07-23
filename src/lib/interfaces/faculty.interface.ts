@@ -1,3 +1,5 @@
+import { University } from './university.interface';
+
 interface Faculty {
   id: string;
   name: string;
@@ -7,6 +9,7 @@ interface Faculty {
   created_by: string;
   created_at: string;
   updated_at: string;
+  university: University;
 }
 
 export { type Faculty };
